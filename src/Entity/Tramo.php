@@ -30,12 +30,12 @@ class Tramo
     private $diaSemana;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $horaInicio;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $horaFin;
 
@@ -90,24 +90,24 @@ class Tramo
         return $this;
     }
 
-    public function getHoraInicio(): ?\DateTimeInterface
+    public function getHoraInicio(): ?string
     {
         return $this->horaInicio;
     }
 
-    public function setHoraInicio(?\DateTimeInterface $horaInicio): self
+    public function setHoraInicio(?string $horaInicio): self
     {
         $this->horaInicio = $horaInicio;
 
         return $this;
     }
 
-    public function getHoraFin(): ?\DateTimeInterface
+    public function getHoraFin(): ?string
     {
         return $this->horaFin;
     }
 
-    public function setHoraFin(?\DateTimeInterface $horaFin): self
+    public function setHoraFin(?string $horaFin): self
     {
         $this->horaFin = $horaFin;
 
