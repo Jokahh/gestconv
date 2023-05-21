@@ -102,6 +102,11 @@ class Parte
      */
     private $observaciones;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $actividades;
+
 
     public function __construct()
     {
@@ -358,6 +363,18 @@ class Parte
                 $observacione->setParte(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActividades(): ?string
+    {
+        return $this->actividades;
+    }
+
+    public function setActividades(?string $actividades): self
+    {
+        $this->actividades = $actividades;
 
         return $this;
     }

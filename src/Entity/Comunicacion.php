@@ -28,7 +28,7 @@ class Comunicacion
     protected $anotacion;
 
     /**
-     * @ORM\ManyToOne(targetEntity=TipoComunicacion::class, inversedBy="comunicacions")
+     * @ORM\ManyToOne(targetEntity=TipoComunicacion::class, inversedBy="comunicaciones")
      */
     private $tipo;
 
@@ -37,24 +37,24 @@ class Comunicacion
         return $this->id;
     }
 
-    protected function getFecha(): ?\DateTimeInterface
+    public function getFecha(): ?\DateTimeInterface
     {
         return $this->fecha;
     }
 
-    protected function setFecha(?\DateTimeInterface $fecha): self
+    public function setFecha(?\DateTimeInterface $fecha): self
     {
         $this->fecha = $fecha;
 
         return $this;
     }
 
-    protected function getAnotacion(): ?string
+    public function getAnotacion(): ?string
     {
         return $this->anotacion;
     }
 
-    protected function setAnotacion(?string $anotacion): self
+    public function setAnotacion(?string $anotacion): self
     {
         $this->anotacion = $anotacion;
 
