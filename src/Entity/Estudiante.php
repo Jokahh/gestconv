@@ -20,7 +20,7 @@ class Estudiante
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=8)
+     * @ORM\Column(type="string", length=9)
      */
     private $nie;
 
