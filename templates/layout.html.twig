@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light navbar-light" style="background-color: #e3f2fd;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('actitud_familia_listar') }}">
+                        <i class="fa-solid fa-list"></i> Actitudes Familia
+                        <span class="sr-only">(actual)</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        {% for mensaje in app.flashes('error') %}
+            <div class="alert alert-danger alert-dismissible fade show">
+                {{ mensaje }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+
+        {% for mensaje in app.flashes('exito') %}
+            <div class="alert alert-success alert-dismissible fade show">
+                {{ mensaje }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
