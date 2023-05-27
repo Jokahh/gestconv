@@ -74,4 +74,8 @@ class ConductasContrarias
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->getCategoria()->getDescripcion();
+    }
 }

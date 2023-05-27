@@ -379,4 +379,8 @@ class Parte
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getAnotacion();
+    }
 }

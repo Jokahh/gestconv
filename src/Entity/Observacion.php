@@ -55,4 +55,9 @@ class Observacion
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getAnotacion();
+    }
 }

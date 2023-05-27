@@ -168,4 +168,9 @@ class Tramo
         return $this;
     }
 
+    public function __toString()
+    {
+        return 'ID: ' . $this->getId();
+    }
+
 }

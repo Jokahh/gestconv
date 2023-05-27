@@ -72,4 +72,8 @@ class Comunicacion
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->getAnotacion();
+    }
 }

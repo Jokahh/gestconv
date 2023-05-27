@@ -317,4 +317,9 @@ class Estudiante
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getNombre() . ' ' . $this->getApellido1() . ' ' . $this->getApellido2();
+    }
 }
