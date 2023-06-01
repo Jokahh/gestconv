@@ -6,6 +6,7 @@ use App\Entity\ConductasContrarias;
 use App\Entity\Docente;
 use App\Entity\Estudiante;
 use App\Entity\Parte;
+use App\Entity\Sancion;
 use App\Entity\Tramo;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -44,7 +45,7 @@ class ParteType extends AbstractType
             ])
             ->add('sancion', EntityType::class, [
                 'label' => 'Sancion que se aplica',
-                'class' => SancionType::class,
+                'class' => Sancion::class,
                 'required' => false
             ])
             ->add('conductasContrarias', EntityType::class, [
