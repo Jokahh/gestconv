@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\ActitudFamilia;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,20 @@ class ActitudFamiliaRepository extends ServiceEntityRepository
         parent::__construct($registry, ActitudFamilia::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(ActitudFamilia $entity, bool $flush = true): void
+    public function nuevo(): ActitudFamilia
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $actitudFamilia = new ActitudFamilia();
+        $this->getEntityManager()->persist($actitudFamilia);
+        return $actitudFamilia;
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(ActitudFamilia $entity, bool $flush = true): void
+    public function guardar()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $this->getEntityManager()->flush();
     }
 
-    // /**
-    //  * @return ActitudFamilia[] Returns an array of ActitudFamilia objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eliminar(ActitudFamilia $actitudFamilia): void
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->getEntityManager()->remove($actitudFamilia);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ActitudFamilia
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

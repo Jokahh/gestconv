@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Tramo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,20 @@ class TramoRepository extends ServiceEntityRepository
         parent::__construct($registry, Tramo::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(Tramo $entity, bool $flush = true): void
+    public function nuevo(): Tramo
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $tramo = new Tramo();
+        $this->getEntityManager()->persist($tramo);
+        return $tramo;
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(Tramo $entity, bool $flush = true): void
+    public function guardar()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $this->getEntityManager()->flush();
     }
 
-    // /**
-    //  * @return Tramo[] Returns an array of Tramo objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eliminar(Tramo $tramo): void
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->getEntityManager()->remove($tramo);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Tramo
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

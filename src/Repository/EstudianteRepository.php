@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Estudiante;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,20 @@ class EstudianteRepository extends ServiceEntityRepository
         parent::__construct($registry, Estudiante::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(Estudiante $entity, bool $flush = true): void
+    public function nuevo(): Estudiante
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $estudiante = new Estudiante();
+        $this->getEntityManager()->persist($estudiante);
+        return $estudiante;
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(Estudiante $entity, bool $flush = true): void
+    public function guardar()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $this->getEntityManager()->flush();
     }
 
-    // /**
-    //  * @return Estudiante[] Returns an array of Estudiante objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eliminar(Estudiante $estudiante): void
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->getEntityManager()->remove($estudiante);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Estudiante
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

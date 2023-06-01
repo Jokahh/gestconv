@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\ConductasContrarias;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,20 @@ class ConductasContrariasRepository extends ServiceEntityRepository
         parent::__construct($registry, ConductasContrarias::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(ConductasContrarias $entity, bool $flush = true): void
+    public function nuevo(): ConductasContrarias
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $conductasContrarias = new ConductasContrarias();
+        $this->getEntityManager()->persist($conductasContrarias);
+        return $conductasContrarias;
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(ConductasContrarias $entity, bool $flush = true): void
+    public function guardar()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $this->getEntityManager()->flush();
     }
 
-    // /**
-    //  * @return ConductasContrarias[] Returns an array of ConductasContrarias objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eliminar(ConductasContrarias $conductasContrarias): void
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->getEntityManager()->remove($conductasContrarias);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ConductasContrarias
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\ObservacionParte;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,20 @@ class ObservacionParteRepository extends ServiceEntityRepository
         parent::__construct($registry, ObservacionParte::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(ObservacionParte $entity, bool $flush = true): void
+    public function nuevo(): ObservacionParte
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $observacionParte = new ObservacionParte();
+        $this->getEntityManager()->persist($observacionParte);
+        return $observacionParte;
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(ObservacionParte $entity, bool $flush = true): void
+    public function guardar()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $this->getEntityManager()->flush();
     }
 
-    // /**
-    //  * @return ObservacionParte[] Returns an array of ObservacionParte objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eliminar(ObservacionParte $observacionParte): void
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->getEntityManager()->remove($observacionParte);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ObservacionParte
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

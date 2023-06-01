@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\ObservacionSancion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,20 @@ class ObservacionSancionRepository extends ServiceEntityRepository
         parent::__construct($registry, ObservacionSancion::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(ObservacionSancion $entity, bool $flush = true): void
+    public function nuevo(): ObservacionSancion
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $observacionSancion = new ObservacionSancion();
+        $this->getEntityManager()->persist($observacionSancion);
+        return $observacionSancion;
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(ObservacionSancion $entity, bool $flush = true): void
+    public function guardar()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $this->getEntityManager()->flush();
     }
 
-    // /**
-    //  * @return ObservacionSancion[] Returns an array of ObservacionSancion objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eliminar(ObservacionSancion $observacionSancion): void
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->getEntityManager()->remove($observacionSancion);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ObservacionSancion
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

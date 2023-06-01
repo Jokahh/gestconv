@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\ComunicacionParte;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,20 @@ class ComunicacionParteRepository extends ServiceEntityRepository
         parent::__construct($registry, ComunicacionParte::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(ComunicacionParte $entity, bool $flush = true): void
+    public function nuevo(): ComunicacionParte
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $comunicacionParte = new ComunicacionParte();
+        $this->getEntityManager()->persist($comunicacionParte);
+        return $comunicacionParte;
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(ComunicacionParte $entity, bool $flush = true): void
+    public function guardar()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $this->getEntityManager()->flush();
     }
 
-    // /**
-    //  * @return ComunicacionParte[] Returns an array of ComunicacionParte objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eliminar(ComunicacionParte $comunicacionParte): void
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->getEntityManager()->remove($comunicacionParte);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ComunicacionParte
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

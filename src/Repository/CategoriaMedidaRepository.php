@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\CategoriaMedida;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,20 @@ class CategoriaMedidaRepository extends ServiceEntityRepository
         parent::__construct($registry, CategoriaMedida::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(CategoriaMedida $entity, bool $flush = true): void
+    public function nuevo(): CategoriaMedida
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $categoriaMedida = new CategoriaMedida();
+        $this->getEntityManager()->persist($categoriaMedida);
+        return $categoriaMedida;
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(CategoriaMedida $entity, bool $flush = true): void
+    public function guardar()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        $this->getEntityManager()->flush();
     }
 
-    // /**
-    //  * @return CategoriaMedida[] Returns an array of CategoriaMedida objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function eliminar(CategoriaMedida $categoriaMedida): void
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->getEntityManager()->remove($categoriaMedida);
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?CategoriaMedida
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
