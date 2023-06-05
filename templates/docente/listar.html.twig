@@ -1,0 +1,72 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todos los docentes</h2>
+        </div>
+        <div>
+            <a href="{{ path('docente_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nuevo docente</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Usuario</th>
+                <th>Contraseña</th>
+                <th>Tiene Notificaciones?</th>
+                <th>Es Admin?</th>
+                <th>Está activo?</th>
+                <th>Está bloqueado?</th>
+                <th>Es externo?</th>
+                <th>Es directivo?</th>
+                <th>Es convivencia?</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for docente in docentes %}
+                <tr>
+                    <th>{{ docente.id }}</th>
+                    <td>{{ docente.nombre }}</td>
+                    <td>{{ docente.apellido1 }} {{ docente.apellido2 }}</td>
+                    <td>{{ docente.email }}</td>
+                    <td>{{ docente.telefono }}</td>
+                    <td>{{ docente.usuario }}</td>
+                    <td>{{ docente.password }}</td>
+                    <td>{{ docente.notificaciones ? 'Si' : 'No' }}</td>
+                    <td>{{ docente.esAdmin ? 'Si' : 'No' }}</td>
+                    <td>{{ docente.estaActivo ? 'Si' : 'No' }}</td>
+                    <td>{{ docente.estaBloqueado ? 'Si' : 'No' }}</td>
+                    <td>{{ docente.esExterno ? 'Si' : 'No' }}</td>
+                    <td>{{ docente.esDirectivo ? 'Si' : 'No' }}</td>
+                    <td>{{ docente.esConvivencia ? 'Si' : 'No' }}</td>
+
+
+                    <td>
+                        <a href="{{ path('docente_modificar', {'id': docente.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay docentes</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
