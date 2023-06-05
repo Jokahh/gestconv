@@ -1,0 +1,56 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todos los tramos</h2>
+        </div>
+        <div>
+            <a href="{{ path('tramo_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nuevo tramo</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Orden</th>
+                <th>Dia Semana</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th>Aula</th>
+                <th>Curso Académico</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tramo in tramos %}
+                <tr>
+                    <th>{{ tramo.id }}</th>
+                    <td>{{ tramo.orden }}</td>
+                    <td>{{ tramo.diaSemana }}</td>
+                    <td>{{ tramo.horaInicio }}</td>
+                    <td>{{ tramo.horaInicio }}</td>
+                    <td>{{ tramo.aula }}</td>
+                    <td>{{ tramo.cursoAcademico }}</td>
+                    <td>
+                        <a href="{{ path('tramo_modificar', {'id': tramo.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay tramos</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
