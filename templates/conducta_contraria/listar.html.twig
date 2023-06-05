@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las conductas contrarias</h2>
+        </div>
+        <div>
+            <a href="{{ path('conducta_contraria_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva conducta contraria</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Orden</th>
+                <th>Categoría</th>
+                <th>Parte</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for conductaContraria in conductasContrarias %}
+                <tr>
+                    <th>{{ conductaContraria.id }}</th>
+                    <td>{{ conductaContraria.orden }}</td>
+                    <td>{{ conductaContraria.categoria }}</td>
+                    <td>{{ conductaContraria.parte }}</td>
+                    <td>
+                        <a href="{{ path('conducta_contraria_modificar', {'id': conductaContraria.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay conductas contrarias</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
