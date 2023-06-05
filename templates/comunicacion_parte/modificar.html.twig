@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    {% if comunicacionParte.id %}
+        <h1>Modificar la comunicación de parte: {{ comunicacionParte.id }}</h1>
+    {% else %}
+        <h1>Crear nueva comunicación de parte</h1>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group row">
+        {% if comunicacionParte.id %}
+            <div class="col-sm-2">
+                <a href="{{ path('comunicacion_parte_eliminar', {'id': comunicacionParte.id}) }}">
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                </a>
+            </div>
+        {% else %}
+        {% endif %}
+        <div class="col-sm-10">
+            <a href="{{ path('comunicacion_parte_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>
+                Volver</a>
+            <button type="submit" id="modificar_comunicacion_parte_enviar" name="guardar" class="btn-primary btn">
+                <i class="fa fa-check"></i> Guardar
+            </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

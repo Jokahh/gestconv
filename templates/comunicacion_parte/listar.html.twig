@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las comunicaciones de parte</h2>
+        </div>
+        <div>
+            <a href="{{ path('comunicacion_parte_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva comunicación de parte</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Anotación</th>
+                <th>Tipo</th>
+                <th>Fecha</th>
+                <th>Asignado al Parte</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comunicacionParte in comunicacionesPartes %}
+                <tr>
+                    <th>{{ comunicacionParte.id }}</th>
+                    <td>{{ comunicacionParte.anotacion }}</td>
+                    <td>{{ comunicacionParte.tipo }}</td>
+                    <td>{{ comunicacionParte.fecha|date("Y-m-d") }}</td>
+                    <td>{{ comunicacionParte.parte }}</td>
+                    <td>
+                        <a href="{{ path('comunicacion_parte_modificar', {'id': comunicacionParte.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay comunicaciones de parte</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
