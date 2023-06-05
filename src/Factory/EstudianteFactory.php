@@ -57,7 +57,7 @@ final class EstudianteFactory extends ModelFactory
             'notaTelefono2' => self::faker()->boolean(25) ? self::faker()->realText(75) : null,
             'fechaNacimiento' => self::faker()->boolean(90) ? self::faker()->dateTime() : null,
             'direccion' => self::faker()->boolean(90) ? self::faker()->address() : null,
-            'observaciones' => self::faker()->boolean(35) ? self::faker()->realTextBetween(10, 75) : null,
+            'observaciones' => self::faker()->boolean(35) ? self::faker()->realTextBetween(10, 35) : null,
             'tutor1' => self::faker()->firstName . ' ' . self::faker()->lastName(),
             'tutor2' => self::faker()->boolean(20) ? self::faker()->firstName . ' ' . self::faker()->lastName() : null
 

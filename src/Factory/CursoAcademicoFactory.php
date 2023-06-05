@@ -49,7 +49,7 @@ final class CursoAcademicoFactory extends ModelFactory
         $semestres = ['1º Semestre','2º Semestre','3º Semestre'];
         $fechaInicio = self::faker()->dateTime();
         return [
-            'descripcion' => self::faker()->realText(25),
+            'descripcion' => self::faker()->realText(15),
             'fechaInicio' => $fechaInicio,
             'fechaFin' => self::faker()->dateTimeInInterval($fechaInicio,'+1 years'),
 

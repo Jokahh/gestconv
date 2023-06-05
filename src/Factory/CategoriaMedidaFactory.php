@@ -48,7 +48,7 @@ final class CategoriaMedidaFactory extends ModelFactory
     {
         return [
             'orden' => self::faker()->boolean() ? 'ASC' : 'DESC',
-            'descripcion' => self::faker()->realTextBetween(20,100)
+            'descripcion' => self::faker()->realTextBetween(5,15)
         ];
     }
 

@@ -48,7 +48,7 @@ final class ComunicacionParteFactory extends ModelFactory
     {
         return [
             'fecha' => self::faker()->dateTime(),
-            'anotacion' => self::faker()->boolean(75) ? self::faker()->realText(100) : null
+            'anotacion' => self::faker()->boolean(75) ? self::faker()->realText(15) : null
         ];
     }
 

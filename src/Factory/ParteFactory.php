@@ -53,7 +53,7 @@ final class ParteFactory extends ModelFactory
             'fechaSuceso' => self::faker()->dateTimeBetween($fechaCreacion),
             'fechaAviso' => $fechaAviso,
             'fechaRecordatorio' => self::faker()->boolean(25) ? self::faker()->dateTimeBetween($fechaAviso) : null,
-            'anotacion' => self::faker()->realText(255),
+            'anotacion' => self::faker()->realText(15),
             'actividades' => self::faker()->realTextBetween(5,25),
             'prescrito' => self::faker()->boolean(25),
             'hayExpulsion' => self::faker()->boolean(20),

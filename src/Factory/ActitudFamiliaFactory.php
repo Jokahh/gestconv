@@ -47,7 +47,7 @@ final class ActitudFamiliaFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'descripcion' => self::faker()->realText(100),
+            'descripcion' => self::faker()->realText(15),
             'fecha' => self::faker()->dateTime(),
             'orden' => self::faker()->boolean() ? 'ASC' : 'DESC'
         ];

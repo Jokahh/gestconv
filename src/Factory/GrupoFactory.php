@@ -49,7 +49,7 @@ final class GrupoFactory extends ModelFactory
         $cursos = ['1º ESO','2º ESO','3º ESO','4º ESO','1º Bach','2º Bach','1º DAW','2º DAW','1º DAM','2º DAM','1º SMR','2º SMR'];
         return [
             'nombre' => self::faker()->randomElement($cursos),
-            'descripcion' => self::faker()->boolean(80) ? self::faker()->realText(75) : null
+            'descripcion' => self::faker()->boolean(80) ? self::faker()->realText(15) : null
         ];
     }
 

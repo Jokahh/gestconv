@@ -47,7 +47,7 @@ final class TipoComunicacionFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'descripcion' => self::faker()->realTextBetween(5,25)
+            'descripcion' => self::faker()->realTextBetween(5,15)
         ];
     }
 
