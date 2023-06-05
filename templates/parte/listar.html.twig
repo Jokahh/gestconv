@@ -1,0 +1,72 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todos los partes</h2>
+        </div>
+        <div>
+            <a href="{{ path('parte_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nuevo parte</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Creado por</th>
+                <th>Asignado a</th>
+                <th>Tramo</th>
+                <th>Sancion</th>
+                <th>Actividades</th>
+                <th>Anotacion</th>
+                <th>Fecha de Creacion</th>
+                <th>Fecha de Suceso</th>
+                <th>Fecha de Aviso</th>
+                <th>Fecha de Recordatorio</th>
+                <th>Prescrito ?</th>
+                <th>Expulsión ?</th>
+                <th>Actividades Realizadas ?</th>
+                <th>Prioritario ?</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for parte in partes %}
+                <tr>
+                    <th>{{ parte.id }}</th>
+                    <td>{{ parte.docente }}</td>
+                    <td>{{ parte.estudiante }}</td>
+                    <td>{{ parte.tramo }}</td>
+                    <td>{{ parte.sancion }}</td>
+                    <td>{{ parte.actividades }}</td>
+                    <td>{{ parte.anotacion }}</td>
+                    <td>{{ parte.fechaCreacion|date("Y-m-d") }}</td>
+                    <td>{{ parte.fechaSuceso|date("Y-m-d") }}</td>
+                    <td>{{ parte.fechaAviso|date("Y-m-d") }}</td>
+                    <td>{{ parte.fechaRecordatorio|date("Y-m-d") }}</td>
+                    <td>{{ parte.prescrito ? 'Si' : 'No' }}</td>
+                    <td>{{ parte.hayExpulsion ? 'Si' : 'No' }}</td>
+                    <td>{{ parte.actividadesRealizadas ? 'Si' : 'No' }}</td>
+                    <td>{{ parte.prioritaria ? 'Si' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('parte_modificar', {'id': parte.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay partes</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
