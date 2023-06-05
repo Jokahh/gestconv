@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todos los grupos</h2>
+        </div>
+        <div>
+            <a href="{{ path('grupo_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nuevo grupo</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Curso Académico</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for grupo in grupos %}
+                <tr>
+                    <th>{{ grupo.id }}</th>
+                    <td>{{ grupo.nombre }}</td>
+                    <td>{{ grupo.descripcion }}</td>
+                    <td>{{ grupo.cursoAcademico }}</td>
+                    <td>
+                        <a href="{{ path('grupo_modificar', {'id': grupo.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay grupos</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
