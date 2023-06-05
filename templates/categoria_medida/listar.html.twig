@@ -1,0 +1,48 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las categorías de medidas</h2>
+        </div>
+        <div>
+            <a href="{{ path('categoria_medida_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva categoría de medida</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Orden</th>
+                <th>Descripción</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for categoriaMedida in categoriasMedidas %}
+                <tr>
+                    <th>{{ categoriaMedida.id }}</th>
+                    <td>{{ categoriaMedida.orden }}</td>
+                    <td>{{ categoriaMedida.descripcion }}</td>
+                    <td>
+                        <a href="{{ path('categoria_medida_modificar', {'id': categoriaMedida.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay categorías de medidas</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
