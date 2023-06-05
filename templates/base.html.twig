@@ -12,6 +12,9 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('bootstrap-4.6.2/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('fontawesome-free-6.4.0-web/css/all.css') }}">
+        <link rel="stylesheet" href="{{ asset('bootstrap-toggle-master/css/bootstrap-toggle.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css') }}"/>
+
         {# {{ encore_entry_link_tags('app') }} #}
     {% endblock %}
 
@@ -20,6 +23,8 @@
         <script src="{{ asset('jquery-3.6.3/jquery.min.js') }}"></script>
         <script src="{{ asset('popper-1.16.1/popper.min.js') }}"></script>
         <script src="{{ asset('bootstrap-4.6.2/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('bootstrap-toggle-master/js/bootstrap-toggle.min.js') }}"></script>
+        <script src="{{ asset('bootstrap-select-1.13.14/js/bootstrap-select.js') }}"></script>
     {% endblock %}
 </head>
 <body style="padding-top: 3.8em">
