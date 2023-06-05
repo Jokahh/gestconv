@@ -13,19 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoriaMedidaController extends AbstractController
 {
     /**
-     * @Route("/categoriaMedida", name="categoriaMedida_listar")
+     * @Route("/categoria_medida", name="categoria_medida_listar")
      */
     public function listar(CategoriaMedidaRepository $categoriaMedidaRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $categoriasMedidas = $categoriaMedidaRepository->findAll();
-        return $this->render('categoriaMedida/listar.html.twig', [
+        return $this->render('categoria_medida/listar.html.twig', [
             'categoriasMedidas' => $categoriasMedidas
         ]);
     }
 
     /**
-     * @Route ("/categoriaMedida/nuevo", name="categoriaMedida_nuevo")
+     * @Route ("/categoria_medida/nuevo", name="categoria_medida_nuevo")
      */
     public function nuevoCategoriaMedida(Request $request, CategoriaMedidaRepository $categoriaMedidaRepository): Response
     {
@@ -36,7 +36,7 @@ class CategoriaMedidaController extends AbstractController
     }
 
     /**
-     * @Route("/categoriaMedida/{id}", name="categoriaMedida_modificar")
+     * @Route("/categoria_medida/{id}", name="categoria_medida_modificar")
      */
     public function modificarCategoriaMedida(Request $request, CategoriaMedidaRepository $categoriaMedidaRepository, CategoriaMedida $categoriaMedida): Response
     {
@@ -48,12 +48,12 @@ class CategoriaMedidaController extends AbstractController
             try {
                 $categoriaMedidaRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('categoriaMedida_listar');
+                return $this->redirectToRoute('categoria_medida_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render('categoriaMedida/modificar.html.twig', [
+        return $this->render('categoria_medida/modificar.html.twig', [
             'categoriaMedida' => $categoriaMedida,
             'form' => $form->createView()
         ]);
@@ -61,7 +61,7 @@ class CategoriaMedidaController extends AbstractController
 
 
     /**
-     * @Route("/categoriaMedida/eliminar/{id}", name="categoriaMedida_eliminar")
+     * @Route("/categoria_medida/eliminar/{id}", name="categoria_medida_eliminar")
      */
     public function eliminarCategoriaMedida(Request $request, CategoriaMedidaRepository $categoriaMedidaRepository, CategoriaMedida $categoriaMedida): Response
     {
@@ -71,12 +71,12 @@ class CategoriaMedidaController extends AbstractController
                 $categoriaMedidaRepository->eliminar($categoriaMedida);
                 $categoriaMedidaRepository->guardar();
                 $this->addFlash('exito', 'Categoria de medida eliminada con éxito');
-                return $this->redirectToRoute('categoriaMedida_listar');
+                return $this->redirectToRoute('categoria_medida_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la categoria de medida!');
             }
         }
-        return $this->render('categoriaMedida/eliminar.html.twig', [
+        return $this->render('categoria_medida/eliminar.html.twig', [
             'categoriaMedida' => $categoriaMedida
         ]);
     }

@@ -13,19 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class TipoComunicacionController extends AbstractController
 {
     /**
-     * @Route("/tipoComunicacion", name="tipoComunicacion_listar")
+     * @Route("/tipo_comunicacion", name="tipo_comunicacion_listar")
      */
     public function listar(TipoComunicacionRepository $tipoComunicacionRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $tiposComunicaciones = $tipoComunicacionRepository->findAll();
-        return $this->render('tipoComunicacion/listar.html.twig', [
+        return $this->render('tipo_comunicacion/listar.html.twig', [
             'tiposComunicaciones' => $tiposComunicaciones
         ]);
     }
 
     /**
-     * @Route ("/tipoComunicacion/nuevo", name="tipoComunicacion_nuevo")
+     * @Route ("/tipo_comunicacion/nuevo", name="tipo_comunicacion_nuevo")
      */
     public function nuevoTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository): Response
     {
@@ -36,7 +36,7 @@ class TipoComunicacionController extends AbstractController
     }
 
     /**
-     * @Route("/tipoComunicacion/{id}", name="tipoComunicacion_modificar")
+     * @Route("/tipo_comunicacion/{id}", name="tipo_comunicacion_modificar")
      */
     public function modificarTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository, TipoComunicacion $tipoComunicacion): Response
     {
@@ -48,12 +48,12 @@ class TipoComunicacionController extends AbstractController
             try {
                 $tipoComunicacionRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('tipoComunicacion_listar');
+                return $this->redirectToRoute('tipo_comunicacion_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render('tipoComunicacion/modificar.html.twig', [
+        return $this->render('tipo_comunicacion/modificar.html.twig', [
             'tipoComunicacion' => $tipoComunicacion,
             'form' => $form->createView()
         ]);
@@ -61,7 +61,7 @@ class TipoComunicacionController extends AbstractController
 
 
     /**
-     * @Route("/tipoComunicacion/eliminar/{id}", name="tipoComunicacion_eliminar")
+     * @Route("/tipo_comunicacion/eliminar/{id}", name="tipo_comunicacion_eliminar")
      */
     public function eliminarTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository, TipoComunicacion $tipoComunicacion): Response
     {
@@ -71,12 +71,12 @@ class TipoComunicacionController extends AbstractController
                 $tipoComunicacionRepository->eliminar($tipoComunicacion);
                 $tipoComunicacionRepository->guardar();
                 $this->addFlash('exito', 'Tipo de comunicacion eliminado con éxito');
-                return $this->redirectToRoute('tipoComunicacion_listar');
+                return $this->redirectToRoute('tipo_comunicacion_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el tipo de comunicación!');
             }
         }
-        return $this->render('tipoComunicacion/eliminar.html.twig', [
+        return $this->render('tipo_comunicacion/eliminar.html.twig', [
             'tipoComunicacion' => $tipoComunicacion
         ]);
     }

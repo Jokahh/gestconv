@@ -13,19 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ComunicacionSancionController extends AbstractController
 {
     /**
-     * @Route("/comunicacionSancion", name="comunicacionSancion_listar")
+     * @Route("/comunicacion_sancion", name="comunicacion_sancion_listar")
      */
     public function listar(ComunicacionSancionRepository $comunicacionSancionRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $comunicacionesSanciones = $comunicacionSancionRepository->findAll();
-        return $this->render('comunicacionSancion/listar.html.twig', [
+        return $this->render('comunicacion_sancion/listar.html.twig', [
             'comunicacionesSanciones' => $comunicacionesSanciones
         ]);
     }
 
     /**
-     * @Route ("/comunicacionSancion/nuevo", name="comunicacionSancion_nuevo")
+     * @Route ("/comunicacion_sancion/nuevo", name="comunicacion_sancion_nuevo")
      */
     public function nuevoComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository): Response
     {
@@ -36,7 +36,7 @@ class ComunicacionSancionController extends AbstractController
     }
 
     /**
-     * @Route("/comunicacionSancion/{id}", name="comunicacionSancion_modificar")
+     * @Route("/comunicacion_sancion/{id}", name="comunicacion_sancion_modificar")
      */
     public function modificarComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, ComunicacionSancion $comunicacionSancion): Response
     {
@@ -48,12 +48,12 @@ class ComunicacionSancionController extends AbstractController
             try {
                 $comunicacionSancionRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('comunicacionSancion_listar');
+                return $this->redirectToRoute('comunicacion_sancion_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render('comunicacionSancion/modificar.html.twig', [
+        return $this->render('comunicacion_sancion/modificar.html.twig', [
             'comunicacionSancion' => $comunicacionSancion,
             'form' => $form->createView()
         ]);
@@ -61,7 +61,7 @@ class ComunicacionSancionController extends AbstractController
 
 
     /**
-     * @Route("/comunicacionSancion/eliminar/{id}", name="comunicacionSancion_eliminar")
+     * @Route("/comunicacion_sancion/eliminar/{id}", name="comunicacion_sancion_eliminar")
      */
     public function eliminarComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, ComunicacionSancion $comunicacionSancion): Response
     {
@@ -71,12 +71,12 @@ class ComunicacionSancionController extends AbstractController
                 $comunicacionSancionRepository->eliminar($comunicacionSancion);
                 $comunicacionSancionRepository->guardar();
                 $this->addFlash('exito', 'Comunicacion de sanción eliminada con éxito');
-                return $this->redirectToRoute('comunicacionSancion_listar');
+                return $this->redirectToRoute('comunicacion_sancion_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la comunicación de sanción!');
             }
         }
-        return $this->render('comunicacionSancion/eliminar.html.twig', [
+        return $this->render('comunicacion_sancion/eliminar.html.twig', [
             'comunicacionSancion' => $comunicacionSancion
         ]);
     }

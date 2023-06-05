@@ -13,19 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoriaConductaContrariaController extends AbstractController
 {
     /**
-     * @Route("/categoriaConductaContraria", name="categoriaConductaContraria_listar")
+     * @Route("/categoria_conducta_contraria", name="categoria_conducta_contraria_listar")
      */
     public function listar(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $categoriasConductasContrarias = $categoriaConductaContrariaRepository->findAll();
-        return $this->render('categoriaConductaContraria/listar.html.twig', [
+        return $this->render('categoria_conducta_contraria/listar.html.twig', [
             'categoriasConductasContrarias' => $categoriasConductasContrarias
         ]);
     }
 
     /**
-     * @Route ("/categoriaConductaContraria/nuevo", name="categoriaConductaContraria_nuevo")
+     * @Route ("/categoria_conducta_contraria/nuevo", name="categoria_conducta_contraria_nuevo")
      */
     public function nuevoCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository): Response
     {
@@ -36,7 +36,7 @@ class CategoriaConductaContrariaController extends AbstractController
     }
 
     /**
-     * @Route("/categoriaConductaContraria/{id}", name="categoriaConductaContraria_modificar")
+     * @Route("/categoria_conducta_contraria/{id}", name="categoria_conducta_contraria_modificar")
      */
     public function modificarCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CategoriaConductaContraria $categoriaConductaContraria): Response
     {
@@ -48,12 +48,12 @@ class CategoriaConductaContrariaController extends AbstractController
             try {
                 $categoriaConductaContrariaRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('categoriaConductaContraria_listar');
+                return $this->redirectToRoute('categoria_conducta_contraria_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render('categoriaConductaContraria/modificar.html.twig', [
+        return $this->render('categoria_conducta_contraria/modificar.html.twig', [
             'categoriaConductaContraria' => $categoriaConductaContraria,
             'form' => $form->createView()
         ]);
@@ -71,12 +71,12 @@ class CategoriaConductaContrariaController extends AbstractController
                 $categoriaConductaContrariaRepository->eliminar($categoriaConductaContraria);
                 $categoriaConductaContrariaRepository->guardar();
                 $this->addFlash('exito', 'Categoria de conducta contraria eliminada con éxito');
-                return $this->redirectToRoute('categoriaConductaContraria_listar');
+                return $this->redirectToRoute('categoria_conducta_contraria_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la categoria de conducta contraria!');
             }
         }
-        return $this->render('categoriaConductaContraria/eliminar.html.twig', [
+        return $this->render('categoria_conducta_contraria/eliminar.html.twig', [
             'categoriaConductaContraria' => $categoriaConductaContraria
         ]);
     }

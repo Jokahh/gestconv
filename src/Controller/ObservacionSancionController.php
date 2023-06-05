@@ -13,19 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ObservacionSancionController extends AbstractController
 {
     /**
-     * @Route("/observacionSancion", name="observacionSancion_listar")
+     * @Route("/observacion_sancion", name="observacion_sancion_listar")
      */
     public function listar(ObservacionSancionRepository $observacionSancionRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $observacionesSanciones = $observacionSancionRepository->findAll();
-        return $this->render('observacionSancion/listar.html.twig', [
+        return $this->render('observacion_sancion/listar.html.twig', [
             'observacionesSanciones' => $observacionesSanciones
         ]);
     }
 
     /**
-     * @Route ("/observacionSancion/nuevo", name="observacionSancion_nuevo")
+     * @Route ("/observacion_sancion/nuevo", name="observacion_sancion_nuevo")
      */
     public function nuevoObservacionSancion(Request $request, ObservacionSancionRepository $observacionSancionRepository): Response
     {
@@ -36,7 +36,7 @@ class ObservacionSancionController extends AbstractController
     }
 
     /**
-     * @Route("/observacionSancion/{id}", name="observacionSancion_modificar")
+     * @Route("/observacion_sancion/{id}", name="observacion_sancion_modificar")
      */
     public function modificarObservacionSancion(Request $request, ObservacionSancionRepository $observacionSancionRepository, ObservacionSancion $observacionSancion): Response
     {
@@ -48,12 +48,12 @@ class ObservacionSancionController extends AbstractController
             try {
                 $observacionSancionRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('observacionSancion_listar');
+                return $this->redirectToRoute('observacion_sancion_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render('observacionSancion/modificar.html.twig', [
+        return $this->render('observacion_sancion/modificar.html.twig', [
             'observacionSancion' => $observacionSancion,
             'form' => $form->createView()
         ]);
@@ -61,7 +61,7 @@ class ObservacionSancionController extends AbstractController
 
 
     /**
-     * @Route("/observacionSancion/eliminar/{id}", name="observacionSancion_eliminar")
+     * @Route("/observacion_sancion/eliminar/{id}", name="observacion_sancion_eliminar")
      */
     public function eliminarObservacionSancion(Request $request, ObservacionSancionRepository $observacionSancionRepository, ObservacionSancion $observacionSancion): Response
     {
@@ -71,12 +71,12 @@ class ObservacionSancionController extends AbstractController
                 $observacionSancionRepository->eliminar($observacionSancion);
                 $observacionSancionRepository->guardar();
                 $this->addFlash('exito', 'Observación de sanción eliminada con éxito');
-                return $this->redirectToRoute('observacionSancion_listar');
+                return $this->redirectToRoute('observacion_sancion_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la observación de sanción!');
             }
         }
-        return $this->render('observacionSancion/eliminar.html.twig', [
+        return $this->render('observacion_sancion/eliminar.html.twig', [
             'observacionSancion' => $observacionSancion
         ]);
     }

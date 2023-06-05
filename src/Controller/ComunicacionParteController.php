@@ -13,19 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ComunicacionParteController extends AbstractController
 {
     /**
-     * @Route("/comunicacionParte", name="comunicacionParte_listar")
+     * @Route("/comunicacion_parte", name="comunicacion_parte_listar")
      */
     public function listar(ComunicacionParteRepository $comunicacionParteRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $comunicacionesPartes = $comunicacionParteRepository->findAll();
-        return $this->render('comunicacionParte/listar.html.twig', [
+        return $this->render('comunicacion_parte/listar.html.twig', [
             'comunicacionesPartes' => $comunicacionesPartes
         ]);
     }
 
     /**
-     * @Route ("/comunicacionParte/nuevo", name="comunicacionParte_nuevo")
+     * @Route ("/comunicacion_parte/nuevo", name="comunicacion_parte_nuevo")
      */
     public function nuevoComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository): Response
     {
@@ -36,7 +36,7 @@ class ComunicacionParteController extends AbstractController
     }
 
     /**
-     * @Route("/comunicacionParte/{id}", name="comunicacionParte_modificar")
+     * @Route("/comunicacion_parte/{id}", name="comunicacion_parte_modificar")
      */
     public function modificarComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ComunicacionParte $comunicacionParte): Response
     {
@@ -48,12 +48,12 @@ class ComunicacionParteController extends AbstractController
             try {
                 $comunicacionParteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('comunicacionParte_listar');
+                return $this->redirectToRoute('comunicacion_parte_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        return $this->render('comunicacionParte/modificar.html.twig', [
+        return $this->render('comunicacion_parte/modificar.html.twig', [
             'comunicacionParte' => $comunicacionParte,
             'form' => $form->createView()
         ]);
@@ -61,7 +61,7 @@ class ComunicacionParteController extends AbstractController
 
 
     /**
-     * @Route("/comunicacionParte/eliminar/{id}", name="comunicacionParte_eliminar")
+     * @Route("/comunicacion_parte/eliminar/{id}", name="comunicacion_parte_eliminar")
      */
     public function eliminarComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ComunicacionParte $comunicacionParte): Response
     {
@@ -71,12 +71,12 @@ class ComunicacionParteController extends AbstractController
                 $comunicacionParteRepository->eliminar($comunicacionParte);
                 $comunicacionParteRepository->guardar();
                 $this->addFlash('exito', 'Comunicacion de parte eliminada con éxito');
-                return $this->redirectToRoute('comunicacionParte_listar');
+                return $this->redirectToRoute('comunicacion_parte_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la comunicación de parte!');
             }
         }
-        return $this->render('comunicacionParte/eliminar.html.twig', [
+        return $this->render('comunicacion_parte/eliminar.html.twig', [
             'comunicacionParte' => $comunicacionParte
         ]);
     }
