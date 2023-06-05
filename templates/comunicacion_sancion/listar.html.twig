@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las comunicaciones de sanción</h2>
+        </div>
+        <div>
+            <a href="{{ path('comunicacion_sancion_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva comunicación de sanción</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Anotación</th>
+                <th>Tipo</th>
+                <th>Fecha</th>
+                <th>Asignado a Sanción</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comunicacionSancion in comunicacionesSanciones %}
+                <tr>
+                    <th>{{ comunicacionSancion.id }}</th>
+                    <td>{{ comunicacionSancion.anotacion }}</td>
+                    <td>{{ comunicacionSancion.tipo }}</td>
+                    <td>{{ comunicacionSancion.fecha|date("Y-m-d") }}</td>
+                    <td>{{ comunicacionSancion.sancion }}</td>
+                    <td>
+                        <a href="{{ path('comunicacion_sancion_modificar', {'id': comunicacionSancion.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay comunicaciones de sanción</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
