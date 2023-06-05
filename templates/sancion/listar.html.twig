@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las sanciones</h2>
+        </div>
+        <div>
+            <a href="{{ path('sancion_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva sanción</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Anotación</th>
+                <th>Fecha Sanción</th>
+                <th>Fecha Registro Salida</th>
+                <th>Fecha Comunicación</th>
+                <th>Fecha Inicio Sanción</th>
+                <th>Fecha Fin Sanción</th>
+                <th>Actitud Familia</th>
+                <th>Reclamación?</th>
+                <th>Registrado en Séneca?</th>
+                <th>Medidas Efectivas?</th>
+                <th>Motivos de no aplicación</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sancion in sanciones %}
+                <tr>
+                    <th>{{ sancion.id }}</th>
+                    <td>{{ sancion.anotacion }}</td>
+                    <td>{{ sancion.fechaSancion|date("Y-m-d") }}</td>
+                    <td>{{ sancion.fechaRegistroSalida|date("Y-m-d") }}</td>
+                    <td>{{ sancion.fechaComunicado|date("Y-m-d") }}</td>
+                    <td>{{ sancion.fechaInicioSancion|date("Y-m-d") }}</td>
+                    <td>{{ sancion.fechaFinSancion|date("Y-m-d") }}</td>
+                    <td>{{ sancion.actitudFamilia }}</td>
+                    <td>{{ sancion.reclamacion ? 'Si' : 'No' }}</td>
+                    <td>{{ sancion.registradoEnSeneca ? 'Si' : 'No' }}</td>
+                    <td>{{ sancion.medidasEfectivas ? 'Si' : 'No' }}</td>
+                    <td>{{ sancion.motivosNoAplicacion }}</td>
+                    <td>
+                        <a href="{{ path('sancion_modificar', {'id': sancion.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay sanciones</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

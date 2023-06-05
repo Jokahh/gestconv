@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Eliminar la sanción</h1>
+
+    <div class="alert alert-danger">
+        La sanción "{{ sancion.id }}" será eliminada de la base de datos.
+        La operación no se puede deshacer.
+    </div>
+    <form method="post">
+        <a href="{{ path('sancion_listar') }}" class="btn btn-info">Volver al listado</a>
+        <button type="submit" name="confirmar" class="btn btn-danger">Confirmar borrado</button>
+    </form>
+{% endblock %}
