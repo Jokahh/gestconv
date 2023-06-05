@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    {% if curso_academico.id %}
+        <h1>Modificar curso académico: {{ curso_academico.id }}</h1>
+    {% else %}
+        <h1>Crear nuevo curso académico</h1>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group row">
+        {% if curso_academico.id %}
+                <div class="col-sm-2">
+                    <a href="{{ path('curso_academico_eliminar', {'id': curso_academico.id}) }}">
+                        <button type="button" class="btn btn-danger">Eliminar</button>
+                    </a>
+                </div>
+        {% else %}
+        {% endif %}
+        <div class="col-sm-10">
+            <a href="{{ path('curso_academico_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver</a>
+            <button type="submit" id="modificar_curso_academico_enviar" name="guardar" class="btn-primary btn">
+                <i class="fa fa-check"></i> Guardar
+            </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

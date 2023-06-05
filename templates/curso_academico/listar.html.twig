@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todos los cursos académicos</h2>
+        </div>
+        <div>
+            <a href="{{ path('curso_academico_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nuevo curso académico</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Estado</th>
+                <th>Semestre</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for curso_academico in cursos_academicos %}
+                <tr>
+                    <th>{{ curso_academico.id }}</th>
+                    <td>{{ curso_academico.descripcion }}</td>
+                    <td>{{ curso_academico.fechaInicio|date("Y-m-d") }}</td>
+                    <td>{{ curso_academico.fechaFin|date("Y-m-d") }}</td>
+                    <td>{{ curso_academico.estado }}</td>
+                    <td>{{ curso_academico.semestre }}</td>
+                    <td>
+                        <a href="{{ path('curso_academico_modificar', {'id': curso_academico.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay cursos académicos</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
