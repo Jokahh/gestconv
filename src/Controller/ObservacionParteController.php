@@ -25,7 +25,7 @@ class ObservacionParteController extends AbstractController
     }
 
     /**
-     * @Route ("/observacion_parte/nuevo", name="oobservacion_parte_nuevo")
+     * @Route ("/observacion_parte/nuevo", name="observacion_parte_nuevo")
      */
     public function nuevoObservacionParte(Request $request, ObservacionParteRepository $observacionParteRepository): Response
     {
