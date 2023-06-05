@@ -7,7 +7,7 @@ use App\Factory\CategoriaConductaContrariaFactory;
 use App\Factory\CategoriaMedidaFactory;
 use App\Factory\ComunicacionParteFactory;
 use App\Factory\ComunicacionSancionFactory;
-use App\Factory\ConductasContrariasFactory;
+use App\Factory\ConductaContrariaFactory;
 use App\Factory\CursoAcademicoFactory;
 use App\Factory\DocenteFactory;
 use App\Factory\EstudianteFactory;
@@ -103,7 +103,7 @@ class AppFixtures extends Fixture
             ];
         });
 
-        ConductasContrariasFactory::createMany(25, function () {
+        ConductaContrariaFactory::createMany(25, function () {
             return [
                 'categoria' => CategoriaConductaContrariaFactory::random(),
                 'parte' => ParteFactory::random()

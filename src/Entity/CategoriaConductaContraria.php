@@ -41,7 +41,7 @@ class CategoriaConductaContraria
     private $cursoAcademico;
 
     /**
-     * @ORM\OneToMany(targetEntity=ConductasContrarias::class, mappedBy="categoria")
+     * @ORM\OneToMany(targetEntity=ConductaContraria::class, mappedBy="categoria")
      */
     private $conductasContrarias;
 
@@ -104,24 +104,24 @@ class CategoriaConductaContraria
     }
 
     /**
-     * @return Collection<int, ConductasContrarias>
+     * @return Collection<int, ConductaContraria>
      */
     public function getConductasContrarias(): Collection
     {
         return $this->conductasContrarias;
     }
 
-    public function addConductasContraria(ConductasContrarias $conductasContraria): self
+    public function addConductasContraria(ConductaContraria $conductaContraria): self
     {
-        if (!$this->conductasContrarias->contains($conductasContraria)) {
-            $this->conductasContrarias[] = $conductasContraria;
-            $conductasContraria->setCategoria($this);
+        if (!$this->conductasContrarias->contains($conductaContraria)) {
+            $this->conductasContrarias[] = $conductaContraria;
+            $conductaContraria->setCategoria($this);
         }
 
         return $this;
     }
 
-    public function removeConductasContraria(ConductasContrarias $conductasContraria): self
+    public function removeConductasContraria(ConductaContraria $conductasContraria): self
     {
         if ($this->conductasContrarias->removeElement($conductasContraria)) {
             // set the owning side to null (unless already changed)

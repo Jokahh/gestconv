@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ConductasContrariasRepository;
+use App\Repository\ConductaContrariaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ConductasContrariasRepository::class)
+ * @ORM\Entity(repositoryClass=ConductaContrariaRepository::class)
  */
-class ConductasContrarias
+class ConductaContraria
 {
     /**
      * @ORM\Id

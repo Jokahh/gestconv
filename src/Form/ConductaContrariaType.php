@@ -3,14 +3,14 @@
 namespace App\Form;
 
 use App\Entity\CategoriaConductaContraria;
-use App\Entity\ConductasContrarias;
+use App\Entity\ConductaContraria;
 use App\Entity\Parte;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ConductasContrariasType extends AbstractType
+class ConductaContrariaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -31,7 +31,7 @@ class ConductasContrariasType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ConductasContrarias::class,
+            'data_class' => ConductaContraria::class,
         ]);
     }
 }

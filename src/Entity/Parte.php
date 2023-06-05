@@ -77,7 +77,7 @@ class Parte
     private $tramo;
 
     /**
-     * @ORM\OneToMany(targetEntity=ConductasContrarias::class, mappedBy="parte")
+     * @ORM\OneToMany(targetEntity=ConductaContraria::class, mappedBy="parte")
      */
     private $conductasContrarias;
 
@@ -254,29 +254,29 @@ class Parte
     }
 
     /**
-     * @return Collection<int, ConductasContrarias>
+     * @return Collection<int, ConductaContraria>
      */
     public function getConductasContrarias(): Collection
     {
         return $this->conductasContrarias;
     }
 
-    public function addConductasContraria(ConductasContrarias $conductasContraria): self
+    public function addConductaContraria(ConductaContraria $conductaContraria): self
     {
-        if (!$this->conductasContrarias->contains($conductasContraria)) {
-            $this->conductasContrarias[] = $conductasContraria;
-            $conductasContraria->setParte($this);
+        if (!$this->conductasContrarias->contains($conductaContraria)) {
+            $this->conductasContrarias[] = $conductaContraria;
+            $conductaContraria->setParte($this);
         }
 
         return $this;
     }
 
-    public function removeConductasContraria(ConductasContrarias $conductasContraria): self
+    public function removeConductaContraria(ConductaContraria $conductaContraria): self
     {
-        if ($this->conductasContrarias->removeElement($conductasContraria)) {
+        if ($this->conductasContrarias->removeElement($conductaContraria)) {
             // set the owning side to null (unless already changed)
-            if ($conductasContraria->getParte() === $this) {
-                $conductasContraria->setParte(null);
+            if ($conductaContraria->getParte() === $this) {
+                $conductaContraria->setParte(null);
             }
         }
 
