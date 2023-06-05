@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Eliminar la categoría de conducta contraria</h1>
+
+    <div class="alert alert-danger">
+        La categoría de conducta contraria "{{ categoriaConductaContraria.id }}" será eliminada de la base de datos.
+        La operación no se puede deshacer.
+    </div>
+    <form method="post">
+        <a href="{{ path('categoria_conducta_contraria_listar') }}" class="btn btn-info">Volver al listado</a>
+        <button type="submit" name="confirmar" class="btn btn-danger">Confirmar borrado</button>
+    </form>
+{% endblock %}

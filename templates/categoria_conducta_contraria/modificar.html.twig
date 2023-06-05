@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    {% if categoriaConductaContraria.id %}
+        <h1>Modificar conducta contraria: {{ categoriaConductaContraria.id }}</h1>
+    {% else %}
+        <h1>Crear nueva conducta contraria</h1>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group row">
+        {% if categoriaConductaContraria.id %}
+            <div class="col-sm-2">
+                <a href="{{ path('categoria_conducta_contraria_eliminar', {'id': categoriaConductaContraria.id}) }}">
+                    <button type="button" class="btn btn-danger">Eliminar</button>
+                </a>
+            </div>
+        {% else %}
+        {% endif %}
+        <div class="col-sm-10">
+            <a href="{{ path('categoria_conducta_contraria_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>
+                Volver</a>
+            <button type="submit" id="modificar_categoria_conducta_contraria_enviar" name="guardar" class="btn-primary btn">
+                <i class="fa fa-check"></i> Guardar
+            </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

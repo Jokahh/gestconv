@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las categorías de conductas contrarias</h2>
+        </div>
+        <div>
+            <a href="{{ path('categoria_conducta_contraria_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva categoría de conducta contraria</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Orden</th>
+                <th>Descripción</th>
+                <th>Prioritaria</th>
+                <th>Curso Académico</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for categoriaConductaContraria in categoriasConductasContrarias %}
+                <tr>
+                    <th>{{ categoriaConductaContraria.id }}</th>
+                    <td>{{ categoriaConductaContraria.orden }}</td>
+                    <td>{{ categoriaConductaContraria.descripcion }}</td>
+                    <td>{{ categoriaConductaContraria.prioritaria ? 'Si' : 'No' }}</td>
+                    <td>{{ categoriaConductaContraria.cursoAcademico }}</td>
+                    <td>
+                        <a href="{{ path('categoria_conducta_contraria_modificar', {'id': categoriaConductaContraria.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay categorías de conductas contrarias</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
