@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las medidas</h2>
+        </div>
+        <div>
+            <a href="{{ path('medida_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva medida</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoria</th>
+                <th>Dias</th>
+                <th>Orden</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for medida in medidas %}
+                <tr>
+                    <th>{{ medida.id }}</th>
+                    <td>{{ medida.nombre }}</td>
+                    <td>{{ medida.categoria }}</td>
+                    <td>{{ medida.dias }}</td>
+                    <td>{{ medida.orden }}</td>
+                    <td>
+                        <a href="{{ path('medida_modificar', {'id': medida.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay medidas</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
