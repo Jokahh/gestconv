@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las observaciones de parte</h2>
+        </div>
+        <div>
+            <a href="{{ path('observacion_parte_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva observación de parte</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Anotación</th>
+                <th>Fecha</th>
+                <th>Asignado al Parte</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for observacionParte in observacionesPartes %}
+                <tr>
+                    <th>{{ observacionParte.id }}</th>
+                    <td>{{ observacionParte.anotacion }}</td>
+                    <td>{{ observacionParte.fecha|date("Y-m-d") }}</td>
+                    <td>{{ observacionParte.parte }}</td>
+                    <td>
+                        <a href="{{ path('observacion_parte_modificar', {'id': observacionParte.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay observaciones de parte</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
