@@ -1,0 +1,62 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todos los estudiantes</h2>
+        </div>
+        <div>
+            <a href="{{ path('estudiante_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nuevo estudiante</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>NIE</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Telefono 1</th>
+                <th>Telefono 2</th>
+                <th>Tutores</th>
+                <th>Fecha Nacimiento</th>
+                <th>Dirección</th>
+                <th>Observaciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for estudiante in estudiantes %}
+                <tr>
+                    <th>{{ estudiante.id }}</th>
+                    <td>{{ estudiante.nie }}</td>
+                    <td>{{ estudiante.nombre }}</td>
+                    <td>{{ estudiante.apellido1 }} {{ estudiante.apellido2 }}</td>
+                    <td>{{ estudiante.telefono1 }} - {{ estudiante.notaTelefono1 }}</td>
+                    <td>{{ estudiante.telefono2 }} - {{ estudiante.notaTelefono2 }}</td>
+                    <td>{{ estudiante.tutor1 }} --- {{ estudiante.tutor2 }}</td>
+                    <td>{{ estudiante.fechaNacimiento|date("Y-m-d") }}</td>
+                    <td>{{ estudiante.direccion }}</td>
+                    <td>{{ estudiante.observaciones }}</td>
+                    <td>
+                        <a href="{{ path('estudiante_modificar', {'id': estudiante.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay estudiantes</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
