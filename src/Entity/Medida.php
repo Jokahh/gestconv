@@ -131,6 +131,6 @@ class Medida
     }
     public function __toString()
     {
-        return $this->getNombre();
+        return ($this->getNombre() == null) ? $this->getId() : $this->getNombre();
     }
 }

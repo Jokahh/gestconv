@@ -97,8 +97,9 @@ class CategoriaMedida
 
         return $this;
     }
+
     public function __toString()
     {
-        return $this->getDescripcion();
+        return ($this->getDescripcion() == null) ? $this->getId() : $this->getDescripcion();
     }
 }

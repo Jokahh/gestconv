@@ -140,8 +140,9 @@ class Grupo
 
         return $this;
     }
+
     public function __toString()
     {
-        return $this->getNombre();
+        return ($this->getNombre() == null) ? $this->getDescripcion() : $this->getNombre();
     }
 }
