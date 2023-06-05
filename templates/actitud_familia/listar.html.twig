@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todas las actitudes de familia</h2>
+        </div>
+        <div>
+            <a href="{{ path('actitud_familia_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nueva actitud de familia</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Orden</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Curso Académico</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for actitud_familia in actitudes_familia %}
+                <tr>
+                    <th>{{ actitud_familia.id }}</th>
+                    <td>{{ actitud_familia.orden }}</td>
+                    <td>{{ actitud_familia.descripcion }}</td>
+                    <td>{{ actitud_familia.fecha|date("Y-m-d") }}</td>
+                    <td>{{ actitud_familia.cursoAcademico.descripcion }}</td>
+                    <td>
+                        <a href="{{ path('actitud_familia_modificar', {'id': actitud_familia.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay actitudes de familia</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
