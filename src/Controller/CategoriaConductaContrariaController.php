@@ -61,7 +61,7 @@ class CategoriaConductaContrariaController extends AbstractController
 
 
     /**
-     * @Route("/categoriaConductaContraria/eliminar/{id}", name="categoriaConductaContraria_eliminar")
+     * @Route("/categoria_conducta_contraria/eliminar/{id}", name="categoria_conducta_contraria_eliminar")
      */
     public function eliminarCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CategoriaConductaContraria $categoriaConductaContraria): Response
     {
