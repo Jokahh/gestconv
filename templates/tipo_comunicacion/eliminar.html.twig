@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Eliminar el tipo de comunicación</h1>
+
+    <div class="alert alert-danger">
+        El tipo de comunicación "{{ tipoComunicacion.id }}" será eliminado de la base de datos.
+        La operación no se puede deshacer.
+    </div>
+    <form method="post">
+        <a href="{{ path('tipo_comunicacion_listar') }}" class="btn btn-info">Volver al listado</a>
+        <button type="submit" name="confirmar" class="btn btn-danger">Confirmar borrado</button>
+    </form>
+{% endblock %}

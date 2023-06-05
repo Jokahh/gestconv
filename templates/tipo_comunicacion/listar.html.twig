@@ -1,0 +1,48 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h2>Listado de todos los tipos de comunicaciones</h2>
+        </div>
+        <div>
+            <a href="{{ path('tipo_comunicacion_nuevo') }}" class="btn btn-success">
+                <i class="fa fa-plus"></i> Nuevo tipo de comunicación</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-bordered table-hover table-striped text-center">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Curso Académico</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tipoComunicacion in tiposComunicaciones %}
+                <tr>
+                    <th>{{ tipoComunicacion.id }}</th>
+                    <td>{{ tipoComunicacion.descripcion }}</td>
+                    <td>{{ tipoComunicacion.cursoAcademico }}</td>
+                    <td>
+                        <a href="{{ path('tipo_comunicacion_modificar', {'id': tipoComunicacion.id}) }}">
+                            <button type="button" class="btn btn-info">Editar</button>
+                        </a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No hay tipos de comunicaciones</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
