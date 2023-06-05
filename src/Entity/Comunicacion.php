@@ -32,7 +32,7 @@ class Comunicacion
      */
     private $tipo;
 
-    protected function getId(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
