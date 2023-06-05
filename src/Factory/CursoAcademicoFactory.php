@@ -46,12 +46,12 @@ final class CursoAcademicoFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
-        $semestres = ['1º Semestre','2º Semestre','3º Semestre'];
+        $semestres = ['1º Semestre', '2º Semestre', '3º Semestre'];
         $fechaInicio = self::faker()->dateTime();
         return [
-            'descripcion' => self::faker()->realText(15),
+            'descripcion' => self::faker()->numberBetween(2000, 2050),
             'fechaInicio' => $fechaInicio,
-            'fechaFin' => self::faker()->dateTimeInInterval($fechaInicio,'+1 years'),
+            'fechaFin' => self::faker()->dateTimeInInterval($fechaInicio, '+1 years'),
 
             //true = activo, false = inactivo
             'estado' => self::faker()->boolean(75),
@@ -64,9 +64,8 @@ final class CursoAcademicoFactory extends ModelFactory
      */
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(CursoAcademico $cursoAcademico): void {})
-        ;
+        return $this// ->afterInstantiate(function(CursoAcademico $cursoAcademico): void {})
+            ;
     }
 
     protected static function getClass(): string
