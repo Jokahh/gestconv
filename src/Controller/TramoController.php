@@ -36,7 +36,7 @@ class TramoController extends AbstractController
     }
 
     /**
-     * @Route("/tramo/{id}", name="tramo_modificar")
+     * @Route("/tramo/{id}", name="tramo_modificar", requirements={"id":"\d+"})
      */
     public function modificarTramo(Request $request, TramoRepository $tramoRepository, Tramo $tramo): Response
     {
@@ -61,7 +61,7 @@ class TramoController extends AbstractController
 
 
     /**
-     * @Route("/tramo/eliminar/{id}", name="tramo_eliminar")
+     * @Route("/tramo/eliminar/{id}", name="tramo_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarTramo(Request $request, TramoRepository $tramoRepository, Tramo $tramo): Response
     {

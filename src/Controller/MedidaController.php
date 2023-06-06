@@ -36,7 +36,7 @@ class MedidaController extends AbstractController
     }
 
     /**
-     * @Route("/medida/{id}", name="medida_modificar")
+     * @Route("/medida/{id}", name="medida_modificar", requirements={"id":"\d+"})
      */
     public function modificarMedida(Request $request, MedidaRepository $medidaRepository, Medida $medida): Response
     {
@@ -61,7 +61,7 @@ class MedidaController extends AbstractController
 
 
     /**
-     * @Route("/medida/eliminar/{id}", name="medida_eliminar")
+     * @Route("/medida/eliminar/{id}", name="medida_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarMedida(Request $request, MedidaRepository $medidaRepository, Medida $medida): Response
     {

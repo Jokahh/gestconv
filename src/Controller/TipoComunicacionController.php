@@ -36,7 +36,7 @@ class TipoComunicacionController extends AbstractController
     }
 
     /**
-     * @Route("/tipo_comunicacion/{id}", name="tipo_comunicacion_modificar")
+     * @Route("/tipo_comunicacion/{id}", name="tipo_comunicacion_modificar", requirements={"id":"\d+"})
      */
     public function modificarTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository, TipoComunicacion $tipoComunicacion): Response
     {
@@ -61,7 +61,7 @@ class TipoComunicacionController extends AbstractController
 
 
     /**
-     * @Route("/tipo_comunicacion/eliminar/{id}", name="tipo_comunicacion_eliminar")
+     * @Route("/tipo_comunicacion/eliminar/{id}", name="tipo_comunicacion_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository, TipoComunicacion $tipoComunicacion): Response
     {

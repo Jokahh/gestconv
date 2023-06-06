@@ -31,12 +31,12 @@ class ActitudFamiliaController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $actitudFamilia = $actitudFamiliaRepository->nuevo();
-        
+
         return $this->modificarActitudFamilia($request, $actitudFamiliaRepository, $actitudFamilia);
     }
 
     /**
-     * @Route("/actitud_familia/{id}", name="actitud_familia_modificar")
+     * @Route("/actitud_familia/{id}", name="actitud_familia_modificar", requirements={"id":"\d+"})
      */
     public function modificarActitudFamilia(Request $request, ActitudFamiliaRepository $actitudFamiliaRepository, ActitudFamilia $actitudFamilia): Response
     {
@@ -61,7 +61,7 @@ class ActitudFamiliaController extends AbstractController
 
 
     /**
-     * @Route("/actitud_familia/eliminar/{id}", name="actitud_familia_eliminar")
+     * @Route("/actitud_familia/eliminar/{id}", name="actitud_familia_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarActitudFamilia(Request $request, ActitudFamiliaRepository $actitudFamiliaRepository, ActitudFamilia $actitudFamilia): Response
     {

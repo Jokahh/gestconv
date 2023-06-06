@@ -36,7 +36,7 @@ class DocenteController extends AbstractController
     }
 
     /**
-     * @Route("/docente/{id}", name="docente_modificar")
+     * @Route("/docente/{id}", name="docente_modificar", requirements={"id":"\d+"})
      */
     public function modificarDocente(Request $request, DocenteRepository $docenteRepository, Docente $docente): Response
     {
@@ -61,7 +61,7 @@ class DocenteController extends AbstractController
 
 
     /**
-     * @Route("/docente/eliminar/{id}", name="docente_eliminar")
+     * @Route("/docente/eliminar/{id}", name="docente_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarDocente(Request $request, DocenteRepository $docenteRepository, Docente $docente): Response
     {

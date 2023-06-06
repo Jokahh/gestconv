@@ -36,7 +36,7 @@ class ComunicacionSancionController extends AbstractController
     }
 
     /**
-     * @Route("/comunicacion_sancion/{id}", name="comunicacion_sancion_modificar")
+     * @Route("/comunicacion_sancion/{id}", name="comunicacion_sancion_modificar", requirements={"id":"\d+"})
      */
     public function modificarComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, ComunicacionSancion $comunicacionSancion): Response
     {
@@ -61,7 +61,7 @@ class ComunicacionSancionController extends AbstractController
 
 
     /**
-     * @Route("/comunicacion_sancion/eliminar/{id}", name="comunicacion_sancion_eliminar")
+     * @Route("/comunicacion_sancion/eliminar/{id}", name="comunicacion_sancion_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, ComunicacionSancion $comunicacionSancion): Response
     {

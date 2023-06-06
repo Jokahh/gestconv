@@ -36,7 +36,7 @@ class CategoriaMedidaController extends AbstractController
     }
 
     /**
-     * @Route("/categoria_medida/{id}", name="categoria_medida_modificar")
+     * @Route("/categoria_medida/{id}", name="categoria_medida_modificar", requirements={"id":"\d+"})
      */
     public function modificarCategoriaMedida(Request $request, CategoriaMedidaRepository $categoriaMedidaRepository, CategoriaMedida $categoriaMedida): Response
     {
@@ -61,7 +61,7 @@ class CategoriaMedidaController extends AbstractController
 
 
     /**
-     * @Route("/categoria_medida/eliminar/{id}", name="categoria_medida_eliminar")
+     * @Route("/categoria_medida/eliminar/{id}", name="categoria_medida_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarCategoriaMedida(Request $request, CategoriaMedidaRepository $categoriaMedidaRepository, CategoriaMedida $categoriaMedida): Response
     {

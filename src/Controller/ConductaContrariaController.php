@@ -36,7 +36,7 @@ class ConductaContrariaController extends AbstractController
     }
 
     /**
-     * @Route("/conducta_contraria/{id}", name="conducta_contraria_modificar")
+     * @Route("/conducta_contraria/{id}", name="conducta_contraria_modificar", requirements={"id":"\d+"})
      */
     public function modificarConductaContraria(Request $request, ConductaContrariaRepository $conductaContrariaRepository, ConductaContraria $conductaContraria): Response
     {
@@ -61,7 +61,7 @@ class ConductaContrariaController extends AbstractController
 
 
     /**
-     * @Route("/conducta_contraria/eliminar/{id}", name="conducta_contraria_eliminar")
+     * @Route("/conducta_contraria/eliminar/{id}", name="conducta_contraria_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarConductaContraria(Request $request, ConductaContrariaRepository $conductaContrariaRepository, ConductaContraria $conductaContraria): Response
     {

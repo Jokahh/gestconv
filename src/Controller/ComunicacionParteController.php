@@ -36,7 +36,7 @@ class ComunicacionParteController extends AbstractController
     }
 
     /**
-     * @Route("/comunicacion_parte/{id}", name="comunicacion_parte_modificar")
+     * @Route("/comunicacion_parte/{id}", name="comunicacion_parte_modificar", requirements={"id":"\d+"})
      */
     public function modificarComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ComunicacionParte $comunicacionParte): Response
     {
@@ -61,7 +61,7 @@ class ComunicacionParteController extends AbstractController
 
 
     /**
-     * @Route("/comunicacion_parte/eliminar/{id}", name="comunicacion_parte_eliminar")
+     * @Route("/comunicacion_parte/eliminar/{id}", name="comunicacion_parte_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ComunicacionParte $comunicacionParte): Response
     {

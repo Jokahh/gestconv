@@ -36,7 +36,7 @@ class ObservacionParteController extends AbstractController
     }
 
     /**
-     * @Route("/observacion_parte/{id}", name="observacion_parte_modificar")
+     * @Route("/observacion_parte/{id}", name="observacion_parte_modificar", requirements={"id":"\d+"})
      */
     public function modificarObservacionParte(Request $request, ObservacionParteRepository $observacionParteRepository, ObservacionParte $observacionParte): Response
     {
@@ -61,7 +61,7 @@ class ObservacionParteController extends AbstractController
 
 
     /**
-     * @Route("/observacion_parte/eliminar/{id}", name="observacion_parte_eliminar")
+     * @Route("/observacion_parte/eliminar/{id}", name="observacion_parte_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarObservacionParte(Request $request, ObservacionParteRepository $observacionParteRepository, ObservacionParte $observacionParte): Response
     {

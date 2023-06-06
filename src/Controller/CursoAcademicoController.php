@@ -36,7 +36,7 @@ class CursoAcademicoController extends AbstractController
     }
 
     /**
-     * @Route("/curso_academico/{id}", name="curso_academico_modificar")
+     * @Route("/curso_academico/{id}", name="curso_academico_modificar", requirements={"id":"\d+"})
      */
     public function modificarCursoAcademico(Request $request, CursoAcademicoRepository $cursoAcademicoRepository, CursoAcademico $cursoAcademico): Response
     {
@@ -61,7 +61,7 @@ class CursoAcademicoController extends AbstractController
 
 
     /**
-     * @Route("/curso_academico/eliminar/{id}", name="curso_academico_eliminar")
+     * @Route("/curso_academico/eliminar/{id}", name="curso_academico_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarCursoAcademico(Request $request, CursoAcademicoRepository $cursoAcademicoRepository, CursoAcademico $cursoAcademico): Response
     {

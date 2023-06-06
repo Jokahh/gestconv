@@ -36,7 +36,7 @@ class ObservacionSancionController extends AbstractController
     }
 
     /**
-     * @Route("/observacion_sancion/{id}", name="observacion_sancion_modificar")
+     * @Route("/observacion_sancion/{id}", name="observacion_sancion_modificar", requirements={"id":"\d+"})
      */
     public function modificarObservacionSancion(Request $request, ObservacionSancionRepository $observacionSancionRepository, ObservacionSancion $observacionSancion): Response
     {
@@ -61,7 +61,7 @@ class ObservacionSancionController extends AbstractController
 
 
     /**
-     * @Route("/observacion_sancion/eliminar/{id}", name="observacion_sancion_eliminar")
+     * @Route("/observacion_sancion/eliminar/{id}", name="observacion_sancion_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarObservacionSancion(Request $request, ObservacionSancionRepository $observacionSancionRepository, ObservacionSancion $observacionSancion): Response
     {

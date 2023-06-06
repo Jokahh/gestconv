@@ -36,7 +36,7 @@ class GrupoController extends AbstractController
     }
 
     /**
-     * @Route("/grupo/{id}", name="grupo_modificar")
+     * @Route("/grupo/{id}", name="grupo_modificar", requirements={"id":"\d+"})
      */
     public function modificarGrupo(Request $request, GrupoRepository $grupoRepository, Grupo $grupo): Response
     {
@@ -61,7 +61,7 @@ class GrupoController extends AbstractController
 
 
     /**
-     * @Route("/grupo/eliminar/{id}", name="grupo_eliminar")
+     * @Route("/grupo/eliminar/{id}", name="grupo_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarGrupo(Request $request, GrupoRepository $grupoRepository, Grupo $grupo): Response
     {

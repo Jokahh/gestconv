@@ -36,7 +36,7 @@ class CategoriaConductaContrariaController extends AbstractController
     }
 
     /**
-     * @Route("/categoria_conducta_contraria/{id}", name="categoria_conducta_contraria_modificar")
+     * @Route("/categoria_conducta_contraria/{id}", name="categoria_conducta_contraria_modificar", requirements={"id":"\d+"})
      */
     public function modificarCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CategoriaConductaContraria $categoriaConductaContraria): Response
     {
@@ -61,7 +61,7 @@ class CategoriaConductaContrariaController extends AbstractController
 
 
     /**
-     * @Route("/categoria_conducta_contraria/eliminar/{id}", name="categoria_conducta_contraria_eliminar")
+     * @Route("/categoria_conducta_contraria/eliminar/{id}", name="categoria_conducta_contraria_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CategoriaConductaContraria $categoriaConductaContraria): Response
     {

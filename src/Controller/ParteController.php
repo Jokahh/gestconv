@@ -36,7 +36,7 @@ class ParteController extends AbstractController
     }
 
     /**
-     * @Route("/parte/{id}", name="parte_modificar")
+     * @Route("/parte/{id}", name="parte_modificar", requirements={"id":"\d+"})
      */
     public function modificarParte(Request $request, ParteRepository $parteRepository, Parte $parte): Response
     {
@@ -61,7 +61,7 @@ class ParteController extends AbstractController
 
 
     /**
-     * @Route("/parte/eliminar/{id}", name="parte_eliminar")
+     * @Route("/parte/eliminar/{id}", name="parte_eliminar", requirements={"id":"\d+"})
      */
     public function eliminarParte(Request $request, ParteRepository $parteRepository, Parte $parte): Response
     {
