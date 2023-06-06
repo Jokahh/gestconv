@@ -21,6 +21,16 @@ class TramoRepository extends ServiceEntityRepository
         parent::__construct($registry, Tramo::class);
     }
 
+    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    {
+        return $this->createQueryBuilder('tramo')
+            ->where('tramo.cursoAcademico = :curso_academico')
+            ->setParameter('curso_academico', $cursoAcademicoId)
+            ->orderBy('tramo.orden')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): Tramo
     {
         $tramo = new Tramo();

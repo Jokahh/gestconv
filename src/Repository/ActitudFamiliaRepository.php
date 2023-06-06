@@ -20,6 +20,15 @@ class ActitudFamiliaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ActitudFamilia::class);
     }
+    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    {
+        return $this->createQueryBuilder('actitud_familia')
+            ->where('actitud_familia.cursoAcademico = :curso_academico')
+            ->setParameter('curso_academico', $cursoAcademicoId)
+            ->orderBy('actitud_familia.orden')
+            ->getQuery()
+            ->getResult();
+    }
 
     public function nuevo(): ActitudFamilia
     {

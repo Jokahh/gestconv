@@ -21,6 +21,16 @@ class GrupoRepository extends ServiceEntityRepository
         parent::__construct($registry, Grupo::class);
     }
 
+
+    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    {
+        return $this->createQueryBuilder('grupo')
+            ->where('grupo.cursoAcademico = :curso_academico')
+            ->setParameter('curso_academico', $cursoAcademicoId)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): Grupo
     {
         $grupo = new Grupo();

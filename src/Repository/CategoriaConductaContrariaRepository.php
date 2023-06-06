@@ -21,6 +21,16 @@ class CategoriaConductaContrariaRepository extends ServiceEntityRepository
         parent::__construct($registry, CategoriaConductaContraria::class);
     }
 
+    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    {
+        return $this->createQueryBuilder('categoria_conducta_contraria')
+            ->where('categoria_conducta_contraria.cursoAcademico = :curso_academico')
+            ->setParameter('curso_academico', $cursoAcademicoId)
+            ->orderBy('categoria_conducta_contraria.orden')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): CategoriaConductaContraria
     {
         $categoriaConductaContraria = new CategoriaConductaContraria();

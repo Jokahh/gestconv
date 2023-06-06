@@ -21,6 +21,14 @@ class TipoComunicacionRepository extends ServiceEntityRepository
         parent::__construct($registry, TipoComunicacion::class);
     }
 
+    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    {
+        return $this->createQueryBuilder('tipo_comunicacion')
+            ->where('tipo_comunicacion.cursoAcademico = :curso_academico')
+            ->setParameter('curso_academico', $cursoAcademicoId)
+            ->getQuery()
+            ->getResult();
+    }
     public function nuevo(): TipoComunicacion
     {
         $tipoComunicacion = new TipoComunicacion();
