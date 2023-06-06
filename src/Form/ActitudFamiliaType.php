@@ -6,41 +6,48 @@ use App\Entity\ActitudFamilia;
 use App\Entity\CursoAcademico;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ActitudFamiliaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('orden', TextType::class, [
+            ->add('orden', ChoiceType::class, [
                 'label' => 'Orden',
-                'constraints' => [
-                    new NotNull()
-                ],
-                'help' => 'ASC / DESC'
+                'choices' => [
+                    'ASC' => 'ASC',
+                    'DESC' => 'DESC'
+                ]
             ])
             ->add('descripcion', TextareaType::class, [
                 'label' => 'Descripción',
-                'help' => 'Ingrese una descripción de la tarea'
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => 'El tamaño máximo de este campo es de 255 caracteres'
+                    ])
+                ]
             ])
             ->add('fecha', DateTimeType::class, [
                 'label' => 'Fecha',
-                'required' => true,
-                'help' => 'Ingrese la fecha (YYYY-MM-DD)',
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd'
+                'date_label' => 'Fecha',
+                'date_widget' => 'single_text',
+                'time_label' => 'Hora',
+                'time_widget' => 'single_text'
             ])
             ->add('cursoAcademico', EntityType::class, [
-                'label' => 'Curso académico a la que pertenece',
+                'label' => 'Curso académico',
                 'class' => CursoAcademico::class,
                 'required' => true,
-                'help' => 'Seleccione el curso académico'
+                'help' => 'Seleccione el curso académico en el que se va a asignar',
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un curso académico', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ]);
     }
 

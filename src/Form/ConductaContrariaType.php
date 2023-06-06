@@ -7,6 +7,7 @@ use App\Entity\ConductaContraria;
 use App\Entity\Parte;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,16 +16,25 @@ class ConductaContrariaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('orden')
+            ->add('orden', ChoiceType::class, [
+                'label' => 'Orden',
+                'choices' => [
+                    'ASC' => 'ASC',
+                    'DESC' => 'DESC'
+                ]
+            ])
             ->add('parte', EntityType::class, [
                 'label' => 'Parte',
                 'class' => Parte::class,
-                'required' => true
+                'required' => true,
+                'help' => 'Parte a la que pertenece',
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un parte', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ])
             ->add('categoria', EntityType::class, [
                 'label' => 'Categoría',
                 'class' => CategoriaConductaContraria::class,
-                'required' => true
+                'required' => true,
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona una categoría', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ]);
     }
 

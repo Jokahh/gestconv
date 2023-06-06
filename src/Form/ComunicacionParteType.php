@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ComunicacionParteType extends AbstractType
 {
@@ -20,32 +20,33 @@ class ComunicacionParteType extends AbstractType
         $builder
             ->add('fecha', DateTimeType::class, [
                 'label' => 'Fecha',
-                'required' => true,
-                'help' => 'Ingrese la fecha',
-                'widget' => 'single_text',
-                'html5' => false,
-                'format' => 'yyyy-MM-dd',
+                'date_label' => 'Fecha',
+                'date_widget' => 'single_text',
+                'time_label' => 'Hora',
+                'time_widget' => 'single_text'
             ])
             ->add('anotacion', TextareaType::class, [
                 'label' => 'Anotación',
                 'required' => false,
-                'help' => 'Ingrese una anotación',
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => 'El tamaño máximo de este campo es de 255 caracteres'
+                    ])
+                ]
             ])
             ->add('parte', EntityType::class, [
-                'label' => 'Parte a la que pertenece',
+                'label' => 'Parte',
                 'class' => Parte::class,
                 'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'help' => 'Parte a la que pertenece',
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un parte', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ])
             ->add('tipo', EntityType::class, [
                 'label' => 'Tipo',
                 'class' => TipoComunicacion::class,
                 'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un tipo', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ]);
     }
 

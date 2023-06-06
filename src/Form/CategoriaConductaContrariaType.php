@@ -6,21 +6,46 @@ use App\Entity\CategoriaConductaContraria;
 use App\Entity\CursoAcademico;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class CategoriaConductaContrariaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('orden')
-            ->add('descripcion')
-            ->add('prioritaria')
+            ->add('orden', ChoiceType::class, [
+                'label' => 'Orden',
+                'choices' => [
+                    'ASC' => 'ASC',
+                    'DESC' => 'DESC'
+                ]
+            ])
+            ->add('descripcion', TextareaType::class, [
+                'label' => 'Descripción',
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                        'maxMessage' => 'El tamaño máximo de este campo es de 255 caracteres'
+                    ])
+                ]
+            ])
+            ->add('prioritaria', CheckboxType::class, [
+                'label' => 'Es prioritaria?',
+                'required' => false,
+                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+            ])
             ->add('cursoAcademico', EntityType::class, [
-                'label' => 'Curso académico a la que pertenece',
+                'label' => 'Curso académico',
                 'class' => CursoAcademico::class,
-                'required' => true
+                'required' => true,
+                'help' => 'Seleccione el curso académico en el que se va a asignar',
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un curso académico', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ]);
     }
 
