@@ -41,6 +41,7 @@ class ParteController extends AbstractController
     public function modificarParte(Request $request, ParteRepository $parteRepository, Parte $parte): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $parte->setFechaCreacion(new \DateTime());
         $form = $this->createForm(ParteType::class, $parte);
         $form->handleRequest($request);
 

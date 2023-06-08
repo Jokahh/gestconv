@@ -22,6 +22,13 @@ class ParteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('docente', EntityType::class, [
+                'label' => 'Docente u ordenanza',
+                'class' => Docente::class,
+                'required' => true,
+                'help' => 'Seleccione el docente',
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un docente', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+            ])
             ->add('anotacion', TextareaType::class, [
                 'label' => 'Anotación',
                 'required' => false,
@@ -37,11 +44,13 @@ class ParteType extends AbstractType
                 'date_label' => 'Fecha de creación',
                 'date_widget' => 'single_text',
                 'time_label' => 'Hora',
-                'time_widget' => 'single_text'
+                'time_widget' => 'single_text',
+                'attr' => ['readonly' => true]
             ])
             ->add('fechaSuceso', DateTimeType::class, [
                 'label' => 'Fecha de suceso',
                 'date_label' => 'Fecha de suceso',
+                'help' => 'Fecha y hora cuando ocurrió el suceso',
                 'date_widget' => 'single_text',
                 'time_label' => 'Hora',
                 'time_widget' => 'single_text'
@@ -70,13 +79,6 @@ class ParteType extends AbstractType
                     ])
                 ],
             ])
-            ->add('docente', EntityType::class, [
-                'label' => 'Docente',
-                'class' => Docente::class,
-                'required' => true,
-                'help' => 'Seleccione el docente',
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un docente', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
-            ])
             ->add('estudiante', EntityType::class, [
                 'label' => 'Estudiante',
                 'class' => Estudiante::class,
@@ -99,8 +101,9 @@ class ParteType extends AbstractType
                 'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona una sanción', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ])
             ->add('conductasContrarias', EntityType::class, [
-                'label' => 'Conductas Contrarias',
+                'label' => 'Conductas contrarias',
                 'class' => ConductaContraria::class,
+                'help' => 'Conductas que provocan el parte',
                 'required' => true,
                 'multiple' => true,
                 'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona las conductas contrarias', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
@@ -113,6 +116,7 @@ class ParteType extends AbstractType
             ->add('hayExpulsion', CheckboxType::class, [
                 'label' => 'Hay expulsión?',
                 'required' => false,
+                'help' => 'Marcar si se expulsó el alumnado implicado del aula',
                 'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
             ])
             ->add('actividadesRealizadas', CheckboxType::class, [
