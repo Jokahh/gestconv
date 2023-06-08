@@ -1,0 +1,137 @@
+{% extends 'layout.html.twig' %}
+{% block inicio %}
+    <div class="row inicio justify-content-center">
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('parte_nuevo') }}">
+                    <i class="card-icon fa-solid fa-pen-to-square pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Registrar un nuevo parte</div>
+                    <div class="texto-card-footer">Dirigido a uno o varios estudiantes</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('comunicacion_parte_nuevo') }}">
+                    <i class="card-icon fa-solid fa-envelope pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Notificar un parte a la familia</div>
+                    <div class="texto-card-footer">Tienes <b>X</b> partes propios pendientes. En total hay <b>X</b></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('parte_nuevo') }}">
+                    <i class="card-icon fa-solid fa-rectangle-list pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Gestionar los partes</div>
+                    <div class="texto-card-footer">Permite modificarlos o añadir observaciones</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('parte_listar') }}">
+                    <i class="card-icon fa-solid fa-gavel pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Revisar y sancionar</div>
+                    <div class="texto-card-footer">Hay <b>X</b> partes sancionables pendientes de revisar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('grupo_listar') }}">
+                    <i class="card-icon fa-solid fa-layer-group pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Grupos y niveles del centro</div>
+                    <div class="texto-card-footer">Muestra información general sobre los grupos</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('sancion_listar') }}">
+                    <i class="card-icon fa-solid fa-list-check pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Gestionar las sanciones</div>
+                    <div class="texto-card-footer">Permite modificarlas o añadir observaciones</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('comunicacion_sancion_nuevo') }}">
+                    <i class="card-icon fa-solid fa-flag pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Notificar una sanción a la familia</div>
+                    <div class="texto-card-footer">Hay <b>X</b> estudiantes pendientes de notificar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('estudiante_listar') }}">
+                    <i class="card-icon fa-solid fa-users-line pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Alumnado del centro</div>
+                    <div class="texto-card-footer">Gestionar el alumnado del centro</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('estudiante_listar') }}">
+                    <i class="card-icon fa-solid fa-people-roof pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Alumnado de mi tutoria</div>
+                    <div class="texto-card-footer">Permite mostrar información sobre el grupo</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+            <div class="card">
+                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                   href="{{ path('docente_listar') }}">
+                    <i class="card-icon fa-solid fa-building-user pb-3"></i>
+                </a>
+                <div class="card-header px-3">
+                    <div class="font-weight-bold">Usuarios del centro</div>
+                    <div class="texto-card-footer">Permite mostrar información sobre los usuarios</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

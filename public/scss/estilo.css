@@ -1,0 +1,31 @@
+/* TODO cambiar a SCSS */
+
+
+.inicio .card-inicio .texto-card-footer {
+    font-size: 0.9em;
+}
+
+.inicio .card-inicio .card-icon {
+    font-size: 7em;
+}
+
+.inicio .card-inicio .form-check {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.inicio .card-inicio .card-header{
+    height: 6em;
+    max-height: 6em;
+    min-height: 6em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.inicio .card-inicio{
+    width: 19em;
+    min-width: 19em;
+    text-align: center;
+}
