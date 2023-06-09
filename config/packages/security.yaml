@@ -1,23 +1,43 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        users_in_memory: { memory: null }
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            anonymous: lazy
-            provider: users_in_memory
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+  providers:
+    docente:
+      entity:
+        class: 'App\Entity\Docente'
+        property: 'usuario'
+  encoders:
+    App\Entity\Docente: 'plaintext'
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      anonymous: lazy
+      provider: docente
+      form_login:
+        login_path: /
+        check_path: login
+        default_target_path: inicio
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+      logout:
+        path: logout
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+  role_hierarchy:
+    ROLE_ADMIN: [ 'ROLE_ADMIN','ROLE_DIRECTIVO' ]
+    ROLE_DIRECTIVO: [ 'ROLE_DIRECTIVO', 'ROLE_CONVIVENCIA' ]
+    ROLE_CONVIVENCIA: [ 'ROLE_CONVIVENCIA','ROLE_EXTERNO' ]
+    ROLE_EXTERNO: [ 'ROLE_EXTERNO','ROLE_PROFESOR' ]
+    ROLE_PROFESOR: [ 'ROLE_PROFESOR' ]
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+
+      # activate different ways to authenticate
+    # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+    # https://symfony.com/doc/current/security/impersonating_user.html
+    # switch_user: true
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+  # - { path: ^/admin, roles: ROLE_ADMIN }
+  # - { path: ^/profile, roles: ROLE_USER }

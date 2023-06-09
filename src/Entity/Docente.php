@@ -6,11 +6,12 @@ use App\Repository\DocenteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=DocenteRepository::class)
  */
-class Docente
+class Docente implements UserInterface
 {
     /**
      * @ORM\Id
@@ -339,4 +340,38 @@ class Docente
     {
         return $this->getNombre() . ' ' . $this->getApellido1() . ' ' . $this->getApellido2();
     }
+
+    public function getRoles(): array
+    {
+        $roles = ['ROLE_PROFESOR'];
+
+        if ($this->getEsAdmin()) {
+            $roles[] = 'ROLE_ADMIN';
+        }
+        if ($this->getEsConvivencia()) {
+            $roles[] = 'ROLE_CONVIVENCIA';
+        }
+        if ($this->getEsDirectivo()) {
+            $roles[] = 'ROLE_DIRECTIVO';
+        }
+        if ($this->getEsExterno()) {
+            $roles[] = 'ROLE_EXTERNO';
+        }
+
+        return $roles;
+    }
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->getUsuario();
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
 }
