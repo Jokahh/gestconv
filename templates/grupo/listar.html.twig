@@ -11,19 +11,18 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Curso Académico</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for grupo in grupos %}
                 <tr>
-                    <th>{{ grupo.id }}</th>
                     <td>{{ grupo.nombre }}</td>
                     <td>{{ grupo.descripcion }}</td>
                     <td>{{ grupo.cursoAcademico }}</td>
@@ -42,9 +41,5 @@
             </tbody>
         </table>
     </div>
-{% endblock %}
-
-{% block title %}
-
 {% endblock %}
 

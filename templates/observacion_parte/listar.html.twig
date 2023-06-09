@@ -11,19 +11,18 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
                 <th>Anotación</th>
                 <th>Fecha</th>
                 <th>Asignado al Parte</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for observacionParte in observacionesPartes %}
                 <tr>
-                    <th>{{ observacionParte.id }}</th>
                     <td>{{ observacionParte.anotacion }}</td>
                     <td>{{ observacionParte.fecha|date("Y-m-d") }}</td>
                     <td>{{ observacionParte.parte }}</td>
@@ -32,7 +31,6 @@
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
                     </td>
-
                 </tr>
             {% else %}
                 <tr>
@@ -42,9 +40,5 @@
             </tbody>
         </table>
     </div>
-{% endblock %}
-
-{% block title %}
-
 {% endblock %}
 

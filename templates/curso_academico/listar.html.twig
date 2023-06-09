@@ -11,25 +11,22 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
                 <th>Descripción</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
-                <th>Estado</th>
                 <th>Semestre</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for curso_academico in cursos_academicos %}
                 <tr>
-                    <th>{{ curso_academico.id }}</th>
                     <td>{{ curso_academico.descripcion }}</td>
                     <td>{{ curso_academico.fechaInicio|date("Y-m-d") }}</td>
                     <td>{{ curso_academico.fechaFin|date("Y-m-d") }}</td>
-                    <td>{{ curso_academico.estado }}</td>
                     <td>{{ curso_academico.semestre }}</td>
                     <td>
                         <a href="{{ path('curso_academico_modificar', {'id': curso_academico.id}) }}">
@@ -46,9 +43,5 @@
             </tbody>
         </table>
     </div>
-{% endblock %}
-
-{% block title %}
-
 {% endblock %}
 

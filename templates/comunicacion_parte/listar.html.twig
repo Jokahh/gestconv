@@ -11,20 +11,19 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
                 <th>Anotación</th>
                 <th>Tipo</th>
                 <th>Fecha</th>
                 <th>Asignado al Parte</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for comunicacionParte in comunicacionesPartes %}
                 <tr>
-                    <th>{{ comunicacionParte.id }}</th>
                     <td>{{ comunicacionParte.anotacion }}</td>
                     <td>{{ comunicacionParte.tipo }}</td>
                     <td>{{ comunicacionParte.fecha|date("Y-m-d") }}</td>
@@ -45,8 +44,3 @@
         </table>
     </div>
 {% endblock %}
-
-{% block title %}
-
-{% endblock %}
-

@@ -11,18 +11,17 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
                 <th>Descripción</th>
                 <th>Curso Académico</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for tipoComunicacion in tiposComunicaciones %}
                 <tr>
-                    <th>{{ tipoComunicacion.id }}</th>
                     <td>{{ tipoComunicacion.descripcion }}</td>
                     <td>{{ tipoComunicacion.cursoAcademico }}</td>
                     <td>
@@ -30,7 +29,6 @@
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
                     </td>
-
                 </tr>
             {% else %}
                 <tr>
@@ -41,8 +39,3 @@
         </table>
     </div>
 {% endblock %}
-
-{% block title %}
-
-{% endblock %}
-

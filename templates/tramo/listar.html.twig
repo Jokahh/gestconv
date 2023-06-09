@@ -11,23 +11,20 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
-                <th>Orden</th>
                 <th>Dia Semana</th>
                 <th>Hora Inicio</th>
                 <th>Hora Fin</th>
                 <th>Aula</th>
                 <th>Curso Académico</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for tramo in tramos %}
                 <tr>
-                    <th>{{ tramo.id }}</th>
-                    <td>{{ tramo.orden }}</td>
                     <td>{{ tramo.diaSemana }}</td>
                     <td>{{ tramo.horaInicio }}</td>
                     <td>{{ tramo.horaInicio }}</td>
@@ -50,7 +47,4 @@
     </div>
 {% endblock %}
 
-{% block title %}
-
-{% endblock %}
 

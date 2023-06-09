@@ -2,7 +2,7 @@
 {% block content %}
     <div class="row">
         <div class="col">
-            <h2>Listado de todas las categorías de conductas contrarias</h2>
+            <h2>Listado de todas las categorias de conductas contrarias</h2>
         </div>
         <div>
             <a href="{{ path('categoria_conducta_contraria_nuevo') }}" class="btn btn-success">
@@ -11,21 +11,18 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
-                <th>Orden</th>
                 <th>Descripción</th>
                 <th>Prioritaria</th>
                 <th>Curso Académico</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for categoriaConductaContraria in categoriasConductasContrarias %}
                 <tr>
-                    <th>{{ categoriaConductaContraria.id }}</th>
-                    <td>{{ categoriaConductaContraria.orden }}</td>
                     <td>{{ categoriaConductaContraria.descripcion }}</td>
                     <td>{{ categoriaConductaContraria.prioritaria ? 'Si' : 'No' }}</td>
                     <td>{{ categoriaConductaContraria.cursoAcademico }}</td>
@@ -44,9 +41,5 @@
             </tbody>
         </table>
     </div>
-{% endblock %}
-
-{% block title %}
-
 {% endblock %}
 

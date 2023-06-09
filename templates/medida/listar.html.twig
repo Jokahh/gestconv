@@ -11,30 +11,26 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>Categoria</th>
                 <th>Dias</th>
-                <th>Orden</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for medida in medidas %}
                 <tr>
-                    <th>{{ medida.id }}</th>
                     <td>{{ medida.nombre }}</td>
                     <td>{{ medida.categoria }}</td>
                     <td>{{ medida.dias }}</td>
-                    <td>{{ medida.orden }}</td>
                     <td>
                         <a href="{{ path('medida_modificar', {'id': medida.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
                     </td>
-
                 </tr>
             {% else %}
                 <tr>
@@ -45,8 +41,3 @@
         </table>
     </div>
 {% endblock %}
-
-{% block title %}
-
-{% endblock %}
-

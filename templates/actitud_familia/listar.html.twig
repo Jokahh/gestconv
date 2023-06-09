@@ -11,21 +11,18 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
-                <th>Orden</th>
                 <th>Descripción</th>
                 <th>Fecha</th>
                 <th>Curso Académico</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for actitud_familia in actitudes_familia %}
                 <tr>
-                    <th>{{ actitud_familia.id }}</th>
-                    <td>{{ actitud_familia.orden }}</td>
                     <td>{{ actitud_familia.descripcion }}</td>
                     <td>{{ actitud_familia.fecha|date("Y-m-d") }}</td>
                     <td>{{ actitud_familia.cursoAcademico.descripcion }}</td>
@@ -44,9 +41,5 @@
             </tbody>
         </table>
     </div>
-{% endblock %}
-
-{% block title %}
-
 {% endblock %}
 

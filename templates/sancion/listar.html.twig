@@ -11,44 +11,28 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-hover table-striped text-center">
-            <thead>
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
             <tr>
-                <th>ID</th>
                 <th>Anotación</th>
                 <th>Fecha Sanción</th>
-                <th>Fecha Registro Salida</th>
                 <th>Fecha Comunicación</th>
-                <th>Fecha Inicio Sanción</th>
-                <th>Fecha Fin Sanción</th>
-                <th>Actitud Familia</th>
-                <th>Reclamación?</th>
                 <th>Registrado en Séneca?</th>
-                <th>Medidas Efectivas?</th>
-                <th>Motivos de no aplicación</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             {% for sancion in sanciones %}
                 <tr>
-                    <th>{{ sancion.id }}</th>
                     <td>{{ sancion.anotacion }}</td>
                     <td>{{ sancion.fechaSancion|date("Y-m-d") }}</td>
-                    <td>{{ sancion.fechaRegistroSalida|date("Y-m-d") }}</td>
                     <td>{{ sancion.fechaComunicado|date("Y-m-d") }}</td>
-                    <td>{{ sancion.fechaInicioSancion|date("Y-m-d") }}</td>
-                    <td>{{ sancion.fechaFinSancion|date("Y-m-d") }}</td>
-                    <td>{{ sancion.actitudFamilia }}</td>
-                    <td>{{ sancion.reclamacion ? 'Si' : 'No' }}</td>
                     <td>{{ sancion.registradoEnSeneca ? 'Si' : 'No' }}</td>
-                    <td>{{ sancion.medidasEfectivas ? 'Si' : 'No' }}</td>
-                    <td>{{ sancion.motivosNoAplicacion }}</td>
                     <td>
                         <a href="{{ path('sancion_modificar', {'id': sancion.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
                     </td>
-
                 </tr>
             {% else %}
                 <tr>
@@ -59,8 +43,3 @@
         </table>
     </div>
 {% endblock %}
-
-{% block title %}
-
-{% endblock %}
-
