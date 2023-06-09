@@ -9,11 +9,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class InicioController extends AbstractController
 {
     /**
-     * @Route("/", name="inicio")
+     * @Route("/inicio", name="inicio")
      */
     public function inicio(): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        return $this->render('inicio.html.twig');
+        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
+        return $this->render('inicio.html.twig', [
+            'usuario' => $this->getUser()
+        ]);
     }
 }

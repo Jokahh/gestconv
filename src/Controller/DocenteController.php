@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Docente;
+use App\Form\CambiarPasswordDocenteType;
 use App\Form\DocenteType;
 use App\Repository\DocenteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class DocenteController extends AbstractController
 {
@@ -78,6 +80,37 @@ class DocenteController extends AbstractController
         }
         return $this->render('docente/eliminar.html.twig', [
             'docente' => $docente
+        ]);
+    }
+
+    /**
+     * @Route("/docente/clave/{id}", name="docente_cambiar_clave", requirements={"id":"\d+"})
+     */
+    public function cambiarPasswordDocente(Request $request, UserPasswordEncoderInterface $passwordEncoder, DocenteRepository $docenteRepository, Docente $docente): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
+        $form = $this->createForm(CambiarPasswordDocenteType::class, $docente, [
+            'admin' => $this->isGranted('ROLE_ADMIN')
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->getUser()->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $docente, $form->get('nuevaClave')->get('first')->getData()
+                    )
+                );
+                $docenteRepository->guardar();
+                $this->addFlash('exito', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('inicio');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+        return $this->render('security/cambiarClave.html.twig', [
+            'docente' => $this->getUser(),
+            'form' => $form->createView()
         ]);
     }
 }

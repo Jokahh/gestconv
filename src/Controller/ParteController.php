@@ -17,7 +17,7 @@ class ParteController extends AbstractController
      */
     public function listar(ParteRepository $parteRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
         $partes = $parteRepository->findAll();
         return $this->render('parte/listar.html.twig', [
             'partes' => $partes
@@ -29,7 +29,7 @@ class ParteController extends AbstractController
      */
     public function nuevoParte(Request $request, ParteRepository $parteRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
         $parte = $parteRepository->nuevo();
         
         return $this->modificarParte($request, $parteRepository, $parte);
@@ -40,7 +40,7 @@ class ParteController extends AbstractController
      */
     public function modificarParte(Request $request, ParteRepository $parteRepository, Parte $parte): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
         $parte->setFechaCreacion(new \DateTime());
         $form = $this->createForm(ParteType::class, $parte);
         $form->handleRequest($request);
