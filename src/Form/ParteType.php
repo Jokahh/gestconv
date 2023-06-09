@@ -31,7 +31,7 @@ class ParteType extends AbstractType
             ])
             ->add('anotacion', TextareaType::class, [
                 'label' => 'Anotación',
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new Length([
                         'max' => 255,
@@ -50,6 +50,7 @@ class ParteType extends AbstractType
             ->add('fechaSuceso', DateTimeType::class, [
                 'label' => 'Fecha de suceso',
                 'date_label' => 'Fecha de suceso',
+                'required' => true,
                 'help' => 'Fecha y hora cuando ocurrió el suceso',
                 'date_widget' => 'single_text',
                 'time_label' => 'Hora',
@@ -58,6 +59,7 @@ class ParteType extends AbstractType
             ->add('fechaAviso', DateTimeType::class, [
                 'label' => 'Fecha de aviso',
                 'date_label' => 'Fecha de aviso',
+                'required' => false,
                 'date_widget' => 'single_text',
                 'time_label' => 'Hora',
                 'time_widget' => 'single_text'
@@ -66,6 +68,7 @@ class ParteType extends AbstractType
                 'label' => 'Fecha de recordatorio',
                 'date_label' => 'Fecha de recordatorio',
                 'date_widget' => 'single_text',
+                'required' => false,
                 'time_label' => 'Hora',
                 'time_widget' => 'single_text'
             ])
