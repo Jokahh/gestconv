@@ -20,7 +20,7 @@ class ActitudFamilia
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $orden;
 
@@ -56,12 +56,12 @@ class ActitudFamilia
         return $this->id;
     }
 
-    public function getOrden(): ?string
+    public function getOrden(): ?int
     {
         return $this->orden;
     }
 
-    public function setOrden(?string $orden): self
+    public function setOrden(?int $orden): self
     {
         $this->orden = $orden;
 
@@ -112,22 +112,22 @@ class ActitudFamilia
         return $this->sanciones;
     }
 
-    public function addSancione(Sancion $sancione): self
+    public function addSanciones(Sancion $sanciones): self
     {
-        if (!$this->sanciones->contains($sancione)) {
-            $this->sanciones[] = $sancione;
-            $sancione->setActitudFamilia($this);
+        if (!$this->sanciones->contains($sanciones)) {
+            $this->sanciones[] = $sanciones;
+            $sanciones->setActitudFamilia($this);
         }
 
         return $this;
     }
 
-    public function removeSancione(Sancion $sancione): self
+    public function removeSanciones(Sancion $sanciones): self
     {
-        if ($this->sanciones->removeElement($sancione)) {
+        if ($this->sanciones->removeElement($sanciones)) {
             // set the owning side to null (unless already changed)
-            if ($sancione->getActitudFamilia() === $this) {
-                $sancione->setActitudFamilia(null);
+            if ($sanciones->getActitudFamilia() === $this) {
+                $sanciones->setActitudFamilia(null);
             }
         }
 

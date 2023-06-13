@@ -49,7 +49,7 @@ final class ActitudFamiliaFactory extends ModelFactory
         return [
             'descripcion' => self::faker()->realText(15),
             'fecha' => self::faker()->dateTime(),
-            'orden' => self::faker()->boolean() ? 'ASC' : 'DESC'
+            'orden' => self::faker()->numberBetween(0, 25)
         ];
     }
 
@@ -58,9 +58,8 @@ final class ActitudFamiliaFactory extends ModelFactory
      */
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(ActitudFamilia $actitudFamilia): void {})
-        ;
+        return $this// ->afterInstantiate(function(ActitudFamilia $actitudFamilia): void {})
+            ;
     }
 
     protected static function getClass(): string
