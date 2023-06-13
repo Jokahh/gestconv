@@ -22,7 +22,8 @@
                 </a>
                 <div class="card-header px-3">
                     <div class="font-weight-bold">Notificar un parte a la familia</div>
-                    <div class="texto-card-footer">Tienes <b>{{ usuario.partes|length }}</b> partes propios pendientes. En total hay <b>X</b>
+                    <div class="texto-card-footer">Tienes <b>{{ usuario.partes|length }}</b> partes propios pendientes.
+                        En total hay <b>X</b>
                     </div>
                 </div>
             </div>
@@ -84,18 +85,21 @@
                 </div>
             </div>
         {% endif %}
-        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
-            <div class="card">
-                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
-                   href="{{ path('comunicacion_sancion_nuevo') }}">
-                    <i class="card-icon fa-solid fa-flag pb-3"></i>
-                </a>
-                <div class="card-header px-3">
-                    <div class="font-weight-bold">Notificar una sanción a la familia</div>
-                    <div class="texto-card-footer">Hay <b>X</b> estudiantes pendientes de notificar</div>
+
+        {% if is_granted('ROLE_TUTOR') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('comunicacion_sancion_nuevo') }}">
+                        <i class="card-icon fa-solid fa-flag pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Notificar una sanción a la familia</div>
+                        <div class="texto-card-footer">Hay <b>X</b> estudiantes pendientes de notificar</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
         {% if is_granted('ROLE_DIRECTIVO') %}
             <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
@@ -111,18 +115,21 @@
                 </div>
             </div>
         {% endif %}
-        <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
-            <div class="card">
-                <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
-                   href="{{ path('estudiante_listar') }}">
-                    <i class="card-icon fa-solid fa-people-roof pb-3"></i>
-                </a>
-                <div class="card-header px-3">
-                    <div class="font-weight-bold">Alumnado de mi tutoria</div>
-                    <div class="texto-card-footer">Permite mostrar información sobre el grupo</div>
+
+        {% if is_granted('ROLE_TUTOR') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('estudiante_listar') }}">
+                        <i class="card-icon fa-solid fa-people-roof pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Alumnado de mi tutoria</div>
+                        <div class="texto-card-footer">Permite mostrar información sobre el grupo</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
         {% if is_granted('ROLE_DIRECTIVO') %}
             <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
                 <div class="card">
