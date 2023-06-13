@@ -338,7 +338,7 @@ class Docente implements UserInterface
 
     public function __toString()
     {
-        return $this->getNombre() . ' ' . $this->getApellido1() . ' ' . $this->getApellido2();
+        return $this->getApellido1() . ' ' . $this->getApellido2() . ' ' . $this->getNombre();
     }
 
     public function getRoles(): array
@@ -360,6 +360,7 @@ class Docente implements UserInterface
 
         return $roles;
     }
+
     public function getSalt()
     {
         return null;
