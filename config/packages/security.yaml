@@ -25,12 +25,12 @@ security:
   role_hierarchy:
     ROLE_ADMIN: [ 'ROLE_ADMIN','ROLE_DIRECTIVO' ]
     ROLE_DIRECTIVO: [ 'ROLE_DIRECTIVO', 'ROLE_CONVIVENCIA' ]
-    ROLE_CONVIVENCIA: [ 'ROLE_CONVIVENCIA','ROLE_EXTERNO' ]
-    ROLE_EXTERNO: [ 'ROLE_EXTERNO','ROLE_PROFESOR' ]
+    ROLE_CONVIVENCIA: [ 'ROLE_CONVIVENCIA','ROLE_TUTOR' ]
+    ROLE_TUTOR: [ 'ROLE_TUTOR','ROLE_PROFESOR' ]
     ROLE_PROFESOR: [ 'ROLE_PROFESOR' ]
 
 
-      # activate different ways to authenticate
+    # activate different ways to authenticate
     # https://symfony.com/doc/current/security.html#firewalls-authentication
 
     # https://symfony.com/doc/current/security/impersonating_user.html
