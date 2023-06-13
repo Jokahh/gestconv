@@ -49,7 +49,8 @@ class DocenteController extends AbstractController
         }
 
         $form = $this->createForm(DocenteType::class, $docente, [
-            'admin' => $this->isGranted('ROLE_DIRECTIVO')
+            'admin' => $this->isGranted('ROLE_DIRECTIVO'),
+            'datosPropios' => $this->getUser()->getId() === $docente->getId()
         ]);
         $form->handleRequest($request);
 

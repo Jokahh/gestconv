@@ -107,13 +107,19 @@ class DocenteType extends AbstractType
                     'disabled' => true,
                     'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona las medidas', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
                 ])
-                ->add('notificaciones', CheckboxType::class, [
-                    'label' => 'Tiene notificaciones?',
+                ->add('esAdmin', CheckboxType::class, [
+                    'label' => 'Es admin?',
+                    'required' => false,
+                    'disabled' => ($options['admin'] && $options['datosPropios']),
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ])
+                ->add('esDirectivo', CheckboxType::class, [
+                    'label' => 'Es directivo?',
                     'required' => false,
                     'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
                 ])
-                ->add('esAdmin', CheckboxType::class, [
-                    'label' => 'Es admin?',
+                ->add('esConvivencia', CheckboxType::class, [
+                    'label' => 'Es convivencia?',
                     'required' => false,
                     'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
                 ])
@@ -132,16 +138,13 @@ class DocenteType extends AbstractType
                     'required' => false,
                     'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
                 ])
-                ->add('esDirectivo', CheckboxType::class, [
-                    'label' => 'Es directivo?',
+                ->add('notificaciones', CheckboxType::class, [
+                    'label' => 'Tiene notificaciones?',
                     'required' => false,
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-                ])
-                ->add('esConvivencia', CheckboxType::class, [
-                    'label' => 'Es convivencia?',
-                    'required' => false,
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                    'disabled' => true,
+                    'attr' => ['readonly' => true, 'data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
                 ]);
+
         }
     }
 
@@ -149,7 +152,8 @@ class DocenteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Docente::class,
-            'admin' => false
+            'admin' => false,
+            'datosPropios' => false
         ]);
     }
 }
