@@ -1,8 +1,8 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
-    {% if docente.id and is_granted('ROLE_ADMIN') and (docente.id != app.user.id) %}
+    {% if docente.id and is_granted('ROLE_DIRECTIVO') and (docente.id != app.user.id) %}
         <h1>Modificar docente: {{ docente.id }}</h1>
-    {% elseif (docente.id and not is_granted('ROLE_ADMIN')) or (docente.id == app.user.id) %}
+    {% elseif (docente.id and not is_granted('ROLE_DIRECTIVO')) or (docente.id == app.user.id) %}
         <h1>Mis datos</h1>
     {% else %}
         <h1>Crear nuevo docente</h1>
@@ -11,7 +11,7 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row">
-        {% if docente.id and is_granted('ROLE_ADMIN') %}
+        {% if docente.id and is_granted('ROLE_DIRECTIVO') and (docente.id != app.user.id ) %}
             <div class="col-sm-2">
                 <a href="{{ path('docente_eliminar', {'id': docente.id}) }}">
                     <button type="button" class="btn btn-danger">Eliminar</button>
@@ -19,12 +19,12 @@
             </div>
         {% endif %}
         <div class="col">
-            <a href="{% if is_granted('ROLE_ADMIN') %}{{ path('docente_listar') }}{% else %}{{ path('inicio') }}{% endif %}"
+            <a href="{% if is_granted('ROLE_DIRECTIVO') %}{{ path('docente_listar') }}{% else %}{{ path('inicio') }}{% endif %}"
                class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver</a>
             <button type="submit" id="modificar_docente_enviar" name="guardar" class="btn-primary btn">
                 <i class="fa fa-check"></i> Guardar
             </button>
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_DIRECTIVO') %}
                 <a class="btn btn-secondary"
                    href="{{ path('docente_cambiar_clave', {'id': docente.id}) }}">
                     <i class="fa-solid fa-key"></i> Cambiar Contraseña

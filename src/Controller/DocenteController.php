@@ -75,6 +75,9 @@ class DocenteController extends AbstractController
      */
     public function eliminarDocente(Request $request, DocenteRepository $docenteRepository, Docente $docente): Response
     {
+        if ($docente->getId() == $this->getUser()->getId()) {
+            throw $this->createAccessDeniedException('No puedes borrarte a tí mismo');
+        }
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
