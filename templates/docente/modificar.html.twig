@@ -1,8 +1,8 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
-    {% if docente.id and is_granted('ROLE_ADMIN') %}
+    {% if docente.id and is_granted('ROLE_ADMIN') and (docente.id != app.user.id) %}
         <h1>Modificar docente: {{ docente.id }}</h1>
-    {% elseif docente.id and is_granted('ROLE_PROFESOR') and not is_granted('ROLE_ADMIN') %}
+    {% elseif (docente.id and not is_granted('ROLE_ADMIN')) or (docente.id == app.user.id) %}
         <h1>Mis datos</h1>
     {% else %}
         <h1>Crear nuevo docente</h1>
