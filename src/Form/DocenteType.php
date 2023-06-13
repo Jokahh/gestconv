@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Docente;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -92,6 +93,20 @@ class DocenteType extends AbstractType
 
         if ($options['admin'] === true) {
             $builder
+                ->add('roles', ChoiceType::class, [
+                    'label' => 'Roles',
+                    'choices' => [
+                        'Admin' => 'ROLE_ADMIN',
+                        'Convivencia' => 'ROLE_CONVIVENCIA',
+                        'Directivo' => 'ROLE_DIRECTIVO',
+                        'Profesor' => 'ROLE_PROFESOR',
+                        'Tutor' => 'ROLE_TUTOR'
+                    ],
+                    'required' => false,
+                    'multiple' => true,
+                    'disabled' => true,
+                    'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona las medidas', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+                ])
                 ->add('notificaciones', CheckboxType::class, [
                     'label' => 'Tiene notificaciones?',
                     'required' => false,
