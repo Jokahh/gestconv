@@ -54,10 +54,10 @@ final class ParteFactory extends ModelFactory
             'fechaAviso' => $fechaAviso,
             'fechaRecordatorio' => self::faker()->boolean(25) ? self::faker()->dateTimeBetween($fechaAviso) : null,
             'anotacion' => self::faker()->realText(15),
-            'actividades' => self::faker()->realTextBetween(5,25),
+            'actividades' => self::faker()->realTextBetween(5, 25),
             'prescrito' => self::faker()->boolean(25),
             'hayExpulsion' => self::faker()->boolean(20),
-            'actividadesRealizadas' => self::faker()->boolean(85),
+            'actividadesRealizadas' => self::faker()->randomElement(['Si', 'No', 'No se sabe']),
             'prioritaria' => self::faker()->boolean(15),
         ];
     }
@@ -67,9 +67,8 @@ final class ParteFactory extends ModelFactory
      */
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(Parte $parte): void {})
-        ;
+        return $this// ->afterInstantiate(function(Parte $parte): void {})
+            ;
     }
 
     protected static function getClass(): string

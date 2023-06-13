@@ -55,7 +55,7 @@ class Parte
     private $hayExpulsion;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $actividadesRealizadas;
 
@@ -205,12 +205,12 @@ class Parte
         return $this;
     }
 
-    public function getActividadesRealizadas(): ?bool
+    public function getActividadesRealizadas(): ?string
     {
         return $this->actividadesRealizadas;
     }
 
-    public function setActividadesRealizadas(?bool $actividadesRealizadas): self
+    public function setActividadesRealizadas(?string $actividadesRealizadas): self
     {
         $this->actividadesRealizadas = $actividadesRealizadas;
 
