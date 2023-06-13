@@ -95,6 +95,11 @@ class Sancion
      */
     private $comunicaciones;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $fechaIncorporacion;
+
 
     public function __construct()
     {
@@ -358,6 +363,18 @@ class Sancion
     public function __toString()
     {
         return ($this->getAnotacion() == null) ? $this->getId() : $this->getAnotacion();
+    }
+
+    public function getFechaIncorporacion(): ?\DateTimeInterface
+    {
+        return $this->fechaIncorporacion;
+    }
+
+    public function setFechaIncorporacion(?\DateTimeInterface $fechaIncorporacion): self
+    {
+        $this->fechaIncorporacion = $fechaIncorporacion;
+
+        return $this;
     }
 }
 

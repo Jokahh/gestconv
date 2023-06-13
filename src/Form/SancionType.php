@@ -48,6 +48,12 @@ class SancionType extends AbstractType
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text'
             ])
+            ->add('fechaIncorporacion', DateTimeType::class, [
+                'label' => 'Fecha de incorporación',
+                'help' => 'Fecha del incorporación del alumno después de acabar la sanción',
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text'
+            ])
             ->add('anotacion', TextareaType::class, [
                 'label' => 'Anotación',
                 'required' => false,

@@ -53,6 +53,10 @@ final class SancionFactory extends ModelFactory
         if ($fechaInicioSancion != null) {
             $fechaFinSancion = self::faker()->boolean(75) ? self::faker()->dateTimeBetween($fechaInicioSancion) : null;
         }
+        $fechaIncorporacion = null;
+        if ($fechaFinSancion != null) {
+            $fechaIncorporacion = self::faker()->boolean() ? self::faker()->dateTimeBetween($fechaFinSancion) : null;
+        }
 
         return [
             'anotacion' => self::faker()->boolean(80) ? self::faker()->realTextBetween(5, 15) : null,
@@ -64,7 +68,8 @@ final class SancionFactory extends ModelFactory
             'reclamacion' => self::faker()->boolean(15),
             'registradoEnSeneca' => self::faker()->boolean(25),
             'medidasEfectivas' => self::faker()->boolean(75),
-            'motivosNoAplicacion' => ($fechaInicioSancion == null) ? self::faker()->realText(35) : null
+            'motivosNoAplicacion' => ($fechaInicioSancion == null) ? self::faker()->realText(35) : null,
+            'fechaIncorporacion' => $fechaIncorporacion
         ];
     }
 
