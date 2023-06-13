@@ -354,8 +354,8 @@ class Docente implements UserInterface
         if ($this->getEsDirectivo()) {
             $roles[] = 'ROLE_DIRECTIVO';
         }
-        if ($this->getEsExterno()) {
-            $roles[] = 'ROLE_EXTERNO';
+        if ($this->getGrupos() > 0) {
+            $roles[] = 'ROLE_TUTOR';
         }
 
         return $roles;
