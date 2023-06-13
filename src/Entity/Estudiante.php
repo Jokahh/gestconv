@@ -320,6 +320,10 @@ class Estudiante
 
     public function __toString()
     {
-        return $this->getNombre() . ' ' . $this->getApellido1() . ' ' . $this->getApellido2();
+        $grupos = $this->getGrupos()->toArray();
+        if (!empty($grupos)) {
+            return $this->getApellido1() . ' ' . $this->getApellido2() . ' ' . $this->getNombre() . ' - ' . implode(', ', $grupos);
+        }
+        return $this->getApellido1() . ' ' . $this->getApellido2() . ' ' . $this->getNombre();
     }
 }
