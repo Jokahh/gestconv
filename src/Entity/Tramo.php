@@ -39,10 +39,6 @@ class Tramo
      */
     private $horaFin;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $aula;
 
     /**
      * @ORM\ManyToOne(targetEntity=CursoAcademico::class, inversedBy="tramos")
@@ -110,18 +106,6 @@ class Tramo
     public function setHoraFin(?string $horaFin): self
     {
         $this->horaFin = $horaFin;
-
-        return $this;
-    }
-
-    public function getAula(): ?string
-    {
-        return $this->aula;
-    }
-
-    public function setAula(?string $aula): self
-    {
-        $this->aula = $aula;
 
         return $this;
     }

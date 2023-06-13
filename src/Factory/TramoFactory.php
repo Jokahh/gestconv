@@ -50,7 +50,6 @@ final class TramoFactory extends ModelFactory
             'diaSemana' => self::faker()->dayOfWeek(),
             'horaInicio' => self::faker()->time('H:i'),
             'horaFin' => self::faker()->time('H:i'),
-            'aula' => self::faker()->numberBetween(1, 100),
             'orden' => self::faker()->numberBetween(0, 50),
         ];
     }

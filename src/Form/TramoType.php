@@ -57,10 +57,6 @@ class TramoType extends AbstractType
                     ])
                 ]
             ])
-            ->add('aula', TextType::class, [
-                'label' => 'Aula',
-                'required' => false
-            ])
             ->add('cursoAcademico', EntityType::class, [
                 'label' => 'Curso académico',
                 'class' => CursoAcademico::class,
