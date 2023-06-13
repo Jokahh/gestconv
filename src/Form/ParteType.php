@@ -11,6 +11,7 @@ use App\Entity\Tramo;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,8 +27,15 @@ class ParteType extends AbstractType
                 'label' => 'Docente u ordenanza',
                 'class' => Docente::class,
                 'required' => true,
-                'help' => 'Seleccione el docente',
+                'help' => 'Seleccione el docente u ordenanza que asigna el parte',
                 'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un docente', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+            ])
+            ->add('estudiante', EntityType::class, [
+                'label' => 'Estudiante',
+                'class' => Estudiante::class,
+                'required' => true,
+                'help' => 'Selecciona uno o varios estudiantes a los que se les asignará este parte',
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona uno varios estudiantes', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Ninguno seleccionado', 'data-size' => '7']
             ])
             ->add('anotacion', TextareaType::class, [
                 'label' => 'Anotación',
@@ -55,26 +63,37 @@ class ParteType extends AbstractType
                 'date_widget' => 'single_text',
                 'time_label' => 'Hora',
                 'time_widget' => 'single_text'
-            ])
-            ->add('fechaAviso', DateTimeType::class, [
-                'label' => 'Fecha de aviso',
-                'date_label' => 'Fecha de aviso',
+            ]);
+        if ($options['nuevo'] === false) {
+            $builder
+                ->add('fechaAviso', DateTimeType::class, [
+                    'label' => 'Fecha de aviso',
+                    'date_label' => 'Fecha de aviso',
+                    'required' => false,
+                    'date_widget' => 'single_text',
+                    'time_label' => 'Hora',
+                    'time_widget' => 'single_text'
+                ])
+                ->add('fechaRecordatorio', DateTimeType::class, [
+                    'label' => 'Fecha de recordatorio',
+                    'date_label' => 'Fecha de recordatorio',
+                    'date_widget' => 'single_text',
+                    'required' => false,
+                    'time_label' => 'Hora',
+                    'time_widget' => 'single_text'
+                ]);
+        }
+        $builder
+            ->add('hayExpulsion', CheckboxType::class, [
+                'label' => 'Hay expulsión?',
                 'required' => false,
-                'date_widget' => 'single_text',
-                'time_label' => 'Hora',
-                'time_widget' => 'single_text'
-            ])
-            ->add('fechaRecordatorio', DateTimeType::class, [
-                'label' => 'Fecha de recordatorio',
-                'date_label' => 'Fecha de recordatorio',
-                'date_widget' => 'single_text',
-                'required' => false,
-                'time_label' => 'Hora',
-                'time_widget' => 'single_text'
+                'help' => 'Marcar si se expulsó el alumnado implicado del aula',
+                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
             ])
             ->add('actividades', TextareaType::class, [
                 'label' => 'Actividades a realizar',
                 'required' => false,
+                'help' => 'Actividades que debe realizar el alumno si se ha expulsado',
                 'constraints' => [
                     new Length([
                         'max' => 255,
@@ -82,62 +101,64 @@ class ParteType extends AbstractType
                     ])
                 ],
             ])
-            ->add('estudiante', EntityType::class, [
-                'label' => 'Estudiante',
-                'class' => Estudiante::class,
-                'required' => true,
-                'help' => 'Seleccione el estudiante al que está asignado',
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un estudiante', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+            ->add('actividadesRealizadas', ChoiceType::class, [
+                'label' => 'Se han realizado las actividades?',
+                'choices' => [
+                    'No se sabe' => 'No se sabe',
+                    'Si' => 'Si',
+                    'No' => 'No'
+                ],
             ])
             ->add('tramo', EntityType::class, [
                 'label' => 'Tramo',
                 'class' => Tramo::class,
                 'required' => true,
-                'help' => 'Seleccione el tramo cuando ocurrió',
+                'help' => 'Seleccione el tramo cuando ocurrió el suceso',
                 'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un tramo', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
-            ])
-            ->add('sancion', EntityType::class, [
-                'label' => 'Sanción',
-                'class' => Sancion::class,
-                'required' => false,
-                'help' => 'Seleccione la sanción',
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona una sanción', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
-            ])
+            ]);
+        if ($options['nuevo'] === false) {
+            $builder
+                ->add('sancion', EntityType::class, [
+                    'label' => 'Sanción',
+                    'class' => Sancion::class,
+                    'required' => false,
+                    'help' => 'Seleccione la sanción',
+                    'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona una sanción', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+                ]);
+        }
+        $builder
             ->add('conductasContrarias', EntityType::class, [
                 'label' => 'Conductas contrarias',
                 'class' => ConductaContraria::class,
-                'help' => 'Conductas que provocan el parte',
+                'help' => 'Conductas contrarias que provocan el parte',
                 'required' => true,
                 'multiple' => true,
                 'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona las conductas contrarias', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ])
-            ->add('prescrito', CheckboxType::class, [
-                'label' => 'Ha prescrito?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
-            ->add('hayExpulsion', CheckboxType::class, [
-                'label' => 'Hay expulsión?',
-                'required' => false,
-                'help' => 'Marcar si se expulsó el alumnado implicado del aula',
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
-            ->add('actividadesRealizadas', CheckboxType::class, [
-                'label' => 'Se han realizado las actividades?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
             ->add('prioritaria', CheckboxType::class, [
-                'label' => 'Es prioritaria?',
+                'label' => 'Es prioritario?',
+                'help' => 'Marcar si el parte es prioritario',
                 'required' => false,
                 'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
             ]);
+        if ($options['admin'] === true) {
+            $builder
+                ->add('prescrito', CheckboxType::class, [
+                    'label' => 'Ha prescrito?',
+                    'help' => 'Marcar si el parte ha prescrito',
+                    'required' => false,
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ]);
+        }
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Parte::class,
+            'nuevo' => false,
+            'admin' => false
         ]);
     }
 }

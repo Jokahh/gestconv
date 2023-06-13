@@ -31,18 +31,20 @@ class ParteController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_PROFESOR');
         $parte = $parteRepository->nuevo();
-        
-        return $this->modificarParte($request, $parteRepository, $parte);
+        return $this->modificarParte($request, $parteRepository, $parte, true);
     }
 
     /**
      * @Route("/parte/{id}", name="parte_modificar", requirements={"id":"\d+"})
      */
-    public function modificarParte(Request $request, ParteRepository $parteRepository, Parte $parte): Response
+    public function modificarParte(Request $request, ParteRepository $parteRepository, Parte $parte, $nuevo = false): Response
     {
         $this->denyAccessUnlessGranted('ROLE_PROFESOR');
         $parte->setFechaCreacion(new \DateTime());
-        $form = $this->createForm(ParteType::class, $parte);
+        $form = $this->createForm(ParteType::class, $parte, [
+            'nuevo' => $nuevo,
+            'admin' => $this->isGranted('ROLE_DIRECTIVO')
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
