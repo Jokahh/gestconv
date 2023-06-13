@@ -46,7 +46,6 @@ final class CursoAcademicoFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
-        $semestres = ['1º Semestre', '2º Semestre', '3º Semestre'];
         $fechaInicio = self::faker()->dateTime();
         return [
             'descripcion' => self::faker()->numberBetween(2000, 2050),
@@ -55,7 +54,6 @@ final class CursoAcademicoFactory extends ModelFactory
 
             //true = activo, false = inactivo
             'estado' => self::faker()->boolean(75),
-            'semestre' => self::faker()->randomElement($semestres)
         ];
     }
 

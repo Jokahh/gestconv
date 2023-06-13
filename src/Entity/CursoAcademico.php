@@ -39,10 +39,6 @@ class CursoAcademico
      */
     private $estado;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $semestre;
 
     /**
      * @ORM\OneToMany(targetEntity=Grupo::class, mappedBy="cursoAcademico")
@@ -140,18 +136,6 @@ class CursoAcademico
     public function setEstado(?bool $estado): self
     {
         $this->estado = $estado;
-
-        return $this;
-    }
-
-    public function getSemestre(): ?string
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(?string $semestre): self
-    {
-        $this->semestre = $semestre;
 
         return $this;
     }

@@ -46,16 +46,6 @@ class CursoAcademicoType extends AbstractType
             ->add('estado', CheckboxType::class, [
                 'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Activo', 'data-off' => '<i class="fa fa-xmark"></i> Inactivo'],
             ])
-            ->add('semestre', ChoiceType::class, [
-                'label' => 'Semestre',
-                'required' => false,
-                'placeholder' => 'Ninguno',
-                'choices' => [
-                    '1º Semestre' => '1',
-                    '2º Semestre' => '2',
-                    '3º Semestre' => '3'
-                ]
-            ])
             ->add('tramos', EntityType::class, [
                 'label' => 'Tramos',
                 'class' => Tramo::class,
