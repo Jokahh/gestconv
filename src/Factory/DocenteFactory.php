@@ -46,12 +46,6 @@ final class DocenteFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
-        $esDirectivo = self::faker()->boolean(10);
-        $esConvivencia = false;
-        if(!$esDirectivo){
-            $esConvivencia = self::faker()->boolean(10);
-        }
-
         return [
             'nombre' => self::faker()->firstName(),
             'apellido1' => self::faker()->lastName(),
@@ -65,9 +59,9 @@ final class DocenteFactory extends ModelFactory
             'estaActivo' => self::faker()->boolean(90),
             'estaBloqueado' => self::faker()->boolean(10),
             'esExterno' => self::faker()->boolean(10),
-            'esDirectivo' => $esDirectivo,
-            'esConvivencia' => $esConvivencia
-         ];
+            'esDirectivo' => self::faker()->boolean(10),
+            'esComisionario' => self::faker()->boolean(10)
+        ];
     }
 
     /**
@@ -75,9 +69,8 @@ final class DocenteFactory extends ModelFactory
      */
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(Docente $docente): void {})
-        ;
+        return $this// ->afterInstantiate(function(Docente $docente): void {})
+            ;
     }
 
     protected static function getClass(): string

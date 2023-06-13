@@ -78,7 +78,7 @@ class Docente implements UserInterface
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $esConvivencia;
+    private $esComisionario;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -243,14 +243,14 @@ class Docente implements UserInterface
         return $this;
     }
 
-    public function getEsConvivencia(): ?bool
+    public function getEsComisionario(): ?bool
     {
-        return $this->esConvivencia;
+        return $this->esComisionario;
     }
 
-    public function setEsConvivencia(?bool $esConvivencia): self
+    public function setEsComisionario(?bool $esComisionario): self
     {
-        $this->esConvivencia = $esConvivencia;
+        $this->esComisionario = $esComisionario;
 
         return $this;
     }
@@ -348,8 +348,8 @@ class Docente implements UserInterface
         if ($this->getEsAdmin()) {
             $roles[] = 'ROLE_ADMIN';
         }
-        if ($this->getEsConvivencia()) {
-            $roles[] = 'ROLE_CONVIVENCIA';
+        if ($this->getEsComisionario()) {
+            $roles[] = 'ROLE_COMISIONARIO';
         }
         if ($this->getEsDirectivo()) {
             $roles[] = 'ROLE_DIRECTIVO';

@@ -118,8 +118,8 @@ class DocenteType extends AbstractType
                     'required' => false,
                     'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
                 ])
-                ->add('esConvivencia', CheckboxType::class, [
-                    'label' => 'Es convivencia?',
+                ->add('esComisionario', CheckboxType::class, [
+                    'label' => 'Es comisionario?',
                     'required' => false,
                     'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
                 ])
