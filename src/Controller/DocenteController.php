@@ -19,7 +19,7 @@ class DocenteController extends AbstractController
      */
     public function listar(DocenteRepository $docenteRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $docentes = $docenteRepository->findAll();
         return $this->render('docente/listar.html.twig', [
             'docentes' => $docentes
@@ -31,7 +31,7 @@ class DocenteController extends AbstractController
      */
     public function nuevoDocente(Request $request, DocenteRepository $docenteRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $docente = $docenteRepository->nuevo();
 
         return $this->modificarDocente($request, $docenteRepository, $docente);
@@ -45,11 +45,11 @@ class DocenteController extends AbstractController
         if ($this->getUser()->getRoles() == $docente->getRoles()) {
             $this->denyAccessUnlessGranted('ROLE_PROFESOR');
         } else {
-            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+            $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         }
 
         $form = $this->createForm(DocenteType::class, $docente, [
-            'admin' => $this->isGranted('ROLE_ADMIN')
+            'admin' => $this->isGranted('ROLE_DIRECTIVO')
         ]);
         $form->handleRequest($request);
 
@@ -74,7 +74,7 @@ class DocenteController extends AbstractController
      */
     public function eliminarDocente(Request $request, DocenteRepository $docenteRepository, Docente $docente): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
                 $docenteRepository->eliminar($docente);
@@ -98,11 +98,11 @@ class DocenteController extends AbstractController
         if ($this->getUser()->getRoles() == $docente->getRoles()) {
             $this->denyAccessUnlessGranted('ROLE_PROFESOR');
         } else {
-            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+            $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         }
 
         $form = $this->createForm(CambiarPasswordDocenteType::class, $docente, [
-            'admin' => $this->isGranted('ROLE_ADMIN')
+            'admin' => $this->isGranted('ROLE_DIRECTIVO')
         ]);
         $form->handleRequest($request);
 
@@ -120,7 +120,7 @@ class DocenteController extends AbstractController
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_DIRECTIVO')) {
             $docente = $this->getUser();
         }
         return $this->render('security/cambiarClave.html.twig', [
