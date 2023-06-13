@@ -9,12 +9,20 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 class DocenteType extends AbstractType
 {
+    protected $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -124,6 +132,20 @@ class DocenteType extends AbstractType
                 'required' => false,
                 'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
             ]);
+
+        $user = $this->security->getUser();
+        if (!in_array('ROLE_ADMIN', $user->getRoles())) {
+            $builder->remove('esDirectivo');
+            $builder->remove('esConvivencia');
+            $builder->remove('esExterno');
+            $builder->remove('estaBloqueado');
+            $builder->remove('estaActivo');
+            $builder->remove('esAdmin');
+            $builder->remove('notificaciones');
+
+        }
+
+        parent::buildForm($builder, $options);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

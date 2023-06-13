@@ -1,7 +1,9 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
-    {% if docente.id %}
+    {% if docente.id and is_granted('ROLE_ADMIN') %}
         <h1>Modificar docente: {{ docente.id }}</h1>
+    {% elseif docente.id and is_granted('ROLE_PROFESOR') and not is_granted('ROLE_ADMIN') %}
+        <h1>Mis datos</h1>
     {% else %}
         <h1>Crear nuevo docente</h1>
     {% endif %}
@@ -9,15 +11,16 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row">
-        {% if docente.id %}
+        {% if docente.id and is_granted('ROLE_ADMIN') %}
             <div class="col-sm-2">
                 <a href="{{ path('docente_eliminar', {'id': docente.id}) }}">
                     <button type="button" class="btn btn-danger">Eliminar</button>
                 </a>
             </div>
         {% endif %}
-        <div class="col-sm-10">
-            <a href="{{ path('docente_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver</a>
+        <div class="col">
+            <a href="{% if is_granted('ROLE_ADMIN') %}{{ path('docente_listar') }}{% else %}{{ path('inicio') }}{% endif %}"
+               class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver</a>
             <button type="submit" id="modificar_docente_enviar" name="guardar" class="btn-primary btn">
                 <i class="fa fa-check"></i> Guardar
             </button>
@@ -25,6 +28,11 @@
                 <a class="btn btn-secondary"
                    href="{{ path('docente_cambiar_clave', {'id': docente.id}) }}">
                     <i class="fa-solid fa-key"></i> Cambiar Contraseña
+                </a>
+            {% else %}
+                <a class="btn btn-secondary"
+                   href="{{ path('docente_cambiar_clave', {'id': app.user.id}) }}">
+                    <i class="fa-solid fa-key"></i> Cambiar mi contraseña
                 </a>
             {% endif %}
         </div>
