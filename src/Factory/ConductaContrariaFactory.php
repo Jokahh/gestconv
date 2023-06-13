@@ -47,7 +47,7 @@ final class ConductaContrariaFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'orden' => self::faker()->boolean() ? 'ASC' : 'DESC'
+            'orden' => self::faker()->numberBetween(0, 50)
         ];
     }
 
@@ -56,9 +56,8 @@ final class ConductaContrariaFactory extends ModelFactory
      */
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(ConductaContraria $conductasContrarias): void {})
-        ;
+        return $this// ->afterInstantiate(function(ConductaContraria $conductasContrarias): void {})
+            ;
     }
 
     protected static function getClass(): string

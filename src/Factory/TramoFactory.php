@@ -50,8 +50,8 @@ final class TramoFactory extends ModelFactory
             'diaSemana' => self::faker()->dayOfWeek(),
             'horaInicio' => self::faker()->time('H:i'),
             'horaFin' => self::faker()->time('H:i'),
-            'aula' => self::faker()->numberBetween(1,100),
-            'orden' => self::faker()->boolean() ? 'ASC' : 'DESC'
+            'aula' => self::faker()->numberBetween(1, 100),
+            'orden' => self::faker()->numberBetween(0, 50),
         ];
     }
 
@@ -60,9 +60,8 @@ final class TramoFactory extends ModelFactory
      */
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(Tramo $tramo): void {})
-        ;
+        return $this// ->afterInstantiate(function(Tramo $tramo): void {})
+            ;
     }
 
     protected static function getClass(): string

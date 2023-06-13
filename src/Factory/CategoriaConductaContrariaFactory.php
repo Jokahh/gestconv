@@ -47,8 +47,8 @@ final class CategoriaConductaContrariaFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'orden' => self::faker()->boolean() ? 'ASC' : 'DESC',
-            'descripcion' => self::faker()->realTextBetween(5,15),
+            'orden' => self::faker()->numberBetween(0, 50),
+            'descripcion' => self::faker()->realTextBetween(5, 15),
             'prioritaria' => self::faker()->boolean(25)
         ];
     }
@@ -58,9 +58,8 @@ final class CategoriaConductaContrariaFactory extends ModelFactory
      */
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(CategoriaConductaContraria $categoriaConductaContraria): void {})
-        ;
+        return $this// ->afterInstantiate(function(CategoriaConductaContraria $categoriaConductaContraria): void {})
+            ;
     }
 
     protected static function getClass(): string

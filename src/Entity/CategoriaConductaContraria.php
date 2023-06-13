@@ -20,7 +20,7 @@ class CategoriaConductaContraria
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $orden;
 
@@ -55,12 +55,12 @@ class CategoriaConductaContraria
         return $this->id;
     }
 
-    public function getOrden(): ?string
+    public function getOrden(): ?int
     {
         return $this->orden;
     }
 
-    public function setOrden(?string $orden): self
+    public function setOrden(?int $orden): self
     {
         $this->orden = $orden;
 
@@ -111,7 +111,7 @@ class CategoriaConductaContraria
         return $this->conductasContrarias;
     }
 
-    public function addConductasContraria(ConductaContraria $conductaContraria): self
+    public function addConductasContrarias(ConductaContraria $conductaContraria): self
     {
         if (!$this->conductasContrarias->contains($conductaContraria)) {
             $this->conductasContrarias[] = $conductaContraria;
@@ -121,7 +121,7 @@ class CategoriaConductaContraria
         return $this;
     }
 
-    public function removeConductasContraria(ConductaContraria $conductasContraria): self
+    public function removeConductasContrarias(ConductaContraria $conductasContraria): self
     {
         if ($this->conductasContrarias->removeElement($conductasContraria)) {
             // set the owning side to null (unless already changed)

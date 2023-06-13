@@ -20,7 +20,7 @@ class Tramo
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $orden;
 
@@ -66,12 +66,12 @@ class Tramo
         return $this->id;
     }
 
-    public function getOrden(): ?string
+    public function getOrden(): ?int
     {
         return $this->orden;
     }
 
-    public function setOrden(?string $orden): self
+    public function setOrden(?int $orden): self
     {
         $this->orden = $orden;
 

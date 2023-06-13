@@ -30,7 +30,7 @@ class Medida
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $orden;
 
@@ -79,12 +79,12 @@ class Medida
         return $this;
     }
 
-    public function getOrden(): ?string
+    public function getOrden(): ?int
     {
         return $this->orden;
     }
 
-    public function setOrden(?string $orden): self
+    public function setOrden(?int $orden): self
     {
         $this->orden = $orden;
 
@@ -99,20 +99,20 @@ class Medida
         return $this->sanciones;
     }
 
-    public function addSancione(Sancion $sancione): self
+    public function addSanciones(Sancion $sanciones): self
     {
-        if (!$this->sanciones->contains($sancione)) {
-            $this->sanciones[] = $sancione;
-            $sancione->addMedida($this);
+        if (!$this->sanciones->contains($sanciones)) {
+            $this->sanciones[] = $sanciones;
+            $sanciones->addMedida($this);
         }
 
         return $this;
     }
 
-    public function removeSancione(Sancion $sancione): self
+    public function removeSanciones(Sancion $sanciones): self
     {
-        if ($this->sanciones->removeElement($sancione)) {
-            $sancione->removeMedida($this);
+        if ($this->sanciones->removeElement($sanciones)) {
+            $sanciones->removeMedida($this);
         }
 
         return $this;
