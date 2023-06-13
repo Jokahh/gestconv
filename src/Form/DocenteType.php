@@ -89,7 +89,6 @@ class DocenteType extends AbstractType
                 ]
             ])
             ->add('usuario')
-            ->add('password') // todo REMOVE LATER
             ->add('notificaciones', CheckboxType::class, [
                 'label' => 'Tiene notificaciones?',
                 'required' => false,
