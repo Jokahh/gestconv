@@ -9,20 +9,12 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 class DocenteType extends AbstractType
 {
-    protected $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -96,62 +88,53 @@ class DocenteType extends AbstractType
                     ])
                 ]
             ])
-            ->add('usuario')
-            ->add('notificaciones', CheckboxType::class, [
-                'label' => 'Tiene notificaciones?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
-            ->add('esAdmin', CheckboxType::class, [
-                'label' => 'Es admin?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
-            ->add('estaActivo', CheckboxType::class, [
-                'label' => 'Está activo?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
-            ->add('estaBloqueado', CheckboxType::class, [
-                'label' => 'Está bloqueado?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
-            ->add('esExterno', CheckboxType::class, [
-                'label' => 'Es externo?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
-            ->add('esDirectivo', CheckboxType::class, [
-                'label' => 'Es directivo?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ])
-            ->add('esConvivencia', CheckboxType::class, [
-                'label' => 'Es convivencia?',
-                'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-            ]);
+            ->add('usuario');
 
-        $user = $this->security->getUser();
-        if (!in_array('ROLE_ADMIN', $user->getRoles())) {
-            $builder->remove('esDirectivo');
-            $builder->remove('esConvivencia');
-            $builder->remove('esExterno');
-            $builder->remove('estaBloqueado');
-            $builder->remove('estaActivo');
-            $builder->remove('esAdmin');
-            $builder->remove('notificaciones');
-
+        if ($options['admin'] === true) {
+            $builder
+                ->add('notificaciones', CheckboxType::class, [
+                    'label' => 'Tiene notificaciones?',
+                    'required' => false,
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ])
+                ->add('esAdmin', CheckboxType::class, [
+                    'label' => 'Es admin?',
+                    'required' => false,
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ])
+                ->add('estaActivo', CheckboxType::class, [
+                    'label' => 'Está activo?',
+                    'required' => false,
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ])
+                ->add('estaBloqueado', CheckboxType::class, [
+                    'label' => 'Está bloqueado?',
+                    'required' => false,
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ])
+                ->add('esExterno', CheckboxType::class, [
+                    'label' => 'Es externo?',
+                    'required' => false,
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ])
+                ->add('esDirectivo', CheckboxType::class, [
+                    'label' => 'Es directivo?',
+                    'required' => false,
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ])
+                ->add('esConvivencia', CheckboxType::class, [
+                    'label' => 'Es convivencia?',
+                    'required' => false,
+                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                ]);
         }
-
-        parent::buildForm($builder, $options);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Docente::class,
+            'admin' => false
         ]);
     }
 }

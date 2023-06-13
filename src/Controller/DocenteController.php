@@ -48,7 +48,9 @@ class DocenteController extends AbstractController
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
 
-        $form = $this->createForm(DocenteType::class, $docente);
+        $form = $this->createForm(DocenteType::class, $docente, [
+            'admin' => $this->isGranted('ROLE_ADMIN')
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
