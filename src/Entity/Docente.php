@@ -60,10 +60,6 @@ class Docente implements UserInterface
      */
     private $estaActivo;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $estaBloqueado;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -207,17 +203,6 @@ class Docente implements UserInterface
         return $this;
     }
 
-    public function getEstaBloqueado(): ?bool
-    {
-        return $this->estaBloqueado;
-    }
-
-    public function setEstaBloqueado(?bool $estaBloqueado): self
-    {
-        $this->estaBloqueado = $estaBloqueado;
-
-        return $this;
-    }
 
     public function getEsExterno(): ?bool
     {

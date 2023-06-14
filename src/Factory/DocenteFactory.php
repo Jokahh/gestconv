@@ -57,7 +57,6 @@ final class DocenteFactory extends ModelFactory
             'notificaciones' => self::faker()->boolean(20),
             'esAdmin' => self::faker()->boolean(10),
             'estaActivo' => self::faker()->boolean(90),
-            'estaBloqueado' => self::faker()->boolean(10),
             'esExterno' => self::faker()->boolean(10),
             'esDirectivo' => self::faker()->boolean(10),
             'esComisionario' => self::faker()->boolean(10)
