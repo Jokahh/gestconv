@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Docente;
+use Faker\Provider\Text;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -80,7 +81,8 @@ class DocenteType extends AbstractType
                 ]
             ])
             ->add('telefono', TextType::class, [
-                'label' => 'Número de teléfono',
+                'label' => 'Teléfono',
+                'help' => 'Número de teléfono',
                 'required' => false,
                 'constraints' => [
                     new Length([
@@ -89,7 +91,24 @@ class DocenteType extends AbstractType
                     ])
                 ]
             ])
-            ->add('usuario');
+            ->add('usuario', TextType::class, [
+                'label' => 'Usuario',
+                'required' => true,
+                'help' => 'Nombre de usuario',
+                'constraints' => [
+                    new Length([
+                        'min' => 6,
+                        'max' => 100,
+                        'minMessage' => 'El tamaño mínimo de este campo es de 6 caracteres',
+                        'maxMessage' => 'El tamaño máximo de este campo es de 100 caracteres'
+                    ])
+                ]
+            ])
+            ->add('notificaciones', CheckboxType::class, [
+                'label' => 'Recibir notificaciones por correo electrónico?',
+                'required' => false,
+                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+            ]);
 
         if ($options['admin'] === true) {
             $builder
@@ -128,23 +147,11 @@ class DocenteType extends AbstractType
                     'required' => false,
                     'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
                 ])
-                ->add('estaBloqueado', CheckboxType::class, [
-                    'label' => 'Está bloqueado?',
-                    'required' => false,
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-                ])
                 ->add('esExterno', CheckboxType::class, [
                     'label' => 'Es externo?',
                     'required' => false,
                     'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
-                ])
-                ->add('notificaciones', CheckboxType::class, [
-                    'label' => 'Tiene notificaciones?',
-                    'required' => false,
-                    'disabled' => true,
-                    'attr' => ['readonly' => true, 'data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
                 ]);
-
         }
     }
 
