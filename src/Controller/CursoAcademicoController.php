@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\CursoAcademico;
-use App\Form\CambiarCursoAcademicoActualType;
 use App\Form\CursoAcademicoType;
 use App\Repository\CursoAcademicoRepository;
-use App\Service\CursoAcademicoActual;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
