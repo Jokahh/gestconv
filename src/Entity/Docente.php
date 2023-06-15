@@ -343,6 +343,11 @@ class Docente implements UserInterface
             $roles[] = 'ROLE_TUTOR';
         }
 
+        // Si el Docente no está activo se le bloquea el acceso a la aplicación
+        if (!$this->getEstaActivo()) {
+            $roles = [];
+        }
+
         return $roles;
     }
 

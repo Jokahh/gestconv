@@ -24,6 +24,7 @@ class DocenteRepository extends ServiceEntityRepository
     public function nuevo(): Docente
     {
         $docente = new Docente();
+        $docente->setEstaActivo(true);
         $this->getEntityManager()->persist($docente);
         return $docente;
     }
