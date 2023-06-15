@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+{% block title %}Modificar Docente{% endblock %}
 {% block content %}
     {% if docente.id and is_granted('ROLE_DIRECTIVO') and (docente.id != app.user.id) %}
         <h1>Modificar docente: {{ docente.id }}</h1>
