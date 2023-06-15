@@ -1,0 +1,11 @@
+knp_paginator:
+  page_range: 5 # The number of page numbers shown in the pagination bar
+  default_options:
+    page_name: page # The name of the page query parameter
+    sort_field_name: sort # The name of the sort field query parameter
+    sort_direction_name: direction # The name of the sort direction query parameter
+    distinct: true # Set to false if you want to allow duplicate items in the pagination
+  template:
+    pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig' # The pagination template to use
+    sortable: '@KnpPaginator/Pagination/twitter_bootstrap_v4_font_awesome_sortable_link.html.twig' # The sorting link template to use
+    filtration: '@KnpPaginator/Pagination/twitter_bootstrap_v4_filtration.html.twig' # The filtration template to use
