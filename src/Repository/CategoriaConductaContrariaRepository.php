@@ -16,17 +16,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoriaConductaContrariaRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $cursoAcademicoRepository;
+
+    public function __construct(ManagerRegistry $registry, CursoAcademicoRepository $cursoAcademicoRepository)
     {
         parent::__construct($registry, CategoriaConductaContraria::class);
+        $this->cursoAcademicoRepository = $cursoAcademicoRepository;
     }
 
-    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    public function findAllByCursoActivo(): array
     {
         return $this->createQueryBuilder('categoria_conducta_contraria')
             ->where('categoria_conducta_contraria.cursoAcademico = :curso_academico')
-            ->setParameter('curso_academico', $cursoAcademicoId)
-            ->orderBy('categoria_conducta_contraria.orden')
+            ->setParameter('curso_academico', $this->cursoAcademicoRepository->findActivo())
+            ->orderBy('categoria_conducta_contraria.orden', 'ASC')
             ->getQuery()
             ->getResult();
     }

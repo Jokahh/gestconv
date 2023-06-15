@@ -16,17 +16,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TramoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $cursoAcademicoRepository;
+
+    public function __construct(ManagerRegistry $registry, CursoAcademicoRepository $cursoAcademicoRepository)
     {
         parent::__construct($registry, Tramo::class);
+        $this->cursoAcademicoRepository = $cursoAcademicoRepository;
     }
 
-    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    public function findAllByCursoActivo(): array
     {
         return $this->createQueryBuilder('tramo')
             ->where('tramo.cursoAcademico = :curso_academico')
-            ->setParameter('curso_academico', $cursoAcademicoId)
-            ->orderBy('tramo.orden')
+            ->setParameter('curso_academico', $this->cursoAcademicoRepository->findActivo())
+            ->orderBy('tramo.orden', 'ASC')
             ->getQuery()
             ->getResult();
     }

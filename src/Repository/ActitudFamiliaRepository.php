@@ -16,16 +16,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ActitudFamiliaRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $cursoAcademicoRepository;
+
+    public function __construct(ManagerRegistry $registry, CursoAcademicoRepository $cursoAcademicoRepository)
     {
         parent::__construct($registry, ActitudFamilia::class);
+        $this->cursoAcademicoRepository = $cursoAcademicoRepository;
     }
 
-    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    public function findAllByCursoActivo(): array
     {
         return $this->createQueryBuilder('actitud_familia')
             ->where('actitud_familia.cursoAcademico = :curso_academico')
-            ->setParameter('curso_academico', $cursoAcademicoId)
+            ->setParameter('curso_academico', $this->cursoAcademicoRepository->findActivo())
             ->orderBy('actitud_familia.orden', 'ASC')
             ->getQuery()
             ->getResult();

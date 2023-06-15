@@ -16,19 +16,23 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TipoComunicacionRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $cursoAcademicoRepository;
+
+    public function __construct(ManagerRegistry $registry, CursoAcademicoRepository $cursoAcademicoRepository)
     {
         parent::__construct($registry, TipoComunicacion::class);
+        $this->cursoAcademicoRepository = $cursoAcademicoRepository;
     }
 
-    public function findAllByCursoAcademicoId(int $cursoAcademicoId): array
+    public function findAllByCursoActivo(): array
     {
         return $this->createQueryBuilder('tipo_comunicacion')
             ->where('tipo_comunicacion.cursoAcademico = :curso_academico')
-            ->setParameter('curso_academico', $cursoAcademicoId)
+            ->setParameter('curso_academico', $this->cursoAcademicoRepository->findActivo())
             ->getQuery()
             ->getResult();
     }
+
     public function nuevo(): TipoComunicacion
     {
         $tipoComunicacion = new TipoComunicacion();
