@@ -1,10 +1,20 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
     <div class="row">
-        <div class="col">
-            <h2>Listado de todas las categorias de conductas contrarias</h2>
+        <div class="col mb-2">
+            {% if cursoActual %}
+                <h2>Listado de las categorías del curso {{ curso }}</h2>
+            {% else %}
+                <h2>Listado de todas las categorías</h2>
+            {% endif %}
         </div>
-        <div>
+        <div> {% if cursoActual %}
+                <a href="{{ path('categoria_conducta_contraria_listar') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Todas las categorías</a>
+            {% else %}
+                <a href="{{ path('categoria_conducta_contraria_listar_curso_actual') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Categorías del curso {{ curso }}</a>
+            {% endif %}
             <a href="{{ path('categoria_conducta_contraria_nuevo') }}" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nueva categoría de conducta contraria</a>
         </div>
@@ -14,19 +24,19 @@
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th>Descripción</th>
-                <th>Prioritaria</th>
-                <th>Curso Académico</th>
-                <th></th>
+                <th class="align-middle">Descripción</th>
+                <th class="align-middle">Prioritaria</th>
+                <th class="align-middle">Curso Académico</th>
+                <th class="align-middle"></th>
             </tr>
             </thead>
             <tbody>
             {% for categoriaConductaContraria in categoriasConductasContrarias %}
                 <tr>
-                    <td>{{ categoriaConductaContraria.descripcion }}</td>
-                    <td>{{ categoriaConductaContraria.prioritaria ? 'Si' : 'No' }}</td>
-                    <td>{{ categoriaConductaContraria.cursoAcademico }}</td>
-                    <td>
+                    <td class="align-middle">{{ categoriaConductaContraria.descripcion }}</td>
+                    <td class="align-middle">{{ categoriaConductaContraria.prioritaria ? 'Si' : 'No' }}</td>
+                    <td class="align-middle">{{ categoriaConductaContraria.cursoAcademico }}</td>
+                    <td class="align-middle">
                         <a href="{{ path('categoria_conducta_contraria_modificar', {'id': categoriaConductaContraria.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
@@ -35,7 +45,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>No hay categorías de conductas contrarias</td>
+                    <td class="align-middle">No hay categorías de conductas contrarias</td>
                 </tr>
             {% endfor %}
             </tbody>

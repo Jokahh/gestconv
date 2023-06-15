@@ -1,10 +1,21 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
     <div class="row">
-        <div class="col">
-            <h2>Listado de todos los tramos</h2>
+        <div class="col mb-2">
+            {% if cursoActual %}
+                <h3>Listado de los tramos del curso {{ curso }}</h3>
+            {% else %}
+                <h3>Listado de todos los tramos</h3>
+            {% endif %}
         </div>
         <div>
+            {% if cursoActual %}
+                <a href="{{ path('tramo_listar') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Todos los tramos</a>
+            {% else %}
+                <a href="{{ path('tramo_listar_curso_actual') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Tramos del curso {{ curso }}</a>
+            {% endif %}
             <a href="{{ path('tramo_nuevo') }}" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nuevo tramo</a>
         </div>
@@ -14,30 +25,29 @@
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th>Dia Semana</th>
-                <th>Hora Inicio</th>
-                <th>Hora Fin</th>
-                <th>Curso Académico</th>
-                <th></th>
+                <th class="align-middle">Dia Semana</th>
+                <th class="align-middle">Hora de Inicio</th>
+                <th class="align-middle">Hora de Fin</th>
+                <th class="align-middle">Curso Académico</th>
+                <th class="align-middle"></th>
             </tr>
             </thead>
             <tbody>
             {% for tramo in tramos %}
                 <tr>
-                    <td>{{ tramo.diaSemana }}</td>
-                    <td>{{ tramo.horaInicio }}</td>
-                    <td>{{ tramo.horaInicio }}</td>
-                    <td>{{ tramo.cursoAcademico }}</td>
-                    <td>
+                    <td class="align-middle">{{ tramo.diaSemana }}</td>
+                    <td class="align-middle">{{ tramo.horaInicio }}</td>
+                    <td class="align-middle">{{ tramo.horaInicio }}</td>
+                    <td class="align-middle">{{ tramo.cursoAcademico }}</td>
+                    <td class="align-middle">
                         <a href="{{ path('tramo_modificar', {'id': tramo.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
                     </td>
-
                 </tr>
             {% else %}
                 <tr>
-                    <td>No hay tramos</td>
+                    <td class="align-middle">No hay tramos</td>
                 </tr>
             {% endfor %}
             </tbody>

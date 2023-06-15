@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ActitudFamilia;
 use App\Form\ActitudFamiliaType;
 use App\Repository\ActitudFamiliaRepository;
+use App\Repository\CursoAcademicoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,28 @@ class ActitudFamiliaController extends AbstractController
     /**
      * @Route("/actitud_familia", name="actitud_familia_listar")
      */
-    public function listar(ActitudFamiliaRepository $actitudFamiliaRepository): Response
+    public function listar(ActitudFamiliaRepository $actitudFamiliaRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $actitudesFamilia = $actitudFamiliaRepository->findAll();
         return $this->render('actitud_familia/listar.html.twig', [
-            'actitudes_familia' => $actitudesFamilia
+            'actitudes_familia' => $actitudesFamilia,
+            'cursoActual' => false,
+            'curso' => $cursoAcademicoRepository->findActivo()
+        ]);
+    }
+
+    /**
+     * @Route("/actitud_familia_actual", name="actitud_familia_listar_curso_actual")
+     */
+    public function listarActitudesCursoActual(ActitudFamiliaRepository $actitudFamiliaRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
+        $actitudesFamilia = $actitudFamiliaRepository->findAllByCursoActivo();
+        return $this->render('actitud_familia/listar.html.twig', [
+            'actitudes_familia' => $actitudesFamilia,
+            'cursoActual' => true,
+            'curso' => $cursoAcademicoRepository->findActivo()
         ]);
     }
 

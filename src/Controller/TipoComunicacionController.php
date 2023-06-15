@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\TipoComunicacion;
 use App\Form\TipoComunicacionType;
+use App\Repository\CursoAcademicoRepository;
 use App\Repository\TipoComunicacionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +16,28 @@ class TipoComunicacionController extends AbstractController
     /**
      * @Route("/tipo_comunicacion", name="tipo_comunicacion_listar")
      */
-    public function listar(TipoComunicacionRepository $tipoComunicacionRepository): Response
+    public function listar(TipoComunicacionRepository $tipoComunicacionRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $tiposComunicaciones = $tipoComunicacionRepository->findAll();
         return $this->render('tipo_comunicacion/listar.html.twig', [
-            'tiposComunicaciones' => $tiposComunicaciones
+            'tiposComunicaciones' => $tiposComunicaciones,
+            'cursoActual' => false,
+            'curso' => $cursoAcademicoRepository->findActivo()
+        ]);
+    }
+
+    /**
+     * @Route("/tipo_comunicacion_actual", name="tipo_comunicacion_listar_curso_actual")
+     */
+    public function listarTiposCursoActual(TipoComunicacionRepository $tipoComunicacionRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
+        $tiposComunicaciones = $tipoComunicacionRepository->findAllByCursoActivo();
+        return $this->render('tipo_comunicacion/listar.html.twig', [
+            'tiposComunicaciones' => $tiposComunicaciones,
+            'cursoActual' => true,
+            'curso' => $cursoAcademicoRepository->findActivo()
         ]);
     }
 
@@ -29,7 +46,7 @@ class TipoComunicacionController extends AbstractController
      */
     public function nuevoTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');;
         $tipoComunicacion = $tipoComunicacionRepository->nuevo();
 
         return $this->modificarTipoComunicacion($request, $tipoComunicacionRepository, $tipoComunicacion);
@@ -40,7 +57,7 @@ class TipoComunicacionController extends AbstractController
      */
     public function modificarTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository, TipoComunicacion $tipoComunicacion): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $form = $this->createForm(TipoComunicacionType::class, $tipoComunicacion);
         $form->handleRequest($request);
 
@@ -65,7 +82,7 @@ class TipoComunicacionController extends AbstractController
      */
     public function eliminarTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository, TipoComunicacion $tipoComunicacion): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
                 $tipoComunicacionRepository->eliminar($tipoComunicacion);

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tramo;
 use App\Form\TramoType;
+use App\Repository\CursoAcademicoRepository;
 use App\Repository\TramoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +16,28 @@ class TramoController extends AbstractController
     /**
      * @Route("/tramo", name="tramo_listar")
      */
-    public function listar(TramoRepository $tramoRepository): Response
+    public function listar(TramoRepository $tramoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $tramos = $tramoRepository->findAll();
         return $this->render('tramo/listar.html.twig', [
-            'tramos' => $tramos
+            'tramos' => $tramos,
+            'cursoActual' => false,
+            'curso' => $cursoAcademicoRepository->findActivo()
+        ]);
+    }
+
+    /**
+     * @Route("/tramo_actual", name="tramo_listar_curso_actual")
+     */
+    public function listarTramosCursoActual(TramoRepository $tramoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
+        $tramos = $tramoRepository->findAllByCursoActivo();
+        return $this->render('tramo/listar.html.twig', [
+            'tramos' => $tramos,
+            'cursoActual' => true,
+            'curso' => $cursoAcademicoRepository->findActivo()
         ]);
     }
 
@@ -29,9 +46,9 @@ class TramoController extends AbstractController
      */
     public function nuevoTramo(Request $request, TramoRepository $tramoRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $tramo = $tramoRepository->nuevo();
-        
+
         return $this->modificarTramo($request, $tramoRepository, $tramo);
     }
 
@@ -40,7 +57,7 @@ class TramoController extends AbstractController
      */
     public function modificarTramo(Request $request, TramoRepository $tramoRepository, Tramo $tramo): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $form = $this->createForm(TramoType::class, $tramo);
         $form->handleRequest($request);
 
@@ -65,7 +82,7 @@ class TramoController extends AbstractController
      */
     public function eliminarTramo(Request $request, TramoRepository $tramoRepository, Tramo $tramo): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
                 $tramoRepository->eliminar($tramo);

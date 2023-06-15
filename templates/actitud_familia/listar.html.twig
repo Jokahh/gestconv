@@ -2,9 +2,20 @@
 {% block content %}
     <div class="row">
         <div class="col">
-            <h2>Listado de todas las actitudes de familia</h2>
+            {% if cursoActual %}
+                <h2>Listado de las actitudes del curso {{ curso }}</h2>
+            {% else %}
+                <h2>Listado de todas las actitudes</h2>
+            {% endif %}
         </div>
         <div>
+            {% if cursoActual %}
+                <a href="{{ path('actitud_familia_listar') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Todas las actitudes</a>
+            {% else %}
+                <a href="{{ path('actitud_familia_listar_curso_actual') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Actitudes del curso {{ curso }}</a>
+            {% endif %}
             <a href="{{ path('actitud_familia_nuevo') }}" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nueva actitud de familia</a>
         </div>

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\CategoriaConductaContraria;
 use App\Form\CategoriaConductaContrariaType;
 use App\Repository\CategoriaConductaContrariaRepository;
+use App\Repository\CursoAcademicoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,28 @@ class CategoriaConductaContrariaController extends AbstractController
     /**
      * @Route("/categoria_conducta_contraria", name="categoria_conducta_contraria_listar")
      */
-    public function listar(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository): Response
+    public function listar(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $categoriasConductasContrarias = $categoriaConductaContrariaRepository->findAll();
         return $this->render('categoria_conducta_contraria/listar.html.twig', [
-            'categoriasConductasContrarias' => $categoriasConductasContrarias
+            'categoriasConductasContrarias' => $categoriasConductasContrarias,
+            'cursoActual' => false,
+            'curso' => $cursoAcademicoRepository->findActivo()
+        ]);
+    }
+
+    /**
+     * @Route("/categoria_conducta_contraria_actual", name="categoria_conducta_contraria_listar_curso_actual")
+     */
+    public function listarCategoriasCursoActual(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
+        $categoriasConductasContrarias = $categoriaConductaContrariaRepository->findAllByCursoActivo();
+        return $this->render('categoria_conducta_contraria/listar.html.twig', [
+            'categoriasConductasContrarias' => $categoriasConductasContrarias,
+            'cursoActual' => true,
+            'curso' => $cursoAcademicoRepository->findActivo()
         ]);
     }
 
@@ -29,7 +46,7 @@ class CategoriaConductaContrariaController extends AbstractController
      */
     public function nuevoCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $categoriaConductaContraria = $categoriaConductaContrariaRepository->nuevo();
 
         return $this->modificarCategoriaConductaContraria($request, $categoriaConductaContrariaRepository, $categoriaConductaContraria);
@@ -40,7 +57,7 @@ class CategoriaConductaContrariaController extends AbstractController
      */
     public function modificarCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CategoriaConductaContraria $categoriaConductaContraria): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $form = $this->createForm(CategoriaConductaContrariaType::class, $categoriaConductaContraria);
         $form->handleRequest($request);
 
@@ -65,7 +82,7 @@ class CategoriaConductaContrariaController extends AbstractController
      */
     public function eliminarCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CategoriaConductaContraria $categoriaConductaContraria): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
                 $categoriaConductaContrariaRepository->eliminar($categoriaConductaContraria);

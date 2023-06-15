@@ -1,12 +1,23 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
     <div class="row">
-        <div class="col">
-            <h2>Listado de todos los tipos de comunicaciones</h2>
+        <div class="col mb-2">
+            {% if cursoActual %}
+                <h3>Listado de los tipos de comunicación del curso {{ curso }}</h3>
+            {% else %}
+                <h3>Listado de todos los tipos de comunicación</h3>
+            {% endif %}
         </div>
         <div>
+            {% if cursoActual %}
+                <a href="{{ path('tipo_comunicacion_listar') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Todos los tipos</a>
+            {% else %}
+                <a href="{{ path('tipo_comunicacion_listar_curso_actual') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Tipos del curso {{ curso }}</a>
+            {% endif %}
             <a href="{{ path('tipo_comunicacion_nuevo') }}" class="btn btn-success">
-                <i class="fa fa-plus"></i> Nuevo tipo de comunicación</a>
+                <i class="fa fa-plus"></i> Nuevo tipo</a>
         </div>
     </div>
 

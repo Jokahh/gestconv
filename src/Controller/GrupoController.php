@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Grupo;
 use App\Form\GrupoType;
+use App\Repository\CursoAcademicoRepository;
 use App\Repository\GrupoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,30 +16,48 @@ class GrupoController extends AbstractController
     /**
      * @Route("/grupo", name="grupo_listar")
      */
-    public function listar(GrupoRepository $grupoRepository): Response
+    public function listar(GrupoRepository $grupoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $grupos = $grupoRepository->findAll();
         return $this->render('grupo/listar.html.twig', [
-            'grupos' => $grupos
+            'grupos' => $grupos,
+            'cursoActual' => false,
+            'curso' => $cursoAcademicoRepository->findActivo()
+        ]);
+    }
+
+    /**
+     * @Route("/grupo_actual", name="grupo_listar_curso_actual")
+     */
+    public function listarGruposCursoActual(GrupoRepository $grupoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    {
+        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $grupos = $grupoRepository->findAllByCursoActivo();
+        return $this->render('grupo/listar.html.twig', [
+            'grupos' => $grupos,
+            'cursoActual' => true,
+            'curso' => $cursoAcademicoRepository->findActivo()
         ]);
     }
 
     /**
      * @Route ("/grupo/nuevo", name="grupo_nuevo")
      */
-    public function nuevoGrupo(Request $request, GrupoRepository $grupoRepository): Response
+    public
+    function nuevoGrupo(Request $request, GrupoRepository $grupoRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $grupo = $grupoRepository->nuevo();
-        
+
         return $this->modificarGrupo($request, $grupoRepository, $grupo);
     }
 
     /**
      * @Route("/grupo/{id}", name="grupo_modificar", requirements={"id":"\d+"})
      */
-    public function modificarGrupo(Request $request, GrupoRepository $grupoRepository, Grupo $grupo): Response
+    public
+    function modificarGrupo(Request $request, GrupoRepository $grupoRepository, Grupo $grupo): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $form = $this->createForm(GrupoType::class, $grupo);
@@ -63,7 +82,8 @@ class GrupoController extends AbstractController
     /**
      * @Route("/grupo/eliminar/{id}", name="grupo_eliminar", requirements={"id":"\d+"})
      */
-    public function eliminarGrupo(Request $request, GrupoRepository $grupoRepository, Grupo $grupo): Response
+    public
+    function eliminarGrupo(Request $request, GrupoRepository $grupoRepository, Grupo $grupo): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($request->request->has('confirmar')) {
@@ -76,7 +96,7 @@ class GrupoController extends AbstractController
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el grupo!');
             }
         }
-        return $this->render('grupo/eliminar.html.twig', [
+        return $this->render('grupo/listar.html.twig', [
             'grupo' => $grupo
         ]);
     }

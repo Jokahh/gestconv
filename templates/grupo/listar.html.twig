@@ -2,9 +2,20 @@
 {% block content %}
     <div class="row">
         <div class="col">
-            <h2>Listado de todos los grupos</h2>
+            {% if cursoActual %}
+                <h2>Listado de los grupos del curso {{ curso }}</h2>
+            {% else %}
+                <h2>Listado de todos los grupos</h2>
+            {% endif %}
         </div>
         <div>
+            {% if cursoActual %}
+                <a href="{{ path('grupo_listar') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Todos los grupos</a>
+            {% else %}
+                <a href="{{ path('grupo_listar_curso_actual') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Grupos del curso {{ curso }}</a>
+            {% endif %}
             <a href="{{ path('grupo_nuevo') }}" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nuevo grupo</a>
         </div>
@@ -14,19 +25,19 @@
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Curso Académico</th>
-                <th></th>
+                <th class="align-middle">Nombre</th>
+                <th class="align-middle">Descripción</th>
+                <th class="align-middle">Curso Académico</th>
+                <th class="align-middle"></th>
             </tr>
             </thead>
             <tbody>
             {% for grupo in grupos %}
                 <tr>
-                    <td>{{ grupo.nombre }}</td>
-                    <td>{{ grupo.descripcion }}</td>
-                    <td>{{ grupo.cursoAcademico }}</td>
-                    <td>
+                    <td class="align-middle">{{ grupo.nombre }}</td>
+                    <td class="align-middle">{{ grupo.descripcion }}</td>
+                    <td class="align-middle">{{ grupo.cursoAcademico }}</td>
+                    <td class="align-middle">
                         <a href="{{ path('grupo_modificar', {'id': grupo.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
@@ -35,7 +46,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>No hay grupos</td>
+                    <td class="align-middle">No hay grupos</td>
                 </tr>
             {% endfor %}
             </tbody>
