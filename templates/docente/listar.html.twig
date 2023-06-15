@@ -15,7 +15,6 @@
             <thead class="thead-light">
             <tr>
                 <th>Nombre y Apellidos</th>
-                <th>Tiene Notificaciones?</th>
                 <th></th>
             </tr>
             </thead>
@@ -23,7 +22,6 @@
             {% for docente in docentes %}
                 <tr>
                     <td>{{ docente.nombre }} {{ docente.apellido1 }} {{ docente.apellido2 }}</td>
-                    <td>{{ docente.notificaciones ? 'Si' : 'No' }}</td>
                     <td>
                         <a href="{{ path('docente_modificar', {'id': docente.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
