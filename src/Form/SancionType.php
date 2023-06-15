@@ -2,13 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\ActitudFamilia;
 use App\Entity\Medida;
 use App\Entity\Parte;
 use App\Entity\Sancion;
+use App\Repository\ActitudFamiliaRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,8 +18,15 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class SancionType extends AbstractType
 {
+    private $actitudFamiliaRepository;
+    public function __construct(ActitudFamiliaRepository $actitudFamiliaRepository)
+    {
+        $this->actitudFamiliaRepository = $actitudFamiliaRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $actitudesFamilia = $this->actitudFamiliaRepository->findAllByCursoActivo();
         $builder
             ->add('fechaSancion', DateTimeType::class, [
                 'label' => 'Fecha de la sanción',
@@ -75,10 +83,11 @@ class SancionType extends AbstractType
                     ])
                 ]
             ])
-            ->add('actitudFamilia', EntityType::class, [
+            ->add('actitudFamilia', ChoiceType::class, [
                 'label' => 'Actitud de la familia',
                 'help' => 'Selecciona la actitud de la familia en respecto a esta sanción',
-                'class' => ActitudFamilia::class,
+                'choices' => $actitudesFamilia,
+                'choice_label' => 'descripcion',
                 'required' => true,
                 'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona una actitud de familia', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ])

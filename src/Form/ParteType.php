@@ -8,6 +8,7 @@ use App\Entity\Estudiante;
 use App\Entity\Parte;
 use App\Entity\Sancion;
 use App\Entity\Tramo;
+use App\Repository\TramoRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -20,8 +21,16 @@ use Symfony\Component\Validator\Constraints\Length;
 
 class ParteType extends AbstractType
 {
+    private $tramoRepository;
+
+    public function __construct(TramoRepository $tramoRepository)
+    {
+        $this->tramoRepository = $tramoRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $tramos = $this->tramoRepository->findAllByCursoActivo();
         $builder
             ->add('docente', EntityType::class, [
                 'label' => 'Docente u ordenanza',
@@ -109,9 +118,12 @@ class ParteType extends AbstractType
                     'No' => 'No'
                 ],
             ])
-            ->add('tramo', EntityType::class, [
+            ->add('tramo', ChoiceType::class, [
                 'label' => 'Tramo',
-                'class' => Tramo::class,
+                'choices' => $tramos,
+                'choice_label' => function (?Tramo $tramo) {
+                    return $tramo;
+                },
                 'required' => true,
                 'help' => 'Seleccione el tramo cuando ocurrió el suceso',
                 'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un tramo', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
