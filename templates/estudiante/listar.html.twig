@@ -1,10 +1,21 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
     <div class="row">
-        <div class="col">
-            <h2>Listado de todos los estudiantes</h2>
+        <div class="col mb-2">
+            {% if cursoActual %}
+                <h3>Listado de los estudiantes del curso {{ curso }}</h3>
+            {% else %}
+                <h3>Listado de todos los estudiantes</h3>
+            {% endif %}
         </div>
         <div>
+            {% if cursoActual %}
+                <a href="{{ path('estudiante_listar') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Todos los estudiantes</a>
+            {% else %}
+                <a href="{{ path('estudiante_listar_grupo_curso_actual') }}" class="btn btn-secondary">
+                    <i class="fa fa-list"></i> Estudiantes del curso {{ curso }}</a>
+            {% endif %}
             <a href="{{ path('estudiante_nuevo') }}" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nuevo estudiante</a>
         </div>
@@ -14,19 +25,21 @@
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th>Nombre y Apellidos</th>
-                <th>Telefono 1</th>
-                <th>Telefono 2</th>
-                <th></th>
+                <th class="align-middle">Nombre y Apellidos</th>
+                <th class="align-middle">Grupos</th>
+                <th class="align-middle">Telefono 1</th>
+                <th class="align-middle">Telefono 2</th>
+                <th class="align-middle"></th>
             </tr>
             </thead>
             <tbody>
             {% for estudiante in estudiantes %}
                 <tr>
-                    <td>{{ estudiante.nombre }} {{ estudiante.apellido1 }} {{ estudiante.apellido2 }}</td>
-                    <td>{{ estudiante.telefono1 }}</td>
-                    <td>{{ estudiante.telefono2 }}</td>
-                    <td>
+                    <td class="align-middle">{{ estudiante.nombre }} {{ estudiante.apellido1 }} {{ estudiante.apellido2 }}</td>
+                    <td class="align-middle">{{ estudiante.grupos|join(', ') }}</td>
+                    <td class="align-middle">{{ estudiante.telefono1 }}</td>
+                    <td class="align-middle">{{ estudiante.telefono2 }}</td>
+                    <td class="align-middle">
                         <a href="{{ path('estudiante_modificar', {'id': estudiante.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
@@ -34,7 +47,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>No hay estudiantes</td>
+                    <td class="align-middle">No hay estudiantes</td>
                 </tr>
             {% endfor %}
             </tbody>

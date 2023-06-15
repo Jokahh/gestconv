@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Estudiante;
 use App\Form\EstudianteType;
+use App\Repository\CursoAcademicoRepository;
 use App\Repository\EstudianteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +16,28 @@ class EstudianteController extends AbstractController
     /**
      * @Route("/estudiante", name="estudiante_listar")
      */
-    public function listar(EstudianteRepository $estudianteRepository): Response
+    public function listar(EstudianteRepository $estudianteRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $estudiantes = $estudianteRepository->findAll();
         return $this->render('estudiante/listar.html.twig', [
-            'estudiantes' => $estudiantes
+            'estudiantes' => $estudiantes,
+            'cursoActual' => false,
+            'curso' => $cursoAcademicoRepository->findActivo()
+        ]);
+    }
+
+    /**
+     * @Route("/estudiante_grupo_curso_actual", name="estudiante_listar_grupo_curso_actual")
+     */
+    public function listarEstudiantesDeGruposDelCursoActual(EstudianteRepository $estudianteRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    {
+        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $estudiantes = $estudianteRepository->findAllEstudiantesDeGruposDelCursoActual();
+        return $this->render('estudiante/listar.html.twig', [
+            'estudiantes' => $estudiantes,
+            'cursoActual' => true,
+            'curso' => $cursoAcademicoRepository->findActivo()
         ]);
     }
 
@@ -31,7 +48,7 @@ class EstudianteController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $estudiante = $estudianteRepository->nuevo();
-        
+
         return $this->modificarEstudiante($request, $estudianteRepository, $estudiante);
     }
 

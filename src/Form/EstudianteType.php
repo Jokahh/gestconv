@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Estudiante;
+use App\Entity\Grupo;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,6 +21,15 @@ class EstudianteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('grupos', EntityType::class, [
+                'label' => 'Grupo',
+                'class' => Grupo::class,
+                'placeholder' => 'Ninguno',
+                'required' => false,
+                'multiple' => true,
+                'help' => 'Seleccione los grupos al que pertenece el estudiante',
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un grupo', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+            ])
             ->add('nie', TextType::class, [
                 'label' => 'NIE',
                 'required' => true,
@@ -124,7 +135,7 @@ class EstudianteType extends AbstractType
                 ]
             ])
             ->add('tutor1', TextType::class, [
-                'label' => 'Tutor',
+                'label' => 'Primer tutor',
                 'required' => false,
                 'constraints' => [
                     new Length([
@@ -133,7 +144,7 @@ class EstudianteType extends AbstractType
                     ])
                 ]
             ])
-            ->add('tutor1', TextType::class, [
+            ->add('tutor2', TextType::class, [
                 'label' => 'Segundo tutor',
                 'required' => false,
                 'constraints' => [
