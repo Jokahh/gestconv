@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\CursoAcademico;
+use App\Form\CambiarCursoAcademicoActualType;
 use App\Form\CursoAcademicoType;
 use App\Repository\CursoAcademicoRepository;
+use App\Service\CursoAcademicoActual;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +33,7 @@ class CursoAcademicoController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $cursoAcademico = $cursoAcademicoRepository->nuevo();
-        
+
         return $this->modificarCursoAcademico($request, $cursoAcademicoRepository, $cursoAcademico);
     }
 
@@ -77,6 +79,28 @@ class CursoAcademicoController extends AbstractController
             }
         }
         return $this->render('curso_academico/eliminar.html.twig', [
+            'curso_academico' => $cursoAcademico
+        ]);
+    }
+
+    /**
+     * @Route("/curso_academico/seleccionar_activo/{id}", name="curso_academico_seleccionar_activo", requirements={"id":"\d+"})
+     */
+    public function seleccionarCursoAcademicoActivo(Request $request, CursoAcademico $cursoAcademico, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        if ($request->request->has('confirmar')) {
+            try {
+                $cursoAcademicoRepository->setActivo($cursoAcademico);
+                $this->addFlash('exito', 'Curso académico actual cambiado con éxito');
+                return $this->redirectToRoute('curso_academico_listar');
+            } catch (\Exception $e) {
+                $this->addFlash('error', '¡Ocurrió un error al cambiar el curso académico activo!');
+                var_dump($e);
+            }
+        }
+        return $this->render('curso_academico/seleccionar_curso_activo.html.twig', [
             'curso_academico' => $cursoAcademico
         ]);
     }

@@ -75,6 +75,11 @@ class CursoAcademico
      */
     private $tiposComunicacion;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $esActivo;
+
     public function __construct()
     {
         $this->tramo = new ArrayCollection();
@@ -289,8 +294,21 @@ class CursoAcademico
 
         return $this;
     }
+
     public function __toString()
     {
         return ($this->getDescripcion() == null) ? $this->getId() : $this->getDescripcion();
+    }
+
+    public function getEsActivo(): ?bool
+    {
+        return $this->esActivo;
+    }
+
+    public function setEsActivo(bool $esActivo): self
+    {
+        $this->esActivo = $esActivo;
+
+        return $this;
     }
 }

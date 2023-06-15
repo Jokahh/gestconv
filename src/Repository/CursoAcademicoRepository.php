@@ -14,6 +14,10 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CursoAcademico[]    findAll()
  * @method CursoAcademico[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+
+/**
+ * @Repository
+ */
 class CursoAcademicoRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -36,5 +40,36 @@ class CursoAcademicoRepository extends ServiceEntityRepository
     public function eliminar(CursoAcademico $cursoAcademico): void
     {
         $this->getEntityManager()->remove($cursoAcademico);
+    }
+
+
+    public function findActivo(): ?CursoAcademico
+    {
+        return $this->findOneBy(['esActivo' => true]);
+    }
+
+    public function setActivo(CursoAcademico $cursoAcademico)
+    {
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        try {
+            $entityManager->beginTransaction();
+            $queryBuilder->update(CursoAcademico::class, 'c')
+                ->set('c.esActivo', ':false')
+                ->where('c.esActivo = :true')
+                ->setParameter('false', false)
+                ->setParameter('true', true)
+                ->getQuery()
+                ->execute();
+
+            $cursoAcademico->setEsActivo(true);
+            $entityManager->persist($cursoAcademico);
+            $entityManager->flush();
+
+            $entityManager->commit();
+        } catch (\Exception $e) {
+            $entityManager->rollback();
+        }
     }
 }

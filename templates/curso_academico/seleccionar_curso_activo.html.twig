@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Seleccionar el Curso Académico Activo</h1>
+    <div class="alert alert-warning">
+        El curso academico "{{ curso_academico.descripcion }}" será seleccionado como el curso activo
+    </div>
+    <form method="post">
+        <a href="{{ path('curso_academico_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver al listado</a>
+        <button type="submit" name="confirmar" class="btn btn-success"><i class="fa fa-check"></i> Confirmar</button>
+    </form>
+{% endblock %}
