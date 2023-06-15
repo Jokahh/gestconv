@@ -154,7 +154,7 @@ class Tramo
 
     public function __toString()
     {
-        return '' . $this->getId();
+        return $this->diaSemana . ' - ' . $this->getHoraInicio() . ' - ' . $this->getHoraFin();
     }
 
 }
