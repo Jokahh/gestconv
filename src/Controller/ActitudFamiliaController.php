@@ -17,7 +17,7 @@ class ActitudFamiliaController extends AbstractController
      */
     public function listar(ActitudFamiliaRepository $actitudFamiliaRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $actitudesFamilia = $actitudFamiliaRepository->findAll();
         return $this->render('actitud_familia/listar.html.twig', [
             'actitudes_familia' => $actitudesFamilia
@@ -29,7 +29,7 @@ class ActitudFamiliaController extends AbstractController
      */
     public function nuevoActitudFamilia(Request $request, ActitudFamiliaRepository $actitudFamiliaRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $actitudFamilia = $actitudFamiliaRepository->nuevo();
 
         return $this->modificarActitudFamilia($request, $actitudFamiliaRepository, $actitudFamilia);
@@ -40,7 +40,7 @@ class ActitudFamiliaController extends AbstractController
      */
     public function modificarActitudFamilia(Request $request, ActitudFamiliaRepository $actitudFamiliaRepository, ActitudFamilia $actitudFamilia): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $form = $this->createForm(ActitudFamiliaType::class, $actitudFamilia);
         $form->handleRequest($request);
 
@@ -65,7 +65,7 @@ class ActitudFamiliaController extends AbstractController
      */
     public function eliminarActitudFamilia(Request $request, ActitudFamiliaRepository $actitudFamiliaRepository, ActitudFamilia $actitudFamilia): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
                 $actitudFamiliaRepository->eliminar($actitudFamilia);
