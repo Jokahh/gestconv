@@ -6,6 +6,7 @@ use App\Entity\Grupo;
 use App\Form\GrupoType;
 use App\Repository\CursoAcademicoRepository;
 use App\Repository\GrupoRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,16 @@ class GrupoController extends AbstractController
     /**
      * @Route("/grupo", name="grupo_listar")
      */
-    public function listar(GrupoRepository $grupoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listar(GrupoRepository $grupoRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $grupos = $grupoRepository->findAll();
+        $pagination = $paginator->paginate(
+            $grupoRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('grupo/listar.html.twig', [
-            'grupos' => $grupos,
+            'pagination' => $pagination,
             'cursoActual' => false,
             'curso' => $cursoAcademicoRepository->findActivo()
         ]);
@@ -30,12 +35,16 @@ class GrupoController extends AbstractController
     /**
      * @Route("/grupo_actual", name="grupo_listar_curso_actual")
      */
-    public function listarGruposCursoActual(GrupoRepository $grupoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listarGruposCursoActual(GrupoRepository $grupoRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $grupos = $grupoRepository->findAllByCursoActivo();
+        $pagination = $paginator->paginate(
+            $grupoRepository->findAllByCursoActivo(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('grupo/listar.html.twig', [
-            'grupos' => $grupos,
+            'pagination' => $pagination,
             'cursoActual' => true,
             'curso' => $cursoAcademicoRepository->findActivo()
         ]);

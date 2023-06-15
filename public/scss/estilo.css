@@ -9,7 +9,7 @@
     font-size: 7em;
 }
 
-.inicio .card-inicio .card-header{
+.inicio .card-inicio .card-header {
     height: 6em;
     max-height: 6em;
     min-height: 6em;
@@ -19,12 +19,18 @@
     justify-content: center;
 }
 
-.inicio .card-inicio{
+.inicio .card-inicio {
     width: 19em;
     min-width: 19em;
     text-align: center;
 }
+
 .form-check {
-     padding-left: 0;
-     padding-right: 0;
- }
+    padding-left: 0;
+    padding-right: 0;
+}
+
+* {
+    transition: all;
+    transition-duration: 0.4s;
+}

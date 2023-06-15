@@ -1,14 +1,15 @@
 {% extends 'layout.html.twig' %}
+{% block title %}Listado de Grupo{% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col">
+    <div class="row p-1">
+        <div class="col-12 col-lg-7 justify-content-start p-0">
             {% if cursoActual %}
-                <h2>Listado de los grupos del curso {{ curso }}</h2>
+                <h4>Listado de los grupos del curso {{ curso }}</h4>
             {% else %}
-                <h2>Listado de todos los grupos</h2>
+                <h4>Listado de todos los grupos</h4>
             {% endif %}
         </div>
-        <div>
+        <div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
             {% if cursoActual %}
                 <a href="{{ path('grupo_listar') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Todos los grupos</a>
@@ -16,23 +17,22 @@
                 <a href="{{ path('grupo_listar_curso_actual') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Grupos del curso {{ curso }}</a>
             {% endif %}
-            <a href="{{ path('grupo_nuevo') }}" class="btn btn-success">
+            <a href="{{ path('grupo_nuevo') }}" class="btn btn-success ml-2">
                 <i class="fa fa-plus"></i> Nuevo grupo</a>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row p-1">
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
                 <th class="align-middle">Nombre</th>
                 <th class="align-middle">Descripción</th>
                 <th class="align-middle">Curso Académico</th>
-                <th class="align-middle"></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for grupo in grupos %}
+            {% for grupo in pagination %}
                 <tr>
                     <td class="align-middle">{{ grupo.nombre }}</td>
                     <td class="align-middle">{{ grupo.descripcion }}</td>
@@ -51,6 +51,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}
 
