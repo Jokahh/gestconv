@@ -143,6 +143,6 @@ class Grupo
 
     public function __toString()
     {
-        return ($this->getNombre() == null) ? $this->getDescripcion() : $this->getNombre();
+        return ($this->getNombre() == null) ? $this->getDescripcion() . ' - ' . $this->getCursoAcademico() : $this->getNombre() . ' - ' . $this->getCursoAcademico();
     }
 }
