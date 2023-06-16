@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ComunicacionSancion;
 use App\Form\ComunicacionSancionType;
 use App\Repository\ComunicacionSancionRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ class ComunicacionSancionController extends AbstractController
     /**
      * @Route("/comunicacion_sancion", name="comunicacion_sancion_listar")
      */
-    public function listar(ComunicacionSancionRepository $comunicacionSancionRepository): Response
+    public function listar(ComunicacionSancionRepository $comunicacionSancionRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $comunicacionesSanciones = $comunicacionSancionRepository->findAll();
+        $pagination = $paginator->paginate(
+            $comunicacionSancionRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('comunicacion_sancion/listar.html.twig', [
-            'comunicacionesSanciones' => $comunicacionesSanciones
+            'pagination' => $pagination,
         ]);
     }
 
