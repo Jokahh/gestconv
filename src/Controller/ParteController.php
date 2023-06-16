@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Parte;
 use App\Form\ParteType;
 use App\Repository\ParteRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ class ParteController extends AbstractController
     /**
      * @Route("/parte", name="parte_listar")
      */
-    public function listar(ParteRepository $parteRepository): Response
+    public function listar(ParteRepository $parteRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_PROFESOR');
-        $partes = $parteRepository->findAll();
+        $pagination = $paginator->paginate(
+            $parteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('parte/listar.html.twig', [
-            'partes' => $partes
+            'pagination' => $pagination
         ]);
     }
 
