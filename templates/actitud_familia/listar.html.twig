@@ -1,15 +1,15 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Listado de Actitudes De Familia{% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col">
+    <div class="row p-1">
+        <div class="col-12 col-lg-7 justify-content-start p-0">
             {% if cursoActual %}
-                <h2>Listado de las actitudes del curso {{ curso }}</h2>
+                <h4>Listado de las actitudes del curso {{ curso }}</h4>
             {% else %}
-                <h2>Listado de todas las actitudes</h2>
+                <h4>Listado de todas las actitudes</h4>
             {% endif %}
         </div>
-        <div>
+        <div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
             {% if cursoActual %}
                 <a href="{{ path('actitud_familia_listar') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Todas las actitudes</a>
@@ -17,41 +17,43 @@
                 <a href="{{ path('actitud_familia_listar_curso_actual') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Actitudes del curso {{ curso }}</a>
             {% endif %}
-            <a href="{{ path('actitud_familia_nuevo') }}" class="btn btn-success">
+            <a href="{{ path('actitud_familia_nuevo') }}" class="btn btn-success ml-2">
                 <i class="fa fa-plus"></i> Nueva actitud de familia</a>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row p-1">
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th>Descripción</th>
-                <th>Fecha</th>
-                <th>Curso Académico</th>
-                <th></th>
+                <th class="align-middle">Descripción</th>
+                <th class="align-middle">Fecha</th>
+                <th class="align-middle">Curso Académico</th>
+                <th class="align-middle"></th>
             </tr>
             </thead>
             <tbody>
-            {% for actitud_familia in actitudes_familia %}
+            {% for actitud_familia in pagination %}
                 <tr>
-                    <td>{{ actitud_familia.descripcion }}</td>
-                    <td>{{ actitud_familia.fecha|date("Y-m-d") }}</td>
-                    <td>{{ actitud_familia.cursoAcademico.descripcion }}</td>
-                    <td>
+                    <td class="align-middle">{{ actitud_familia.descripcion }}</td>
+                    <td class="align-middle">{{ actitud_familia.fecha|date("Y-m-d") }}</td>
+                    <td class="align-middle">{{ actitud_familia.cursoAcademico.descripcion }}</td>
+                    <td class="align-middle">
                         <a href="{{ path('actitud_familia_modificar', {'id': actitud_familia.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
                     </td>
-
                 </tr>
             {% else %}
                 <tr>
-                    <td>No hay actitudes de familia</td>
+                    <td class="align-middle">No hay actitudes de familia</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}
 

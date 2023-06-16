@@ -6,6 +6,7 @@ use App\Entity\ActitudFamilia;
 use App\Form\ActitudFamiliaType;
 use App\Repository\ActitudFamiliaRepository;
 use App\Repository\CursoAcademicoRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,16 @@ class ActitudFamiliaController extends AbstractController
     /**
      * @Route("/actitud_familia", name="actitud_familia_listar")
      */
-    public function listar(ActitudFamiliaRepository $actitudFamiliaRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listar(ActitudFamiliaRepository $actitudFamiliaRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
-        $actitudesFamilia = $actitudFamiliaRepository->findAll();
+        $pagination = $paginator->paginate(
+            $actitudFamiliaRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('actitud_familia/listar.html.twig', [
-            'actitudes_familia' => $actitudesFamilia,
+            'pagination' => $pagination,
             'cursoActual' => false,
             'curso' => $cursoAcademicoRepository->findActivo()
         ]);
@@ -30,12 +35,16 @@ class ActitudFamiliaController extends AbstractController
     /**
      * @Route("/actitud_familia_actual", name="actitud_familia_listar_curso_actual")
      */
-    public function listarActitudesCursoActual(ActitudFamiliaRepository $actitudFamiliaRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listarActitudesCursoActual(ActitudFamiliaRepository $actitudFamiliaRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
-        $actitudesFamilia = $actitudFamiliaRepository->findAllByCursoActivo();
+        $pagination = $paginator->paginate(
+            $actitudFamiliaRepository->findAllByCursoActivo(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('actitud_familia/listar.html.twig', [
-            'actitudes_familia' => $actitudesFamilia,
+            'pagination' => $pagination,
             'cursoActual' => true,
             'curso' => $cursoAcademicoRepository->findActivo()
         ]);
