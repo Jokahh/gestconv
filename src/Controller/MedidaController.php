@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Medida;
 use App\Form\MedidaType;
 use App\Repository\MedidaRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ class MedidaController extends AbstractController
     /**
      * @Route("/medida", name="medida_listar")
      */
-    public function listar(MedidaRepository $medidaRepository): Response
+    public function listar(MedidaRepository $medidaRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $medidas = $medidaRepository->findAll();
+        $pagination = $paginator->paginate(
+            $medidaRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('medida/listar.html.twig', [
-            'medidas' => $medidas
+            'pagination' => $pagination,
         ]);
     }
 
@@ -31,7 +36,7 @@ class MedidaController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $medida = $medidaRepository->nuevo();
-        
+
         return $this->modificarMedida($request, $medidaRepository, $medida);
     }
 
