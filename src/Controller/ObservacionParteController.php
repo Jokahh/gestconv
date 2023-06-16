@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ObservacionParte;
 use App\Form\ObservacionParteType;
 use App\Repository\ObservacionParteRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ class ObservacionParteController extends AbstractController
     /**
      * @Route("/observacion_parte", name="observacion_parte_listar")
      */
-    public function listar(ObservacionParteRepository $observacionParteRepository): Response
+    public function listar(ObservacionParteRepository $observacionParteRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $observacionesPartes = $observacionParteRepository->findAll();
+        $pagination = $paginator->paginate(
+            $observacionParteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('observacion_parte/listar.html.twig', [
-            'observacionesPartes' => $observacionesPartes
+            'pagination' => $pagination,
         ]);
     }
 

@@ -1,33 +1,33 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Listado de Observaciones de Parte{% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col">
-            <h2>Listado de todas las observaciones de parte</h2>
+    <div class="row p-1">
+        <div class="col-12 col-lg-7 justify-content-start p-0">
+            <h4>Listado de todas las observaciones de parte</h4>
         </div>
-        <div>
+        <div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
             <a href="{{ path('observacion_parte_nuevo') }}" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nueva observación de parte</a>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row p-1">
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th>Anotación</th>
-                <th>Fecha</th>
-                <th>Asignado al Parte</th>
+                <th class="align-middle">Anotación</th>
+                <th class="align-middle">Fecha</th>
+                <th class="align-middle">Asignado al Parte</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for observacionParte in observacionesPartes %}
+            {% for observacionParte in pagination %}
                 <tr>
-                    <td>{{ observacionParte.anotacion }}</td>
-                    <td>{{ observacionParte.fecha|date("Y-m-d") }}</td>
-                    <td>{{ observacionParte.parte }}</td>
-                    <td>
+                    <td class="align-middle">{{ observacionParte.anotacion }}</td>
+                    <td class="align-middle">{{ observacionParte.fecha|date("Y-m-d") }}</td>
+                    <td class="align-middle">{{ observacionParte.parte }}</td>
+                    <td class="align-middle">
                         <a href="{{ path('observacion_parte_modificar', {'id': observacionParte.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
@@ -35,11 +35,14 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>No hay observaciones de parte</td>
+                    <td colspan="4" class="align-middle">No hay observaciones de parte</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}
 
