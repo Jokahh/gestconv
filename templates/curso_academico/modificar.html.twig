@@ -23,7 +23,7 @@
             <button type="submit" id="modificar_curso_academico_enviar" name="guardar" class="btn-primary btn">
                 <i class="fa fa-check"></i> Guardar
             </button>
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_ADMIN') and curso_academico.id %}
                 <a href="{{ path('curso_academico_seleccionar_activo', {'id': curso_academico.id}) }}"
                    class="btn btn-success">
                     <i class="fa fa-toggle-on"></i> Seleccionar como activo</a>
