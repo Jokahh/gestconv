@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\CategoriaMedida;
 use App\Form\CategoriaMedidaType;
 use App\Repository\CategoriaMedidaRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ class CategoriaMedidaController extends AbstractController
     /**
      * @Route("/categoria_medida", name="categoria_medida_listar")
      */
-    public function listar(CategoriaMedidaRepository $categoriaMedidaRepository): Response
+    public function listar(CategoriaMedidaRepository $categoriaMedidaRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $categoriasMedidas = $categoriaMedidaRepository->findAll();
+        $pagination = $paginator->paginate(
+            $categoriaMedidaRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('categoria_medida/listar.html.twig', [
-            'categoriasMedidas' => $categoriasMedidas
+            'pagination' => $pagination,
         ]);
     }
 
@@ -31,7 +36,7 @@ class CategoriaMedidaController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $categoriaMedida = $categoriaMedidaRepository->nuevo();
-        
+
         return $this->modificarCategoriaMedida($request, $categoriaMedidaRepository, $categoriaMedida);
     }
 
