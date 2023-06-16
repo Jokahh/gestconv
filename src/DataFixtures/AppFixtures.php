@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Docente;
 use App\Factory\ActitudFamiliaFactory;
 use App\Factory\CategoriaConductaContrariaFactory;
 use App\Factory\CategoriaMedidaFactory;
@@ -46,6 +47,50 @@ class AppFixtures extends Fixture
                 'cursoAcademico' => CursoAcademicoFactory::random()
             ];
         });
+
+        $docenteAdmin = new Docente();
+        $docenteAdmin->setApellido1("admin");
+        $docenteAdmin->setEsAdmin(true);
+        $docenteAdmin->setEstaActivo(true);
+        $docenteAdmin->setUsuario("admin");
+        $docenteAdmin->setPassword("admin");
+        $docenteAdmin->setNombre("admin");
+        $manager->persist($docenteAdmin);
+
+        $docenteDirectivo = new Docente();
+        $docenteDirectivo->setApellido1("directivo");
+        $docenteDirectivo->setEsDirectivo(true);
+        $docenteDirectivo->setEstaActivo(true);
+        $docenteDirectivo->setUsuario("directivo");
+        $docenteDirectivo->setPassword("directivo");
+        $docenteDirectivo->setNombre("directivo");
+        $manager->persist($docenteDirectivo);
+
+        $docenteComisionario = new Docente();
+        $docenteComisionario->setApellido1("comisionario");
+        $docenteComisionario->setEsComisionario(true);
+        $docenteComisionario->setEstaActivo(true);
+        $docenteComisionario->setUsuario("comisionario");
+        $docenteComisionario->setPassword("comisionario");
+        $docenteComisionario->setNombre("comisionario");
+        $manager->persist($docenteComisionario);
+
+        $docente = new Docente();
+        $docente->setApellido1("docente");
+        $docente->setEstaActivo(true);
+        $docente->setUsuario("docente");
+        $docente->setPassword("docente");
+        $docente->setNombre("docente");
+        $manager->persist($docente);
+
+        $docenteTutor = new Docente();
+        $docenteTutor->setApellido1("tutor");
+        $docenteTutor->setEstaActivo(true);
+        $docenteTutor->setUsuario("tutor");
+        $docenteTutor->setPassword("tutor");
+        $docenteTutor->setNombre("tutor");
+        $manager->persist($docenteTutor);
+
 
         DocenteFactory::createMany(15);
 
