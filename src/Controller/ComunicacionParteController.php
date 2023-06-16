@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ComunicacionParte;
 use App\Form\ComunicacionParteType;
 use App\Repository\ComunicacionParteRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ class ComunicacionParteController extends AbstractController
     /**
      * @Route("/comunicacion_parte", name="comunicacion_parte_listar")
      */
-    public function listar(ComunicacionParteRepository $comunicacionParteRepository): Response
+    public function listar(ComunicacionParteRepository $comunicacionParteRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $comunicacionesPartes = $comunicacionParteRepository->findAll();
+        $pagination = $paginator->paginate(
+            $comunicacionParteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('comunicacion_parte/listar.html.twig', [
-            'comunicacionesPartes' => $comunicacionesPartes
+            'pagination' => $pagination,
         ]);
     }
 
