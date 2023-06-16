@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ConductaContraria;
 use App\Form\ConductaContrariaType;
 use App\Repository\ConductaContrariaRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ class ConductaContrariaController extends AbstractController
     /**
      * @Route("/conducta_contraria", name="conducta_contraria_listar")
      */
-    public function listar(ConductaContrariaRepository $conductaContrariaRepository): Response
+    public function listar(ConductaContrariaRepository $conductaContrariaRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $conductasContrarias = $conductaContrariaRepository->findAll();
+        $pagination = $paginator->paginate(
+            $conductaContrariaRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('conducta_contraria/listar.html.twig', [
-            'conductasContrarias' => $conductasContrarias
+            'pagination' => $pagination,
         ]);
     }
 
