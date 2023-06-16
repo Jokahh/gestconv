@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
 
         EstudianteFactory::createMany(75, function () {
             return [
-                'grupos' => GrupoFactory::randomRange(0, 2)
+                'grupos' => GrupoFactory::randomRange(0, 1)
             ];
         });
 
