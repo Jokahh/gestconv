@@ -76,9 +76,10 @@ class CursoAcademico
     private $tiposComunicacion;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $esActivo;
+
 
     public function __construct()
     {
@@ -305,10 +306,11 @@ class CursoAcademico
         return $this->esActivo;
     }
 
-    public function setEsActivo(bool $esActivo): self
+    public function setEsActivo(?bool $esActivo): self
     {
         $this->esActivo = $esActivo;
 
         return $this;
     }
+
 }
