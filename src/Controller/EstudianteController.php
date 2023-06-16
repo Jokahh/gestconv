@@ -6,6 +6,7 @@ use App\Entity\Estudiante;
 use App\Form\EstudianteType;
 use App\Repository\CursoAcademicoRepository;
 use App\Repository\EstudianteRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,16 @@ class EstudianteController extends AbstractController
     /**
      * @Route("/estudiante", name="estudiante_listar")
      */
-    public function listar(EstudianteRepository $estudianteRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listar(EstudianteRepository $estudianteRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $estudiantes = $estudianteRepository->findAll();
+        $pagination = $paginator->paginate(
+            $estudianteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('estudiante/listar.html.twig', [
-            'estudiantes' => $estudiantes,
+            'pagination' => $pagination,
             'cursoActual' => false,
             'curso' => $cursoAcademicoRepository->findActivo()
         ]);
@@ -30,12 +35,16 @@ class EstudianteController extends AbstractController
     /**
      * @Route("/estudiante_grupo_curso_actual", name="estudiante_listar_grupo_curso_actual")
      */
-    public function listarEstudiantesDeGruposDelCursoActual(EstudianteRepository $estudianteRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listarEstudiantesDeGruposDelCursoActual(EstudianteRepository $estudianteRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $estudiantes = $estudianteRepository->findAllEstudiantesDeGruposDelCursoActual();
+        $pagination = $paginator->paginate(
+            $estudianteRepository->findAllEstudiantesDeGruposDelCursoActual(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('estudiante/listar.html.twig', [
-            'estudiantes' => $estudiantes,
+            'pagination' => $pagination,
             'cursoActual' => true,
             'curso' => $cursoAcademicoRepository->findActivo()
         ]);

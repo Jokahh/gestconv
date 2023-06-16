@@ -1,15 +1,15 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Listado de Estudiantes{% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col mb-2">
+    <div class="row p-1">
+        <div class="col-12 col-lg-7 justify-content-start p-0">
             {% if cursoActual %}
-                <h3>Listado de los estudiantes del curso {{ curso }}</h3>
+                <h4>Listado de los estudiantes del curso {{ curso }}</h4>
             {% else %}
-                <h3>Listado de todos los estudiantes</h3>
+                <h4>Listado de todos los estudiantes</h4>
             {% endif %}
         </div>
-        <div>
+        <div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
             {% if cursoActual %}
                 <a href="{{ path('estudiante_listar') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Todos los estudiantes</a>
@@ -17,26 +17,26 @@
                 <a href="{{ path('estudiante_listar_grupo_curso_actual') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Estudiantes del curso {{ curso }}</a>
             {% endif %}
-            <a href="{{ path('estudiante_nuevo') }}" class="btn btn-success">
+            <a href="{{ path('estudiante_nuevo') }}" class="btn btn-success ml-2">
                 <i class="fa fa-plus"></i> Nuevo estudiante</a>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row p-1">
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th class="align-middle">Nombre y Apellidos</th>
+                <th class="align-middle">Apellidos y Nombre</th>
                 <th class="align-middle">Grupos</th>
                 <th class="align-middle">Telefono 1</th>
                 <th class="align-middle">Telefono 2</th>
-                <th class="align-middle"></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for estudiante in estudiantes %}
+            {% for estudiante in pagination %}
                 <tr>
-                    <td class="align-middle">{{ estudiante.nombre }} {{ estudiante.apellido1 }} {{ estudiante.apellido2 }}</td>
+                    <td class="align-middle">{{ estudiante.apellido1 }} {{ estudiante.apellido2 }} {{ estudiante.nombre }}</td>
                     <td class="align-middle">{{ estudiante.grupos|join(', ') }}</td>
                     <td class="align-middle">{{ estudiante.telefono1 }}</td>
                     <td class="align-middle">{{ estudiante.telefono2 }}</td>
@@ -48,11 +48,14 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td class="align-middle">No hay estudiantes</td>
+                    <td colspan="5" class="align-middle">No hay estudiantes</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}
 
