@@ -1,38 +1,39 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Listado de Categorías de Conducta Contraria{% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col mb-2">
+    <div class="row p-1">
+        <div class="col-12 col-lg-6 justify-content-start align-items-center p-0">
             {% if cursoActual %}
-                <h2>Listado de las categorías del curso {{ curso }}</h2>
+                <h4>Listado de las categorías del curso {{ curso }}</h4>
             {% else %}
-                <h2>Listado de todas las categorías</h2>
+                <h4>Listado de todas las categorías</h4>
             {% endif %}
         </div>
-        <div> {% if cursoActual %}
+        <div class="col-12 col-lg-6 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
+            {% if cursoActual %}
                 <a href="{{ path('categoria_conducta_contraria_listar') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Todas las categorías</a>
             {% else %}
                 <a href="{{ path('categoria_conducta_contraria_listar_curso_actual') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Categorías del curso {{ curso }}</a>
             {% endif %}
-            <a href="{{ path('categoria_conducta_contraria_nuevo') }}" class="btn btn-success">
+            <a href="{{ path('categoria_conducta_contraria_nuevo') }}" class="btn btn-success ml-2">
                 <i class="fa fa-plus"></i> Nueva categoría de conducta contraria</a>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row p-1">
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
                 <th class="align-middle">Descripción</th>
-                <th class="align-middle">Prioritaria</th>
+                <th class="align-middle">Es Prioritaria?</th>
                 <th class="align-middle">Curso Académico</th>
-                <th class="align-middle"></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for categoriaConductaContraria in categoriasConductasContrarias %}
+            {% for categoriaConductaContraria in pagination %}
                 <tr>
                     <td class="align-middle">{{ categoriaConductaContraria.descripcion }}</td>
                     <td class="align-middle">{{ categoriaConductaContraria.prioritaria ? 'Si' : 'No' }}</td>
@@ -42,15 +43,17 @@
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
                     </td>
-
                 </tr>
             {% else %}
                 <tr>
-                    <td class="align-middle">No hay categorías de conductas contrarias</td>
+                    <td colspan="4" class="align-middle">No hay categorías de conductas contrarias</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}
 

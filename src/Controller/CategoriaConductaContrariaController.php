@@ -6,6 +6,7 @@ use App\Entity\CategoriaConductaContraria;
 use App\Form\CategoriaConductaContrariaType;
 use App\Repository\CategoriaConductaContrariaRepository;
 use App\Repository\CursoAcademicoRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,16 @@ class CategoriaConductaContrariaController extends AbstractController
     /**
      * @Route("/categoria_conducta_contraria", name="categoria_conducta_contraria_listar")
      */
-    public function listar(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listar(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
-        $categoriasConductasContrarias = $categoriaConductaContrariaRepository->findAll();
+        $pagination = $paginator->paginate(
+            $categoriaConductaContrariaRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('categoria_conducta_contraria/listar.html.twig', [
-            'categoriasConductasContrarias' => $categoriasConductasContrarias,
+            'pagination' => $pagination,
             'cursoActual' => false,
             'curso' => $cursoAcademicoRepository->findActivo()
         ]);
@@ -30,12 +35,16 @@ class CategoriaConductaContrariaController extends AbstractController
     /**
      * @Route("/categoria_conducta_contraria_actual", name="categoria_conducta_contraria_listar_curso_actual")
      */
-    public function listarCategoriasCursoActual(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listarCategoriasCursoActual(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
-        $categoriasConductasContrarias = $categoriaConductaContrariaRepository->findAllByCursoActivo();
+        $pagination = $paginator->paginate(
+            $categoriaConductaContrariaRepository->findAllByCursoActivo(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('categoria_conducta_contraria/listar.html.twig', [
-            'categoriasConductasContrarias' => $categoriasConductasContrarias,
+            'pagination' => $pagination,
             'cursoActual' => true,
             'curso' => $cursoAcademicoRepository->findActivo()
         ]);
