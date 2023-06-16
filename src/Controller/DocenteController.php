@@ -6,6 +6,7 @@ use App\Entity\Docente;
 use App\Form\CambiarPasswordDocenteType;
 use App\Form\DocenteType;
 use App\Repository\DocenteRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,16 @@ class DocenteController extends AbstractController
     /**
      * @Route("/docente", name="docente_listar")
      */
-    public function listar(DocenteRepository $docenteRepository): Response
+    public function listar(DocenteRepository $docenteRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
-        $docentes = $docenteRepository->findAll();
+        $pagination = $paginator->paginate(
+            $docenteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('docente/listar.html.twig', [
-            'docentes' => $docentes
+            'pagination' => $pagination,
         ]);
     }
 

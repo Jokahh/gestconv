@@ -1,29 +1,31 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Listado de Docentes{% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col">
-            <h2>Listado de todos los docentes</h2>
+    <div class="row p-1">
+        <div class="col-12 col-lg-7 justify-content-start p-0">
+            <h4>Listado de todos los docentes</h4>
         </div>
-        <div>
+        <div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
             <a href="{{ path('docente_nuevo') }}" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nuevo docente</a>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row p-1">
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th>Nombre y Apellidos</th>
+                <th class="align-middle">Apellidos</th>
+                <th class="align-middle">Nombre</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for docente in docentes %}
+            {% for docente in pagination %}
                 <tr>
-                    <td>{{ docente.nombre }} {{ docente.apellido1 }} {{ docente.apellido2 }}</td>
-                    <td>
+                    <td class="align-middle">{{ docente.apellido1 }} {{ docente.apellido2 }}</td>
+                    <td class="align-middle">{{ docente.nombre }}</td>
+                    <td class="align-middle">
                         <a href="{{ path('docente_modificar', {'id': docente.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
@@ -31,11 +33,14 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>No hay docentes</td>
+                    <td colspan="3" class="align-middle">No hay docentes</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}
 
