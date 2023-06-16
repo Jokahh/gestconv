@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\CursoAcademico;
 use App\Form\CursoAcademicoType;
 use App\Repository\CursoAcademicoRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +16,16 @@ class CursoAcademicoController extends AbstractController
     /**
      * @Route("/curso_academico", name="curso_academico_listar")
      */
-    public function listar(CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listar(CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
-        $cursosAcademicos = $cursoAcademicoRepository->findAll();
+        $pagination = $paginator->paginate(
+            $cursoAcademicoRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('curso_academico/listar.html.twig', [
-            'cursos_academicos' => $cursosAcademicos
+            'pagination' => $pagination,
         ]);
     }
 
