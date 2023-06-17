@@ -2,10 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\ActitudFamilia;
 use App\Entity\CursoAcademico;
-use App\Entity\Tramo;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -45,20 +42,6 @@ class CursoAcademicoType extends AbstractType
             ->add('estado', CheckboxType::class, [
                 'label' => 'Inactivo / Activo',
                 'label_attr' => ['class' => 'switch-custom'],
-            ])
-            ->add('tramos', EntityType::class, [
-                'label' => 'Tramos',
-                'class' => Tramo::class,
-                'required' => true,
-                'multiple' => true,
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona los tramos', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
-            ])
-            ->add('actitudesFamilia', EntityType::class, [
-                'label' => 'Actitudes de Familia',
-                'class' => ActitudFamilia::class,
-                'required' => true,
-                'multiple' => true,
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona las actitudes de familia', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ]);
     }
 
