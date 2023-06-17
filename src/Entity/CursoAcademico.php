@@ -161,22 +161,22 @@ class CursoAcademico
         return $this->categoriasConductaContraria;
     }
 
-    public function addCategoriasConductaContrarium(CategoriaConductaContraria $categoriasConductaContrarium): self
+    public function addCategoriasConductaContraria(CategoriaConductaContraria $categoriasConductaContraria): self
     {
-        if (!$this->categoriasConductaContraria->contains($categoriasConductaContrarium)) {
-            $this->categoriasConductaContraria[] = $categoriasConductaContrarium;
-            $categoriasConductaContrarium->setCursoAcademico($this);
+        if (!$this->categoriasConductaContraria->contains($categoriasConductaContraria)) {
+            $this->categoriasConductaContraria[] = $categoriasConductaContraria;
+            $categoriasConductaContraria->setCursoAcademico($this);
         }
 
         return $this;
     }
 
-    public function removeCategoriasConductaContrarium(CategoriaConductaContraria $categoriasConductaContrarium): self
+    public function removeCategoriasConductaContraria(CategoriaConductaContraria $categoriasConductaContraria): self
     {
-        if ($this->categoriasConductaContraria->removeElement($categoriasConductaContrarium)) {
+        if ($this->categoriasConductaContraria->removeElement($categoriasConductaContraria)) {
             // set the owning side to null (unless already changed)
-            if ($categoriasConductaContrarium->getCursoAcademico() === $this) {
-                $categoriasConductaContrarium->setCursoAcademico(null);
+            if ($categoriasConductaContraria->getCursoAcademico() === $this) {
+                $categoriasConductaContraria->setCursoAcademico(null);
             }
         }
 
@@ -191,22 +191,22 @@ class CursoAcademico
         return $this->actitudesFamilia;
     }
 
-    public function addActitudesFamilium(ActitudFamilia $actitudesFamilium): self
+    public function addActitudesFamilia(ActitudFamilia $actitudesFamilia): self
     {
-        if (!$this->actitudesFamilia->contains($actitudesFamilium)) {
-            $this->actitudesFamilia[] = $actitudesFamilium;
-            $actitudesFamilium->setCursoAcademico($this);
+        if (!$this->actitudesFamilia->contains($actitudesFamilia)) {
+            $this->actitudesFamilia[] = $actitudesFamilia;
+            $actitudesFamilia->setCursoAcademico($this);
         }
 
         return $this;
     }
 
-    public function removeActitudesFamilium(ActitudFamilia $actitudesFamilium): self
+    public function removeActitudesFamilia(ActitudFamilia $actitudesFamilia): self
     {
-        if ($this->actitudesFamilia->removeElement($actitudesFamilium)) {
+        if ($this->actitudesFamilia->removeElement($actitudesFamilia)) {
             // set the owning side to null (unless already changed)
-            if ($actitudesFamilium->getCursoAcademico() === $this) {
-                $actitudesFamilium->setCursoAcademico(null);
+            if ($actitudesFamilia->getCursoAcademico() === $this) {
+                $actitudesFamilia->setCursoAcademico(null);
             }
         }
 
