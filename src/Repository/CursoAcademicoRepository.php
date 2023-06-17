@@ -24,6 +24,13 @@ class CursoAcademicoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CursoAcademico::class);
     }
+    public function findAllOrdenados(): array
+    {
+        return $this->createQueryBuilder('curso_academico')
+            ->orderBy('curso_academico.descripcion', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
     public function nuevo(): CursoAcademico
     {
