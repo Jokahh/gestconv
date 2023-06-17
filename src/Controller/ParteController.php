@@ -50,6 +50,7 @@ class ParteController extends AbstractController
         if ($nuevo) {
             $parte->setFechaCreacion(new DateTime());
             $parte->setDocente($this->getUser());
+            $parte->setPrescrito(false);
         }
 
         $form = $this->createForm(ParteType::class, $parte, [
