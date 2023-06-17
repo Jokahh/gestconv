@@ -1,21 +1,24 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Modificar Parte{% endblock %}
 {% block content %}
-    {% if parte.id %}
-        <h1>Modificar parte: {{ parte.id }}</h1>
-    {% else %}
-        <h1>Crear nuevo parte</h1>
-    {% endif %}
-
+    <div class="row">
+        <div class="col d-flex justify-content-center align-items-center border rounded bg-light mb-2 mx-3 p-2">
+            {% if parte.id %}
+                <h3>Modificar el parte #{{ parte.id }}</h3>
+            {% else %}
+                <h3>Crear un nuevo parte</h3>
+            {% endif %}
+        </div>
+    </div>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row">
         {% if parte.id %}
-                <div class="col-sm-2">
-                    <a href="{{ path('parte_eliminar', {'id': parte.id}) }}">
-                        <button type="button" class="btn btn-danger">Eliminar</button>
-                    </a>
-                </div>
+            <div class="col-sm-2">
+                <a href="{{ path('parte_eliminar', {'id': parte.id}) }}">
+                    <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
+                </a>
+            </div>
         {% else %}
         {% endif %}
         <div class="col-sm-10">

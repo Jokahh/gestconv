@@ -1,21 +1,24 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Modificar Docente{% endblock %}
 {% block content %}
-    {% if docente.id and is_granted('ROLE_DIRECTIVO') and (docente.id != app.user.id) %}
-        <h1>Modificar docente: {{ docente.id }}</h1>
-    {% elseif (docente.id and not is_granted('ROLE_DIRECTIVO')) or (docente.id == app.user.id) %}
-        <h1>Mis datos</h1>
-    {% else %}
-        <h1>Crear nuevo docente</h1>
-    {% endif %}
-
+    <div class="row">
+        <div class="col d-flex justify-content-center align-items-center border rounded bg-light mb-2 mx-3 p-2">
+            {% if docente.id and is_granted('ROLE_DIRECTIVO') and (docente.id != app.user.id) %}
+                <h3>Modificar docente #{{ docente.id }}</h3>
+            {% elseif (docente.id and not is_granted('ROLE_DIRECTIVO')) or (docente.id == app.user.id) %}
+                <h3>Mis datos</h3>
+            {% else %}
+                <h3>Crear nuevo docente</h3>
+            {% endif %}
+        </div>
+    </div>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row">
         {% if docente.id and is_granted('ROLE_DIRECTIVO') and (docente.id != app.user.id ) %}
             <div class="col-sm-2">
                 <a href="{{ path('docente_eliminar', {'id': docente.id}) }}">
-                    <button type="button" class="btn btn-danger">Eliminar</button>
+                    <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
                 </a>
             </div>
         {% endif %}

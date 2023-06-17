@@ -1,27 +1,32 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Modificar Categoría de Conducta Contraria{% endblock %}
 {% block content %}
-    {% if categoriaConductaContraria.id %}
-        <h1>Modificar conducta contraria: {{ categoriaConductaContraria.id }}</h1>
-    {% else %}
-        <h1>Crear nueva conducta contraria</h1>
-    {% endif %}
-
+    <div class="row">
+        <div class="col d-flex justify-content-center align-items-center border rounded bg-light mb-2 mx-3 p-2">
+            {% if categoriaConductaContraria.id %}
+                <h3>Modificar categoría de conducta contraria #{{ categoriaConductaContraria.id }}</h3>
+            {% else %}
+                <h3>Crear nueva categoría de conducta contraria</h3>
+            {% endif %}
+        </div>
+    </div>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row">
         {% if categoriaConductaContraria.id %}
             <div class="col-sm-2">
                 <a href="{{ path('categoria_conducta_contraria_eliminar', {'id': categoriaConductaContraria.id}) }}">
-                    <button type="button" class="btn btn-danger">Eliminar</button>
+                    <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
                 </a>
             </div>
         {% else %}
         {% endif %}
         <div class="col-sm-10">
-            <a href="{{ path('categoria_conducta_contraria_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i>
+            <a href="{{ path('categoria_conducta_contraria_listar') }}" class="btn btn-info"><i
+                        class="fa fa-arrow-left"></i>
                 Volver</a>
-            <button type="submit" id="modificar_categoria_conducta_contraria_enviar" name="guardar" class="btn-primary btn">
+            <button type="submit" id="modificar_categoria_conducta_contraria_enviar" name="guardar"
+                    class="btn-primary btn">
                 <i class="fa fa-check"></i> Guardar
             </button>
         </div>

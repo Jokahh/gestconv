@@ -1,19 +1,22 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Modificar Observación de Parte{% endblock %}
 {% block content %}
-    {% if observacionParte.id %}
-        <h1>Modificar la observación de parte: {{ observacionParte.id }}</h1>
-    {% else %}
-        <h1>Crear nueva observación de parte</h1>
-    {% endif %}
-
+    <div class="row">
+        <div class="col d-flex justify-content-center align-items-center border rounded bg-light mb-2 mx-3 p-2">
+            {% if observacionParte.id %}
+                <h3>Modificar la observación de parte #{{ observacionParte.id }}</h3>
+            {% else %}
+                <h3>Crear nueva observación de parte</h3>
+            {% endif %}
+        </div>
+    </div>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row">
         {% if observacionParte.id %}
             <div class="col-sm-2">
                 <a href="{{ path('observacion_parte_eliminar', {'id': observacionParte.id}) }}">
-                    <button type="button" class="btn btn-danger">Eliminar</button>
+                    <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
                 </a>
             </div>
         {% else %}

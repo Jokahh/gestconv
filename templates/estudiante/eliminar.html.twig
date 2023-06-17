@@ -1,14 +1,20 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Eliminar Estudiante{% endblock %}
 {% block content %}
-    <h1>Eliminar el estudiante</h1>
+    <div class="d-flex justify-content-center align-items-center border rounded bg-danger mb-2 p-1">
+        <div>
+            <h3 class="text-white text-center">Eliminar el estudiante #{{ estudiante.id }}</h3>
+        </div>
+    </div>
 
     <div class="alert alert-danger">
         El estudiante "{{ estudiante.id }}" será eliminado de la base de datos.
         La operación no se puede deshacer.
     </div>
     <form method="post">
-        <a href="{{ path('estudiante_listar') }}" class="btn btn-info">Volver al listado</a>
-        <button type="submit" name="confirmar" class="btn btn-danger">Confirmar borrado</button>
+        <a href="{{ path('estudiante_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver al
+            listado</a>
+        <button type="submit" name="confirmar" class="btn btn-danger"><i class="fa fa-trash"></i> Confirmar borrado
+        </button>
     </form>
 {% endblock %}
