@@ -4,7 +4,7 @@
     <div class="row p-1">
         <div class="col-12 col-lg-6 justify-content-start align-items-center p-0">
             {% if cursoActual %}
-                <h4>Listado de las categorías del curso {{ curso }}</h4>
+                <h4>Listado de las categorías del curso {{ cursoAcademicoRepository.findActivo }}</h4>
             {% else %}
                 <h4>Listado de todas las categorías</h4>
             {% endif %}
@@ -15,7 +15,7 @@
                     <i class="fa fa-list"></i> Todas las categorías</a>
             {% else %}
                 <a href="{{ path('categoria_conducta_contraria_listar_curso_actual') }}" class="btn btn-secondary">
-                    <i class="fa fa-list"></i> Categorías del curso {{ curso }}</a>
+                    <i class="fa fa-list"></i> Categorías del curso {{ cursoAcademicoRepository.findActivo }}</a>
             {% endif %}
             <a href="{{ path('categoria_conducta_contraria_nuevo') }}" class="btn btn-success ml-2">
                 <i class="fa fa-plus"></i> Nueva categoría de conducta contraria</a>

@@ -27,8 +27,7 @@ class GrupoController extends AbstractController
         );
         return $this->render('grupo/listar.html.twig', [
             'pagination' => $pagination,
-            'cursoActual' => false,
-            'curso' => $cursoAcademicoRepository->findActivo()
+            'cursoActual' => false
         ]);
     }
 
@@ -45,8 +44,7 @@ class GrupoController extends AbstractController
         );
         return $this->render('grupo/listar.html.twig', [
             'pagination' => $pagination,
-            'cursoActual' => true,
-            'curso' => $cursoAcademicoRepository->findActivo()
+            'cursoActual' => true
         ]);
     }
 

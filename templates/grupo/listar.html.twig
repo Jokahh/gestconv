@@ -4,7 +4,7 @@
     <div class="row p-1">
         <div class="col-12 col-lg-7 justify-content-start p-0">
             {% if cursoActual %}
-                <h4>Listado de los grupos del curso {{ curso }}</h4>
+                <h4>Listado de los grupos del curso {{ cursoAcademicoRepository.findActivo }}</h4>
             {% else %}
                 <h4>Listado de todos los grupos</h4>
             {% endif %}
@@ -15,7 +15,7 @@
                     <i class="fa fa-list"></i> Todos los grupos</a>
             {% else %}
                 <a href="{{ path('grupo_listar_curso_actual') }}" class="btn btn-secondary">
-                    <i class="fa fa-list"></i> Grupos del curso {{ curso }}</a>
+                    <i class="fa fa-list"></i> Grupos del curso {{ cursoAcademicoRepository.findActivo }}</a>
             {% endif %}
             <a href="{{ path('grupo_nuevo') }}" class="btn btn-success ml-2">
                 <i class="fa fa-plus"></i> Nuevo grupo</a>

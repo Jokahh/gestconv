@@ -27,8 +27,7 @@ class EstudianteController extends AbstractController
         );
         return $this->render('estudiante/listar.html.twig', [
             'pagination' => $pagination,
-            'cursoActual' => false,
-            'curso' => $cursoAcademicoRepository->findActivo()
+            'cursoActual' => false
         ]);
     }
 
@@ -45,8 +44,7 @@ class EstudianteController extends AbstractController
         );
         return $this->render('estudiante/listar.html.twig', [
             'pagination' => $pagination,
-            'cursoActual' => true,
-            'curso' => $cursoAcademicoRepository->findActivo()
+            'cursoActual' => true
         ]);
     }
 

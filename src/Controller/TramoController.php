@@ -22,8 +22,7 @@ class TramoController extends AbstractController
         $tramos = $tramoRepository->findAll();
         return $this->render('tramo/listar.html.twig', [
             'tramos' => $tramos,
-            'cursoActual' => false,
-            'curso' => $cursoAcademicoRepository->findActivo()
+            'cursoActual' => false
         ]);
     }
 
@@ -36,8 +35,7 @@ class TramoController extends AbstractController
         $tramos = $tramoRepository->findAllByCursoActivo();
         return $this->render('tramo/listar.html.twig', [
             'tramos' => $tramos,
-            'cursoActual' => true,
-            'curso' => $cursoAcademicoRepository->findActivo()
+            'cursoActual' => true
         ]);
     }
 

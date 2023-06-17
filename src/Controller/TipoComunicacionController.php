@@ -22,8 +22,7 @@ class TipoComunicacionController extends AbstractController
         $tiposComunicaciones = $tipoComunicacionRepository->findAll();
         return $this->render('tipo_comunicacion/listar.html.twig', [
             'tiposComunicaciones' => $tiposComunicaciones,
-            'cursoActual' => false,
-            'curso' => $cursoAcademicoRepository->findActivo()
+            'cursoActual' => false
         ]);
     }
 
@@ -36,8 +35,7 @@ class TipoComunicacionController extends AbstractController
         $tiposComunicaciones = $tipoComunicacionRepository->findAllByCursoActivo();
         return $this->render('tipo_comunicacion/listar.html.twig', [
             'tiposComunicaciones' => $tiposComunicaciones,
-            'cursoActual' => true,
-            'curso' => $cursoAcademicoRepository->findActivo()
+            'cursoActual' => true
         ]);
     }
 

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col mb-2">
             {% if cursoActual %}
-                <h3>Listado de los tramos del curso {{ curso }}</h3>
+                <h3>Listado de los tramos del curso {{ cursoAcademicoRepository.findActivo }}</h3>
             {% else %}
                 <h3>Listado de todos los tramos</h3>
             {% endif %}
@@ -15,7 +15,7 @@
                     <i class="fa fa-list"></i> Todos los tramos</a>
             {% else %}
                 <a href="{{ path('tramo_listar_curso_actual') }}" class="btn btn-secondary">
-                    <i class="fa fa-list"></i> Tramos del curso {{ curso }}</a>
+                    <i class="fa fa-list"></i> Tramos del curso {{ cursoAcademicoRepository.findActivo }}</a>
             {% endif %}
             <a href="{{ path('tramo_nuevo') }}" class="btn btn-success">
                 <i class="fa fa-plus"></i> Nuevo tramo</a>
