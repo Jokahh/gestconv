@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ActitudFamilia;
 use App\Form\ActitudFamiliaType;
 use App\Repository\ActitudFamiliaRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,7 +73,7 @@ class ActitudFamiliaController extends AbstractController
                 $actitudFamiliaRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('actitud_familia_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -95,7 +96,7 @@ class ActitudFamiliaController extends AbstractController
                 $actitudFamiliaRepository->guardar();
                 $this->addFlash('exito', 'Actitud de familia eliminada con éxito');
                 return $this->redirectToRoute('actitud_familia_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la actitud de familia!');
             }
         }

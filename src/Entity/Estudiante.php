@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EstudianteRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -225,12 +226,12 @@ class Estudiante
         return $this;
     }
 
-    public function getFechaNacimiento(): ?\DateTimeInterface
+    public function getFechaNacimiento(): ?DateTimeInterface
     {
         return $this->fechaNacimiento;
     }
 
-    public function setFechaNacimiento(?\DateTimeInterface $fechaNacimiento): self
+    public function setFechaNacimiento(?DateTimeInterface $fechaNacimiento): self
     {
         $this->fechaNacimiento = $fechaNacimiento;
 

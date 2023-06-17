@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Medida;
 use App\Form\MedidaType;
 use App\Repository\MedidaRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class MedidaController extends AbstractController
                 $medidaRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('medida_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -77,7 +78,7 @@ class MedidaController extends AbstractController
                 $medidaRepository->guardar();
                 $this->addFlash('exito', 'Medida eliminada con éxito');
                 return $this->redirectToRoute('medida_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la medida!');
             }
         }

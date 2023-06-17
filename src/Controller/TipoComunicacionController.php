@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\TipoComunicacion;
 use App\Form\TipoComunicacionType;
 use App\Repository\TipoComunicacionRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,7 +53,7 @@ class TipoComunicacionController extends AbstractController
      */
     public function nuevoTipoComunicacion(Request $request, TipoComunicacionRepository $tipoComunicacionRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');;
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $tipoComunicacion = $tipoComunicacionRepository->nuevo();
 
         return $this->modificarTipoComunicacion($request, $tipoComunicacionRepository, $tipoComunicacion);
@@ -72,7 +73,7 @@ class TipoComunicacionController extends AbstractController
                 $tipoComunicacionRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('tipo_comunicacion_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -95,7 +96,7 @@ class TipoComunicacionController extends AbstractController
                 $tipoComunicacionRepository->guardar();
                 $this->addFlash('exito', 'Tipo de comunicacion eliminado con éxito');
                 return $this->redirectToRoute('tipo_comunicacion_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el tipo de comunicación!');
             }
         }

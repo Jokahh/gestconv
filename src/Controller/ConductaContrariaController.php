@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ConductaContraria;
 use App\Form\ConductaContrariaType;
 use App\Repository\ConductaContrariaRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class ConductaContrariaController extends AbstractController
                 $conductaContrariaRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('conducta_contraria_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -77,7 +78,7 @@ class ConductaContrariaController extends AbstractController
                 $conductaContrariaRepository->guardar();
                 $this->addFlash('exito', 'Conducta contraria eliminada con éxito');
                 return $this->redirectToRoute('conducta_contraria_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la conducta contraria!');
             }
         }

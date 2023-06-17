@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\CursoAcademico;
 use App\Form\CursoAcademicoType;
 use App\Repository\CursoAcademicoRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class CursoAcademicoController extends AbstractController
                 $cursoAcademicoRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('curso_academico_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -77,7 +78,7 @@ class CursoAcademicoController extends AbstractController
                 $cursoAcademicoRepository->guardar();
                 $this->addFlash('exito', 'Curso académico eliminado con éxito');
                 return $this->redirectToRoute('curso_academico_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el curso académico!');
             }
         }
@@ -98,7 +99,7 @@ class CursoAcademicoController extends AbstractController
                 $cursoAcademicoRepository->setActivo($cursoAcademico);
                 $this->addFlash('exito', 'Curso académico actual cambiado con éxito');
                 return $this->redirectToRoute('curso_academico_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al cambiar el curso académico activo!');
                 var_dump($e);
             }

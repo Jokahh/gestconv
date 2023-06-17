@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CursoAcademicoRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -116,24 +117,24 @@ class CursoAcademico
         return $this;
     }
 
-    public function getFechaInicio(): ?\DateTimeInterface
+    public function getFechaInicio(): ?DateTimeInterface
     {
         return $this->fechaInicio;
     }
 
-    public function setFechaInicio(?\DateTimeInterface $fechaInicio): self
+    public function setFechaInicio(?DateTimeInterface $fechaInicio): self
     {
         $this->fechaInicio = $fechaInicio;
 
         return $this;
     }
 
-    public function getFechaFin(): ?\DateTimeInterface
+    public function getFechaFin(): ?DateTimeInterface
     {
         return $this->fechaFin;
     }
 
-    public function setFechaFin(?\DateTimeInterface $fechaFin): self
+    public function setFechaFin(?DateTimeInterface $fechaFin): self
     {
         $this->fechaFin = $fechaFin;
 

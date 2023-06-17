@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ActitudFamiliaRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -80,12 +81,12 @@ class ActitudFamilia
         return $this;
     }
 
-    public function getFecha(): ?\DateTimeInterface
+    public function getFecha(): ?DateTimeInterface
     {
         return $this->fecha;
     }
 
-    public function setFecha(?\DateTimeInterface $fecha): self
+    public function setFecha(?DateTimeInterface $fecha): self
     {
         $this->fecha = $fecha;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ParteRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -121,48 +122,48 @@ class Parte
         return $this->id;
     }
 
-    public function getFechaCreacion(): ?\DateTimeInterface
+    public function getFechaCreacion(): ?DateTimeInterface
     {
         return $this->fechaCreacion;
     }
 
-    public function setFechaCreacion(?\DateTimeInterface $fechaCreacion): self
+    public function setFechaCreacion(?DateTimeInterface $fechaCreacion): self
     {
         $this->fechaCreacion = $fechaCreacion;
 
         return $this;
     }
 
-    public function getFechaSuceso(): ?\DateTimeInterface
+    public function getFechaSuceso(): ?DateTimeInterface
     {
         return $this->fechaSuceso;
     }
 
-    public function setFechaSuceso(?\DateTimeInterface $fechaSuceso): self
+    public function setFechaSuceso(?DateTimeInterface $fechaSuceso): self
     {
         $this->fechaSuceso = $fechaSuceso;
 
         return $this;
     }
 
-    public function getFechaAviso(): ?\DateTimeInterface
+    public function getFechaAviso(): ?DateTimeInterface
     {
         return $this->fechaAviso;
     }
 
-    public function setFechaAviso(?\DateTimeInterface $fechaAviso): self
+    public function setFechaAviso(?DateTimeInterface $fechaAviso): self
     {
         $this->fechaAviso = $fechaAviso;
 
         return $this;
     }
 
-    public function getFechaRecordatorio(): ?\DateTimeInterface
+    public function getFechaRecordatorio(): ?DateTimeInterface
     {
         return $this->fechaRecordatorio;
     }
 
-    public function setFechaRecordatorio(?\DateTimeInterface $fechaRecordatorio): self
+    public function setFechaRecordatorio(?DateTimeInterface $fechaRecordatorio): self
     {
         $this->fechaRecordatorio = $fechaRecordatorio;
 

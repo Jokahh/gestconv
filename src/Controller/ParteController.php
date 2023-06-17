@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Parte;
 use App\Form\ParteType;
 use App\Repository\ParteRepository;
+use DateTime;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +47,7 @@ class ParteController extends AbstractController
     public function modificarParte(Request $request, ParteRepository $parteRepository, Parte $parte, $nuevo = false): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DOCENTE');
-        $parte->setFechaCreacion(new \DateTime());
+        $parte->setFechaCreacion(new DateTime());
         $form = $this->createForm(ParteType::class, $parte, [
             'nuevo' => $nuevo,
             'admin' => $this->isGranted('ROLE_DIRECTIVO')
@@ -57,7 +59,7 @@ class ParteController extends AbstractController
                 $parteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('parte_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -80,7 +82,7 @@ class ParteController extends AbstractController
                 $parteRepository->guardar();
                 $this->addFlash('exito', 'Parte eliminado con éxito');
                 return $this->redirectToRoute('parte_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el parte!');
             }
         }

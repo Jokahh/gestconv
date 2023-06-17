@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ObservacionParte;
 use App\Form\ObservacionParteType;
 use App\Repository\ObservacionParteRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class ObservacionParteController extends AbstractController
                 $observacionParteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('observacion_parte_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -77,7 +78,7 @@ class ObservacionParteController extends AbstractController
                 $observacionParteRepository->guardar();
                 $this->addFlash('exito', 'Observacion de parte eliminada con éxito');
                 return $this->redirectToRoute('observacion_parte_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la observación de parte!');
             }
         }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\CategoriaMedida;
 use App\Form\CategoriaMedidaType;
 use App\Repository\CategoriaMedidaRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class CategoriaMedidaController extends AbstractController
                 $categoriaMedidaRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('categoria_medida_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -77,7 +78,7 @@ class CategoriaMedidaController extends AbstractController
                 $categoriaMedidaRepository->guardar();
                 $this->addFlash('exito', 'Categoria de medida eliminada con éxito');
                 return $this->redirectToRoute('categoria_medida_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la categoria de medida!');
             }
         }

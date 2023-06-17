@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ComunicacionParte;
 use App\Form\ComunicacionParteType;
 use App\Repository\ComunicacionParteRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,7 @@ class ComunicacionParteController extends AbstractController
                 $comunicacionParteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('comunicacion_parte_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -77,7 +78,7 @@ class ComunicacionParteController extends AbstractController
                 $comunicacionParteRepository->guardar();
                 $this->addFlash('exito', 'Comunicacion de parte eliminada con éxito');
                 return $this->redirectToRoute('comunicacion_parte_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la comunicación de parte!');
             }
         }

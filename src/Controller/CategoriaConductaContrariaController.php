@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\CategoriaConductaContraria;
 use App\Form\CategoriaConductaContrariaType;
 use App\Repository\CategoriaConductaContrariaRepository;
-use App\Repository\CursoAcademicoRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,7 +73,7 @@ class CategoriaConductaContrariaController extends AbstractController
                 $categoriaConductaContrariaRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('categoria_conducta_contraria_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -96,7 +96,7 @@ class CategoriaConductaContrariaController extends AbstractController
                 $categoriaConductaContrariaRepository->guardar();
                 $this->addFlash('exito', 'Categoria de conducta contraria eliminada con éxito');
                 return $this->redirectToRoute('categoria_conducta_contraria_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la categoria de conducta contraria!');
             }
         }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ObservacionSancion;
 use App\Form\ObservacionSancionType;
 use App\Repository\ObservacionSancionRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +50,7 @@ class ObservacionSancionController extends AbstractController
                 $observacionSancionRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('observacion_sancion_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -72,7 +73,7 @@ class ObservacionSancionController extends AbstractController
                 $observacionSancionRepository->guardar();
                 $this->addFlash('exito', 'Observación de sanción eliminada con éxito');
                 return $this->redirectToRoute('observacion_sancion_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar la observación de sanción!');
             }
         }

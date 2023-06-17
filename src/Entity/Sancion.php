@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SancionRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -114,60 +115,60 @@ class Sancion
         return $this->id;
     }
 
-    public function getFechaSancion(): ?\DateTimeInterface
+    public function getFechaSancion(): ?DateTimeInterface
     {
         return $this->fechaSancion;
     }
 
-    public function setFechaSancion(?\DateTimeInterface $fechaSancion): self
+    public function setFechaSancion(?DateTimeInterface $fechaSancion): self
     {
         $this->fechaSancion = $fechaSancion;
 
         return $this;
     }
 
-    public function getFechaRegistroSalida(): ?\DateTimeInterface
+    public function getFechaRegistroSalida(): ?DateTimeInterface
     {
         return $this->fechaRegistroSalida;
     }
 
-    public function setFechaRegistroSalida(?\DateTimeInterface $fechaRegistroSalida): self
+    public function setFechaRegistroSalida(?DateTimeInterface $fechaRegistroSalida): self
     {
         $this->fechaRegistroSalida = $fechaRegistroSalida;
 
         return $this;
     }
 
-    public function getFechaComunicado(): ?\DateTimeInterface
+    public function getFechaComunicado(): ?DateTimeInterface
     {
         return $this->fechaComunicado;
     }
 
-    public function setFechaComunicado(?\DateTimeInterface $fechaComunicado): self
+    public function setFechaComunicado(?DateTimeInterface $fechaComunicado): self
     {
         $this->fechaComunicado = $fechaComunicado;
 
         return $this;
     }
 
-    public function getFechaInicioSancion(): ?\DateTimeInterface
+    public function getFechaInicioSancion(): ?DateTimeInterface
     {
         return $this->fechaInicioSancion;
     }
 
-    public function setFechaInicioSancion(?\DateTimeInterface $fechaInicioSancion): self
+    public function setFechaInicioSancion(?DateTimeInterface $fechaInicioSancion): self
     {
         $this->fechaInicioSancion = $fechaInicioSancion;
 
         return $this;
     }
 
-    public function getFechaFinSancion(): ?\DateTimeInterface
+    public function getFechaFinSancion(): ?DateTimeInterface
     {
         return $this->fechaFinSancion;
     }
 
-    public function setFechaFinSancion(?\DateTimeInterface $fechaFinSancion): self
+    public function setFechaFinSancion(?DateTimeInterface $fechaFinSancion): self
     {
         $this->fechaFinSancion = $fechaFinSancion;
 
@@ -365,12 +366,12 @@ class Sancion
         return ($this->getAnotacion() == null) ? $this->getId() : $this->getAnotacion();
     }
 
-    public function getFechaIncorporacion(): ?\DateTimeInterface
+    public function getFechaIncorporacion(): ?DateTimeInterface
     {
         return $this->fechaIncorporacion;
     }
 
-    public function setFechaIncorporacion(?\DateTimeInterface $fechaIncorporacion): self
+    public function setFechaIncorporacion(?DateTimeInterface $fechaIncorporacion): self
     {
         $this->fechaIncorporacion = $fechaIncorporacion;
 

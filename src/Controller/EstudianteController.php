@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Estudiante;
 use App\Form\EstudianteType;
-use App\Repository\CursoAcademicoRepository;
 use App\Repository\EstudianteRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,7 +73,7 @@ class EstudianteController extends AbstractController
                 $estudianteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('estudiante_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -96,7 +96,7 @@ class EstudianteController extends AbstractController
                 $estudianteRepository->guardar();
                 $this->addFlash('exito', 'Estudiante eliminado con éxito');
                 return $this->redirectToRoute('estudiante_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el estudiante!');
             }
         }

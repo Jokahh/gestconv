@@ -6,6 +6,7 @@ use App\Entity\Docente;
 use App\Form\CambiarPasswordDocenteType;
 use App\Form\DocenteType;
 use App\Repository\DocenteRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,7 +65,7 @@ class DocenteController extends AbstractController
                 $docenteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('docente_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -90,7 +91,7 @@ class DocenteController extends AbstractController
                 $docenteRepository->guardar();
                 $this->addFlash('exito', 'Docente eliminado con éxito');
                 return $this->redirectToRoute('docente_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el docente!');
             }
         }
@@ -125,7 +126,7 @@ class DocenteController extends AbstractController
                 $docenteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('inicio');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
