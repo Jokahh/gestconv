@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Grupo;
 use App\Form\GrupoType;
-use App\Repository\CursoAcademicoRepository;
 use App\Repository\GrupoRepository;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,7 +75,7 @@ class GrupoController extends AbstractController
                 $grupoRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('grupo_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -99,12 +99,12 @@ class GrupoController extends AbstractController
                 $grupoRepository->guardar();
                 $this->addFlash('exito', 'Grupo eliminado con éxito');
                 return $this->redirectToRoute('grupo_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el grupo!');
             }
         }
-        return $this->render('grupo/listar.html.twig', [
-            'grupo' => $grupo
+        return $this->render('grupo/eliminar.html.twig', [
+            'grupo' => $grupo,
         ]);
     }
 }
