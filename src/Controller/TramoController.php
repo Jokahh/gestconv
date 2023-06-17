@@ -19,7 +19,7 @@ class TramoController extends AbstractController
     public function listar(TramoRepository $tramoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
-        $tramos = $tramoRepository->findAll();
+        $tramos = $tramoRepository->findAllOrdenados();
         return $this->render('tramo/listar.html.twig', [
             'tramos' => $tramos,
             'cursoActual' => false

@@ -21,7 +21,7 @@ class ActitudFamiliaController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $pagination = $paginator->paginate(
-            $actitudFamiliaRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $actitudFamiliaRepository->findAllOrdenados(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
             10 /* Límite por página */
         );

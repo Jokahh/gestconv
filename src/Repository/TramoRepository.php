@@ -34,6 +34,14 @@ class TramoRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllOrdenados(): array
+    {
+        return $this->createQueryBuilder('tramo')
+            ->orderBy('tramo.orden', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): Tramo
     {
         $tramo = new Tramo();

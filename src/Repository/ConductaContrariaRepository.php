@@ -21,6 +21,14 @@ class ConductaContrariaRepository extends ServiceEntityRepository
         parent::__construct($registry, ConductaContraria::class);
     }
 
+    public function findAllOrdenados(): array
+    {
+        return $this->createQueryBuilder('conducta_contraria')
+            ->orderBy('conducta_contraria.orden', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): ConductaContraria
     {
         $conductaContraria = new ConductaContraria();

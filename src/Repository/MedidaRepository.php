@@ -21,6 +21,14 @@ class MedidaRepository extends ServiceEntityRepository
         parent::__construct($registry, Medida::class);
     }
 
+    public function findAllOrdenados(): array
+    {
+        return $this->createQueryBuilder('medida')
+            ->orderBy('medida.orden', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): Medida
     {
         $medida = new Medida();

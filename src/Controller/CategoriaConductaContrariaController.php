@@ -21,7 +21,7 @@ class CategoriaConductaContrariaController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $pagination = $paginator->paginate(
-            $categoriaConductaContrariaRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $categoriaConductaContrariaRepository->findAllOrdenados(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
             10 /* Límite por página */
         );

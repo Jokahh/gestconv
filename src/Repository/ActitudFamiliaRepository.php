@@ -34,6 +34,14 @@ class ActitudFamiliaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllOrdenados(): array
+    {
+        return $this->createQueryBuilder('actitud_familia')
+            ->orderBy('actitud_familia.orden', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): ActitudFamilia
     {
         $actitudFamilia = new ActitudFamilia();

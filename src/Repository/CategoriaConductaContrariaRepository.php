@@ -34,6 +34,14 @@ class CategoriaConductaContrariaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAllOrdenados(): array
+    {
+        return $this->createQueryBuilder('categoria_conducta_contraria')
+            ->orderBy('categoria_conducta_contraria.orden', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): CategoriaConductaContraria
     {
         $categoriaConductaContraria = new CategoriaConductaContraria();

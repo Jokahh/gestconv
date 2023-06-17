@@ -20,7 +20,7 @@ class CategoriaMedidaController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $pagination = $paginator->paginate(
-            $categoriaMedidaRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $categoriaMedidaRepository->findAllOrdenados(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
             10 /* Límite por página */
         );

@@ -21,6 +21,14 @@ class CategoriaMedidaRepository extends ServiceEntityRepository
         parent::__construct($registry, CategoriaMedida::class);
     }
 
+    public function findAllOrdenados(): array
+    {
+        return $this->createQueryBuilder('categoria_medida')
+            ->orderBy('categoria_medida.orden', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function nuevo(): CategoriaMedida
     {
         $categoriaMedida = new CategoriaMedida();
