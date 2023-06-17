@@ -97,7 +97,7 @@ class SancionType extends AbstractType
                 'class' => Medida::class,
                 'required' => true,
                 'multiple' => true,
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona las medidas', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+                'expanded' => true
             ])
             ->add('partes', EntityType::class, [
                 'label' => 'Partes',
