@@ -20,6 +20,7 @@ class TramoType extends AbstractType
             ->add('orden', ChoiceType::class, [
                 'label' => 'Orden',
                 'required' => true,
+                'help' => 'Orden en el que va a aparecer en los listados o desplegables',
                 'choices' => range(0, 50)
             ])
             ->add('diaSemana', ChoiceType::class, [
