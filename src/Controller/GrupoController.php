@@ -17,7 +17,7 @@ class GrupoController extends AbstractController
     /**
      * @Route("/grupo", name="grupo_listar")
      */
-    public function listar(GrupoRepository $grupoRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listar(GrupoRepository $grupoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $pagination = $paginator->paginate(
@@ -34,7 +34,7 @@ class GrupoController extends AbstractController
     /**
      * @Route("/grupo_actual", name="grupo_listar_curso_actual")
      */
-    public function listarGruposCursoActual(GrupoRepository $grupoRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listarGruposCursoActual(GrupoRepository $grupoRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $pagination = $paginator->paginate(

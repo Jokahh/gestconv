@@ -16,7 +16,7 @@ class TramoController extends AbstractController
     /**
      * @Route("/tramo", name="tramo_listar")
      */
-    public function listar(TramoRepository $tramoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listar(TramoRepository $tramoRepository,): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $tramos = $tramoRepository->findAllOrdenados();
@@ -29,7 +29,7 @@ class TramoController extends AbstractController
     /**
      * @Route("/tramo_actual", name="tramo_listar_curso_actual")
      */
-    public function listarTramosCursoActual(TramoRepository $tramoRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listarTramosCursoActual(TramoRepository $tramoRepository,): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $tramos = $tramoRepository->findAllByCursoActivo();

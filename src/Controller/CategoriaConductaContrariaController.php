@@ -17,7 +17,7 @@ class CategoriaConductaContrariaController extends AbstractController
     /**
      * @Route("/categoria_conducta_contraria", name="categoria_conducta_contraria_listar")
      */
-    public function listar(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listar(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $pagination = $paginator->paginate(
@@ -34,7 +34,7 @@ class CategoriaConductaContrariaController extends AbstractController
     /**
      * @Route("/categoria_conducta_contraria_actual", name="categoria_conducta_contraria_listar_curso_actual")
      */
-    public function listarCategoriasCursoActual(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listarCategoriasCursoActual(CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $pagination = $paginator->paginate(

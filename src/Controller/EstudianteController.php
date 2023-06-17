@@ -17,7 +17,7 @@ class EstudianteController extends AbstractController
     /**
      * @Route("/estudiante", name="estudiante_listar")
      */
-    public function listar(EstudianteRepository $estudianteRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listar(EstudianteRepository $estudianteRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $pagination = $paginator->paginate(
@@ -34,7 +34,7 @@ class EstudianteController extends AbstractController
     /**
      * @Route("/estudiante_grupo_curso_actual", name="estudiante_listar_grupo_curso_actual")
      */
-    public function listarEstudiantesDeGruposDelCursoActual(EstudianteRepository $estudianteRepository, CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listarEstudiantesDeGruposDelCursoActual(EstudianteRepository $estudianteRepository, PaginatorInterface $paginator, Request $request): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_USUARIO');
         $pagination = $paginator->paginate(
