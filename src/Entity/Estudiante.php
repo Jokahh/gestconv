@@ -322,7 +322,7 @@ class Estudiante
     {
         $grupos = $this->getGrupos()->toArray();
         if (!empty($grupos)) {
-            return $this->getApellido1() . ' ' . $this->getApellido2() . ' ' . $this->getNombre() . ' - ' . implode(', ', $grupos);
+            return $this->getApellido1() . ' ' . $this->getApellido2() . ' ' . $this->getNombre() . ' (' . implode(', ', $grupos) . ')';
         }
         return $this->getApellido1() . ' ' . $this->getApellido2() . ' ' . $this->getNombre();
     }

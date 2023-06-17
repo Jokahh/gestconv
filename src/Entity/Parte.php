@@ -381,6 +381,6 @@ class Parte
 
     public function __toString()
     {
-        return ($this->getAnotacion() == null) ? $this->getId() : $this->getAnotacion();
+        return '#' . $this->getId() . ' - ' . $this->getEstudiante() . ' - Asignado por: ' . $this->getDocente();
     }
 }
