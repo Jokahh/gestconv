@@ -37,7 +37,7 @@ class CategoriaConductaContrariaType extends AbstractType
             ->add('prioritaria', CheckboxType::class, [
                 'label' => 'Es prioritaria?',
                 'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                'label_attr' => ['class' => 'switch-custom'],
             ])
             ->add('cursoAcademico', EntityType::class, [
                 'label' => 'Curso académico',

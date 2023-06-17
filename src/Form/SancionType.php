@@ -110,17 +110,17 @@ class SancionType extends AbstractType
             ->add('reclamacion', CheckboxType::class, [
                 'label' => 'Hay reclamación?',
                 'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                'label_attr' => ['class' => 'switch-custom'],
             ])
             ->add('registradoEnSeneca', CheckboxType::class, [
                 'label' => 'Está registrada en Séneca?',
                 'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                'label_attr' => ['class' => 'switch-custom'],
             ])
             ->add('medidasEfectivas', CheckboxType::class, [
                 'label' => 'Las medidas fueron efectivas?',
                 'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                'label_attr' => ['class' => 'switch-custom'],
             ]);
     }
 

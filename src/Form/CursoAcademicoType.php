@@ -43,7 +43,8 @@ class CursoAcademicoType extends AbstractType
                 'help' => 'Fecha de fin del curso académico',
             ])
             ->add('estado', CheckboxType::class, [
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Activo', 'data-off' => '<i class="fa fa-xmark"></i> Inactivo'],
+                'label' => 'Inactivo / Activo',
+                'label_attr' => ['class' => 'switch-custom'],
             ])
             ->add('tramos', EntityType::class, [
                 'label' => 'Tramos',

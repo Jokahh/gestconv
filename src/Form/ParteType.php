@@ -49,6 +49,7 @@ class ParteType extends AbstractType
             ->add('anotacion', TextareaType::class, [
                 'label' => 'Anotación',
                 'required' => true,
+                'help' => 'Explicar detalladamente qué es lo que pasó',
                 'constraints' => [
                     new Length([
                         'max' => 255,
@@ -97,7 +98,7 @@ class ParteType extends AbstractType
                 'label' => 'Hay expulsión?',
                 'required' => false,
                 'help' => 'Marcar si se expulsó el alumnado implicado del aula',
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                'label_attr' => ['class' => 'switch-custom'],
             ])
             ->add('actividades', TextareaType::class, [
                 'label' => 'Actividades a realizar',
@@ -151,7 +152,7 @@ class ParteType extends AbstractType
                 'label' => 'Es prioritario?',
                 'help' => 'Marcar si el parte es prioritario',
                 'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                'label_attr' => ['class' => 'switch-custom'],
             ]);
         if ($options['admin'] === true) {
             $builder
@@ -159,7 +160,7 @@ class ParteType extends AbstractType
                     'label' => 'Ha prescrito?',
                     'help' => 'Marcar si el parte ha prescrito',
                     'required' => false,
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                    'label_attr' => ['class' => 'switch-custom'],
                 ]);
         }
 

@@ -108,7 +108,7 @@ class DocenteType extends AbstractType
             ->add('notificaciones', CheckboxType::class, [
                 'label' => 'Recibir notificaciones por correo electrónico?',
                 'required' => false,
-                'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                'label_attr' => ['class' => 'switch-custom'],
             ]);
         if ($options['admin'] === true) {
             $builder
@@ -138,27 +138,27 @@ class DocenteType extends AbstractType
                     'label' => 'Es admin?',
                     'required' => false,
                     'disabled' => ($options['admin'] && $options['datosPropios']),
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                    'label_attr' => ['class' => 'switch-custom'],
                 ])
                 ->add('esDirectivo', CheckboxType::class, [
                     'label' => 'Es directivo?',
                     'required' => false,
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                    'label_attr' => ['class' => 'switch-custom'],
                 ])
                 ->add('esComisionario', CheckboxType::class, [
                     'label' => 'Es comisionario?',
                     'required' => false,
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                    'label_attr' => ['class' => 'switch-custom'],
                 ])
                 ->add('estaActivo', CheckboxType::class, [
                     'label' => 'Está activo?',
                     'required' => false,
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                    'label_attr' => ['class' => 'switch-custom'],
                 ])
                 ->add('esExterno', CheckboxType::class, [
                     'label' => 'Es externo?',
                     'required' => false,
-                    'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
+                    'label_attr' => ['class' => 'switch-custom'],
                 ]);
         }
     }
