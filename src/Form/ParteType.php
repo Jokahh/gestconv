@@ -176,16 +176,6 @@ class ParteType extends AbstractType
                 'required' => false,
                 'label_attr' => ['class' => 'switch-custom'],
             ]);
-        if ($options['admin'] === true) {
-            $builder
-                ->add('prescrito', CheckboxType::class, [
-                    'label' => 'Ha prescrito?',
-                    'help' => 'Marcar si el parte ha prescrito',
-                    'required' => false,
-                    'label_attr' => ['class' => 'switch-custom'],
-                ]);
-        }
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void
