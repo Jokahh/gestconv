@@ -47,8 +47,9 @@ final class CursoAcademicoFactory extends ModelFactory
     protected function getDefaults(): array
     {
         $fechaInicio = self::faker()->dateTime();
+        $descripcion = self::faker()->numberBetween(2000, 2035);
         return [
-            'descripcion' => self::faker()->numberBetween(2000, 2050),
+            'descripcion' => $descripcion . '/' . ($descripcion + 1),
             'fechaInicio' => $fechaInicio,
             'fechaFin' => self::faker()->dateTimeInInterval($fechaInicio, '+1 years'),
 
