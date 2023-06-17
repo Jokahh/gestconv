@@ -334,7 +334,7 @@ class Docente implements UserInterface
 
     public function getRoles(): array
     {
-        $roles = ['ROLE_PROFESOR'];
+        $roles = ['ROLE_DOCENTE'];
 
         if ($this->getEsAdmin()) {
             $roles[] = 'ROLE_ADMIN';

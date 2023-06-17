@@ -13,7 +13,7 @@ class InicioController extends AbstractController
      */
     public function inicio(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         return $this->render('inicio.html.twig', [
             'usuario' => $this->getUser()
         ]);

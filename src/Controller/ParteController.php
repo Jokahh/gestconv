@@ -18,7 +18,7 @@ class ParteController extends AbstractController
      */
     public function listar(ParteRepository $parteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $pagination = $paginator->paginate(
             $parteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -34,7 +34,7 @@ class ParteController extends AbstractController
      */
     public function nuevoParte(Request $request, ParteRepository $parteRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $parte = $parteRepository->nuevo();
         return $this->modificarParte($request, $parteRepository, $parte, true);
     }
@@ -44,7 +44,7 @@ class ParteController extends AbstractController
      */
     public function modificarParte(Request $request, ParteRepository $parteRepository, Parte $parte, $nuevo = false): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_PROFESOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $parte->setFechaCreacion(new \DateTime());
         $form = $this->createForm(ParteType::class, $parte, [
             'nuevo' => $nuevo,

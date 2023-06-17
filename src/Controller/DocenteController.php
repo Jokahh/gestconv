@@ -48,7 +48,7 @@ class DocenteController extends AbstractController
     public function modificarDocente(Request $request, DocenteRepository $docenteRepository, Docente $docente): Response
     {
         if ($this->getUser()->getRoles() == $docente->getRoles()) {
-            $this->denyAccessUnlessGranted('ROLE_PROFESOR');
+            $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         } else {
             $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         }
@@ -105,7 +105,7 @@ class DocenteController extends AbstractController
     public function cambiarPasswordDocente(Request $request, UserPasswordEncoderInterface $passwordEncoder, DocenteRepository $docenteRepository, Docente $docente): Response
     {
         if ($this->getUser()->getRoles() == $docente->getRoles()) {
-            $this->denyAccessUnlessGranted('ROLE_PROFESOR');
+            $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         } else {
             $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         }

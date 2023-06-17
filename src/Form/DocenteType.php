@@ -126,7 +126,7 @@ class DocenteType extends AbstractType
                         'Admin' => 'ROLE_ADMIN',
                         'Convivencia' => 'ROLE_CONVIVENCIA',
                         'Directivo' => 'ROLE_DIRECTIVO',
-                        'Profesor' => 'ROLE_PROFESOR',
+                        'Docente' => 'ROLE_DOCENTE',
                         'Tutor' => 'ROLE_TUTOR'
                     ],
                     'required' => false,
