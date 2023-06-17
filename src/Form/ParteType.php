@@ -167,8 +167,8 @@ class ParteType extends AbstractType
                 'class' => ConductaContraria::class,
                 'help' => 'Conductas contrarias que provocan el parte',
                 'required' => true,
+                'expanded' => true,
                 'multiple' => true,
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona las conductas contrarias', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ])
             ->add('prioritaria', CheckboxType::class, [
                 'label' => 'Es prioritario?',
