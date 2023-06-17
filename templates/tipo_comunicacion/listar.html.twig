@@ -1,15 +1,15 @@
 {% extends 'layout.html.twig' %}
 {% block title %}Listado de Tipos de Comunicación{% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="col mb-2">
+    <div class="row p-1">
+        <div class="col-12 col-lg-7 justify-content-start p-0">
             {% if cursoActual %}
-                <h3>Listado de los tipos de comunicación del curso {{ cursoAcademicoRepository.findActivo }}</h3>
+                <h2>Listado de los tipos de comunicación del curso {{ cursoAcademicoRepository.findActivo }}</h2>
             {% else %}
-                <h3>Listado de todos los tipos de comunicación</h3>
+                <h2>Listado de todos los tipos de comunicación</h2>
             {% endif %}
         </div>
-        <div>
+        <div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
             {% if cursoActual %}
                 <a href="{{ path('tipo_comunicacion_listar') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Todos los tipos</a>
@@ -17,26 +17,26 @@
                 <a href="{{ path('tipo_comunicacion_listar_curso_actual') }}" class="btn btn-secondary">
                     <i class="fa fa-list"></i> Tipos del curso {{ cursoAcademicoRepository.findActivo }}</a>
             {% endif %}
-            <a href="{{ path('tipo_comunicacion_nuevo') }}" class="btn btn-success">
+            <a href="{{ path('tipo_comunicacion_nuevo') }}" class="btn btn-success ml-2">
                 <i class="fa fa-plus"></i> Nuevo tipo</a>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row p-1">
         <table class="table table-sm table-bordered table-hover table-striped text-center">
             <thead class="thead-light">
             <tr>
-                <th>Descripción</th>
-                <th>Curso Académico</th>
+                <th class="align-middle">Descripción</th>
+                <th class="align-middle">Curso Académico</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for tipoComunicacion in tiposComunicaciones %}
+            {% for tipoComunicacion in pagination %}
                 <tr>
-                    <td>{{ tipoComunicacion.descripcion }}</td>
-                    <td>{{ tipoComunicacion.cursoAcademico }}</td>
-                    <td>
+                    <td class="align-middle">{{ tipoComunicacion.descripcion }}</td>
+                    <td class="align-middle">{{ tipoComunicacion.cursoAcademico }}</td>
+                    <td class="align-middle">
                         <a href="{{ path('tipo_comunicacion_modificar', {'id': tipoComunicacion.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
                         </a>
@@ -44,10 +44,13 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>No hay tipos de comunicaciones</td>
+                    <td colspan="3" class="align-middle">No hay tipos de comunicaciones</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
 {% endblock %}

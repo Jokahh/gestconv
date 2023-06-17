@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\TipoComunicacion;
 use App\Form\TipoComunicacionType;
-use App\Repository\CursoAcademicoRepository;
 use App\Repository\TipoComunicacionRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +16,16 @@ class TipoComunicacionController extends AbstractController
     /**
      * @Route("/tipo_comunicacion", name="tipo_comunicacion_listar")
      */
-    public function listar(TipoComunicacionRepository $tipoComunicacionRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listar(TipoComunicacionRepository $tipoComunicacionRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
-        $tiposComunicaciones = $tipoComunicacionRepository->findAll();
+        $pagination = $paginator->paginate(
+            $tipoComunicacionRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('tipo_comunicacion/listar.html.twig', [
-            'tiposComunicaciones' => $tiposComunicaciones,
+            'pagination' => $pagination,
             'cursoActual' => false
         ]);
     }
@@ -29,12 +33,16 @@ class TipoComunicacionController extends AbstractController
     /**
      * @Route("/tipo_comunicacion_actual", name="tipo_comunicacion_listar_curso_actual")
      */
-    public function listarTiposCursoActual(TipoComunicacionRepository $tipoComunicacionRepository, CursoAcademicoRepository $cursoAcademicoRepository): Response
+    public function listarTiposCursoActual(TipoComunicacionRepository $tipoComunicacionRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
-        $tiposComunicaciones = $tipoComunicacionRepository->findAllByCursoActivo();
+        $pagination = $paginator->paginate(
+            $tipoComunicacionRepository->findAllByCursoActivo(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
         return $this->render('tipo_comunicacion/listar.html.twig', [
-            'tiposComunicaciones' => $tiposComunicaciones,
+            'pagination' => $pagination,
             'cursoActual' => true
         ]);
     }
