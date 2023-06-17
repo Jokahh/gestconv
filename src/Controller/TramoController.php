@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Tramo;
 use App\Form\TramoType;
-use App\Repository\CursoAcademicoRepository;
 use App\Repository\TramoRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ class TramoController extends AbstractController
     /**
      * @Route("/tramo", name="tramo_listar")
      */
-    public function listar(TramoRepository $tramoRepository,): Response
+    public function listar(TramoRepository $tramoRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $tramos = $tramoRepository->findAllOrdenados();
@@ -29,7 +29,7 @@ class TramoController extends AbstractController
     /**
      * @Route("/tramo_actual", name="tramo_listar_curso_actual")
      */
-    public function listarTramosCursoActual(TramoRepository $tramoRepository,): Response
+    public function listarTramosCursoActual(TramoRepository $tramoRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $tramos = $tramoRepository->findAllByCursoActivo();
@@ -64,7 +64,7 @@ class TramoController extends AbstractController
                 $tramoRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('tramo_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
@@ -87,7 +87,7 @@ class TramoController extends AbstractController
                 $tramoRepository->guardar();
                 $this->addFlash('exito', 'Tramo eliminado con éxito');
                 return $this->redirectToRoute('tramo_listar');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->addFlash('error', '¡Ocurrió un error al eliminar el tramo!');
             }
         }
