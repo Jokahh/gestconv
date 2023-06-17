@@ -8,6 +8,7 @@ use App\Entity\Estudiante;
 use App\Entity\Parte;
 use App\Entity\Sancion;
 use App\Entity\Tramo;
+use App\Repository\EstudianteRepository;
 use App\Repository\TramoRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -22,15 +23,18 @@ use Symfony\Component\Validator\Constraints\Length;
 class ParteType extends AbstractType
 {
     private $tramoRepository;
+    private $estudianteRepository;
 
-    public function __construct(TramoRepository $tramoRepository)
+    public function __construct(TramoRepository $tramoRepository, EstudianteRepository $estudianteRepository)
     {
         $this->tramoRepository = $tramoRepository;
+        $this->estudianteRepository = $estudianteRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $tramos = $this->tramoRepository->findAllByCursoActivo();
+        $estudiantes = $this->estudianteRepository->findAllEstudiantesDeGruposDelCursoActual();
         $builder
             ->add('docente', EntityType::class, [
                 'label' => 'Docente u ordenanza',
@@ -38,25 +42,43 @@ class ParteType extends AbstractType
                 'required' => true,
                 'help' => 'Seleccione el docente u ordenanza que asigna el parte',
                 'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un docente', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
-            ])
-            ->add('estudiante', EntityType::class, [
-                'label' => 'Estudiante',
-                'class' => Estudiante::class,
-                'required' => true,
-                'help' => 'Selecciona uno o varios estudiantes a los que se les asignará este parte',
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona uno varios estudiantes', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Ninguno seleccionado', 'data-size' => '7']
-            ])
-            ->add('anotacion', TextareaType::class, [
-                'label' => 'Anotación',
-                'required' => true,
-                'help' => 'Explicar detalladamente qué es lo que pasó',
-                'constraints' => [
-                    new Length([
-                        'max' => 255,
-                        'maxMessage' => 'El tamaño máximo de este campo es de 255 caracteres'
-                    ])
-                ],
-            ])
+            ]);
+        if ($options['nuevo'] === false) {
+            $builder
+                ->add('estudiante', EntityType::class, [
+                    'label' => 'Estudiante',
+                    'class' => Estudiante::class,
+                    'required' => true,
+                    'help' => 'Estudiante al que está asignado',
+                    'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un docente', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+                ]);
+        }
+        if ($options['nuevo'] === true) {
+            $builder
+                ->add('estudiantes', ChoiceType::class, [
+                    'mapped' => false,
+                    'label' => 'Estudiantes',
+                    'choices' => $estudiantes,
+                    'choice_label' => function (?Estudiante $estudiante) {
+                        return $estudiante;
+                    },
+                    'required' => true,
+                    'multiple' => true,
+                    'help' => 'Selecciona uno o varios estudiantes a los que se les asignará este parte',
+                    'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona uno varios estudiantes', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Ninguno seleccionado', 'data-size' => '7']
+                ]);
+        }
+        $builder->add('anotacion', TextareaType::class, [
+            'label' => 'Anotación',
+            'required' => true,
+            'help' => 'Explicar detalladamente qué es lo que pasó',
+            'constraints' => [
+                new Length([
+                    'max' => 255,
+                    'maxMessage' => 'El tamaño máximo de este campo es de 255 caracteres'
+                ])
+            ],
+        ])
             ->add('fechaCreacion', DateTimeType::class, [
                 'label' => 'Fecha de creación',
                 'date_label' => 'Fecha de creación',
@@ -73,6 +95,16 @@ class ParteType extends AbstractType
                 'date_widget' => 'single_text',
                 'time_label' => 'Hora',
                 'time_widget' => 'single_text'
+            ])
+            ->add('tramo', ChoiceType::class, [
+                'label' => 'Tramo',
+                'choices' => $tramos,
+                'choice_label' => function (?Tramo $tramo) {
+                    return $tramo;
+                },
+                'required' => true,
+                'help' => 'Seleccione el tramo cuando ocurrió el suceso',
+                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un tramo', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ]);
         if ($options['nuevo'] === false) {
             $builder
@@ -118,16 +150,6 @@ class ParteType extends AbstractType
                     'Si' => 'Si',
                     'No' => 'No'
                 ],
-            ])
-            ->add('tramo', ChoiceType::class, [
-                'label' => 'Tramo',
-                'choices' => $tramos,
-                'choice_label' => function (?Tramo $tramo) {
-                    return $tramo;
-                },
-                'required' => true,
-                'help' => 'Seleccione el tramo cuando ocurrió el suceso',
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un tramo', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
             ]);
         if ($options['nuevo'] === false) {
             $builder

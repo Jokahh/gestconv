@@ -47,7 +47,11 @@ class ParteController extends AbstractController
     public function modificarParte(Request $request, ParteRepository $parteRepository, Parte $parte, $nuevo = false): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DOCENTE');
-        $parte->setFechaCreacion(new DateTime());
+        if ($nuevo) {
+            $parte->setFechaCreacion(new DateTime());
+            $parte->setDocente($this->getUser());
+        }
+
         $form = $this->createForm(ParteType::class, $parte, [
             'nuevo' => $nuevo,
             'admin' => $this->isGranted('ROLE_DIRECTIVO')
@@ -56,11 +60,20 @@ class ParteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $estudiantes = $form->get('estudiantes')->getData();
+                $entityManager = $this->getDoctrine()->getManager();
+                foreach ($estudiantes as $estudiante) {
+                    $entityManager->detach($parte);
+                    $copiaParte = clone $parte;
+                    $copiaParte->setEstudiante($estudiante);
+                    $entityManager->persist($copiaParte);
+                }
                 $parteRepository->guardar();
-                $this->addFlash('exito', 'Cambios guardados con éxito');
+                $this->addFlash('exito', (count($estudiantes) == 1) ? 'Se ha creado un parte con éxito' : 'Se han creado ' . count($estudiantes) . ' partes con éxito');
                 return $this->redirectToRoute('parte_listar');
             } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
+                dump($e);
             }
         }
         return $this->render('parte/modificar.html.twig', [
