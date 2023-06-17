@@ -96,10 +96,16 @@ class Docente implements UserInterface
      */
     private $partes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=CursoAcademico::class, inversedBy="docentes")
+     */
+    private $cursosAcademicos;
+
     public function __construct()
     {
         $this->grupos = new ArrayCollection();
         $this->partes = new ArrayCollection();
+        $this->cursosAcademicos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -363,6 +369,30 @@ class Docente implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return Collection<int, CursoAcademico>
+     */
+    public function getCursosAcademicos(): Collection
+    {
+        return $this->cursosAcademicos;
+    }
+
+    public function addCursosAcademico(CursoAcademico $cursosAcademico): self
+    {
+        if (!$this->cursosAcademicos->contains($cursosAcademico)) {
+            $this->cursosAcademicos[] = $cursosAcademico;
+        }
+
+        return $this;
+    }
+
+    public function removeCursosAcademico(CursoAcademico $cursosAcademico): self
+    {
+        $this->cursosAcademicos->removeElement($cursosAcademico);
+
+        return $this;
     }
 
 }

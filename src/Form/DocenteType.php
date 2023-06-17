@@ -2,8 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\CursoAcademico;
 use App\Entity\Docente;
-use Faker\Provider\Text;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -97,9 +98,9 @@ class DocenteType extends AbstractType
                 'help' => 'Nombre de usuario',
                 'constraints' => [
                     new Length([
-                        'min' => 6,
+                        'min' => 5,
                         'max' => 100,
-                        'minMessage' => 'El tamaño mínimo de este campo es de 6 caracteres',
+                        'minMessage' => 'El tamaño mínimo de este campo es de 5 caracteres',
                         'maxMessage' => 'El tamaño máximo de este campo es de 100 caracteres'
                     ])
                 ]
@@ -109,9 +110,16 @@ class DocenteType extends AbstractType
                 'required' => false,
                 'attr' => ['data-toggle' => 'toggle', 'data-onstyle' => 'primary', 'data-offstyle' => 'danger', 'data-on' => '<i class="fa fa-check"></i> Si', 'data-off' => '<i class="fa fa-xmark"></i> No'],
             ]);
-
         if ($options['admin'] === true) {
             $builder
+                ->add('cursosAcademicos', EntityType::class, [
+                    'label' => 'Cursos Académicos',
+                    'class' => CursoAcademico::class,
+                    'help' => 'Cursos académicos a los que está asignado',
+                    'required' => true,
+                    'multiple' => true,
+                    'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona los cursos', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+                ])
                 ->add('roles', ChoiceType::class, [
                     'label' => 'Roles',
                     'choices' => [

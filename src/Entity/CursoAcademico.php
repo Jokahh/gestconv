@@ -80,6 +80,11 @@ class CursoAcademico
      */
     private $esActivo;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Docente::class, mappedBy="cursosAcademicos")
+     */
+    private $docentes;
+
 
     public function __construct()
     {
@@ -91,6 +96,7 @@ class CursoAcademico
         $this->tramos = new ArrayCollection();
         $this->grupos = new ArrayCollection();
         $this->tiposComunicacion = new ArrayCollection();
+        $this->docentes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -309,6 +315,33 @@ class CursoAcademico
     public function setEsActivo(?bool $esActivo): self
     {
         $this->esActivo = $esActivo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Docente>
+     */
+    public function getDocentes(): Collection
+    {
+        return $this->docentes;
+    }
+
+    public function addDocente(Docente $docente): self
+    {
+        if (!$this->docentes->contains($docente)) {
+            $this->docentes[] = $docente;
+            $docente->addCursosAcademico($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocente(Docente $docente): self
+    {
+        if ($this->docentes->removeElement($docente)) {
+            $docente->removeCursosAcademico($this);
+        }
 
         return $this;
     }
