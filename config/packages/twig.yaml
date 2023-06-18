@@ -6,3 +6,4 @@ twig:
     exception_controller: null
     globals:
         cursoAcademicoRepository: "@App\\Repository\\CursoAcademicoRepository"
+        parteRepository: "@App\\Repository\\ParteRepository"
