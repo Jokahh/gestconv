@@ -30,7 +30,7 @@ class ConductaContrariaType extends AbstractType
                 'help' => 'Orden en el que va a aparecer en los listados o desplegables',
                 'choices' => range(0, 50)
             ])
-            ->add('parte', EntityType::class, [
+            ->add('partes', EntityType::class, [
                 'label' => 'Parte',
                 'class' => Parte::class,
                 'required' => true,

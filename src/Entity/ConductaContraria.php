@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ConductaContrariaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,16 +25,26 @@ class ConductaContraria
     private $orden;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Parte::class, inversedBy="conductasContrarias")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $parte;
-
-    /**
      * @ORM\ManyToOne(targetEntity=CategoriaConductaContraria::class, inversedBy="conductasContrarias")
      * @ORM\JoinColumn(nullable=false)
      */
     private $categoria;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Parte::class, inversedBy="conductasContrarias")
+     */
+    private $parte;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Parte::class, mappedBy="conductasContrarias")
+     */
+    private $partes;
+
+    public function __construct()
+    {
+        $this->partes = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -51,17 +63,6 @@ class ConductaContraria
         return $this;
     }
 
-    public function getParte(): ?Parte
-    {
-        return $this->parte;
-    }
-
-    public function setParte(?Parte $parte): self
-    {
-        $this->parte = $parte;
-
-        return $this;
-    }
 
     public function getCategoria(): ?CategoriaConductaContraria
     {
@@ -79,4 +80,33 @@ class ConductaContraria
     {
         return '' . $this->getCategoria();
     }
+
+    /**
+     * @return Collection<int, Parte>
+     */
+    public function getPartes(): Collection
+    {
+        return $this->partes;
+    }
+
+    public function addParte(Parte $parte): self
+    {
+        if (!$this->partes->contains($parte)) {
+            $this->partes[] = $parte;
+            $parte->addConductasContraria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParte(Parte $parte): self
+    {
+        if ($this->partes->removeElement($parte)) {
+            $parte->removeConductasContraria($this);
+        }
+
+        return $this;
+    }
+
+
 }

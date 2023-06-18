@@ -78,11 +78,6 @@ class Parte
     private $tramo;
 
     /**
-     * @ORM\OneToMany(targetEntity=ConductaContraria::class, mappedBy="parte")
-     */
-    private $conductasContrarias;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Estudiante::class, inversedBy="partes")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -108,13 +103,19 @@ class Parte
      */
     private $actividades;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=ConductaContraria::class, inversedBy="partes")
+     */
+    private $conductasContrarias;
+
+
 
     public function __construct()
     {
-        $this->conductasContrarias = new ArrayCollection();
         $this->comunicacionParte = new ArrayCollection();
         $this->sanciones = new ArrayCollection();
         $this->observaciones = new ArrayCollection();
+        $this->conductasContrarias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,35 +255,6 @@ class Parte
         return $this;
     }
 
-    /**
-     * @return Collection<int, ConductaContraria>
-     */
-    public function getConductasContrarias(): Collection
-    {
-        return $this->conductasContrarias;
-    }
-
-    public function addConductaContraria(ConductaContraria $conductaContraria): self
-    {
-        if (!$this->conductasContrarias->contains($conductaContraria)) {
-            $this->conductasContrarias[] = $conductaContraria;
-            $conductaContraria->setParte($this);
-        }
-
-        return $this;
-    }
-
-    public function removeConductaContraria(ConductaContraria $conductaContraria): self
-    {
-        if ($this->conductasContrarias->removeElement($conductaContraria)) {
-            // set the owning side to null (unless already changed)
-            if ($conductaContraria->getParte() === $this) {
-                $conductaContraria->setParte(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getEstudiante(): ?Estudiante
     {
@@ -384,4 +356,29 @@ class Parte
     {
         return '#' . $this->getId() . ' - ' . $this->getEstudiante() . ' - Asignado por: ' . $this->getDocente();
     }
+
+    /**
+     * @return Collection<int, ConductaContraria>
+     */
+    public function getConductasContrarias(): Collection
+    {
+        return $this->conductasContrarias;
+    }
+
+    public function addConductasContraria(ConductaContraria $conductasContraria): self
+    {
+        if (!$this->conductasContrarias->contains($conductasContraria)) {
+            $this->conductasContrarias[] = $conductasContraria;
+        }
+
+        return $this;
+    }
+
+    public function removeConductasContraria(ConductaContraria $conductasContraria): self
+    {
+        $this->conductasContrarias->removeElement($conductasContraria);
+
+        return $this;
+    }
+
 }

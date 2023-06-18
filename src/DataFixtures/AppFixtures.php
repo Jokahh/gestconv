@@ -151,7 +151,7 @@ class AppFixtures extends Fixture
         ConductaContrariaFactory::createMany(25, function () {
             return [
                 'categoria' => CategoriaConductaContrariaFactory::random(),
-                'parte' => ParteFactory::random()
+                'partes' => ParteFactory::randomRange(0,1)
             ];
         });
 
