@@ -24,7 +24,7 @@
             {% for conductaContraria in pagination %}
                 <tr>
                     <td class="align-middle">{{ conductaContraria.categoria }}</td>
-                    <td class="align-middle">{{ conductaContraria.parte }}</td>
+                    <td class="align-middle">{{ conductaContraria.partes|join(', ') }}</td>
                     <td class="align-middle">
                         <a href="{{ path('conducta_contraria_modificar', {'id': conductaContraria.id}) }}">
                             <button type="button" class="btn btn-info">Editar</button>
