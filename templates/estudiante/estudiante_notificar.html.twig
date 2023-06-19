@@ -1,0 +1,70 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Notificar partes del estudiante{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col d-flex justify-content-center align-items-center border rounded bg-light mb-2 mx-3 p-2">
+            <h4 class="text-center align-middle">Notificar partes del estudiante: <b>{{ estudiante.apellido1 }} {{ estudiante.apellido2 }} {{ estudiante.nombre }}({{ estudiante.grupos|join(', ') }})</b></h4>
+        </div>
+    </div>
+    {{ form_start(form) }}
+    <div class="form-group border-bottom border-light">
+        {% if form.parte|length > 1 %}
+            <div class="col-12 ml-4">
+                <label class="checkbox-bootstrap checkbox-lg">
+                    <input type="checkbox" onChange="marcarDesmarcarTodos(this)">
+                    <span class="checkbox-placeholder"></span>
+                </label> Marcar/desmarcar todos los partes
+            </div>
+        {% endif %}
+        <div class="col-12">
+            <div class="accordion" id="accordionPartes">
+                {% for parte in form.parte %}
+                    {% set marcar = parte.vars %}
+                    {% set parteDetallado = parteRepository.findOneById(parte.vars.value)[0] %}
+                    {% include 'parte/parte_partial.html.twig' %}
+                {% else %}
+                    <div class="d-flex align-items-center justify-content-center"><h3>No hay partes pendientes</h3></div>
+                {% endfor %}
+                {{ form_errors(form.parte) }}
+            </div>
+        </div>
+    </div>
+    {% do form.parte.setRendered %}
+    {{ form_widget(form) }}
+    <div class="row">
+        <div class="col">
+            <a href="{{ path('estudiantes_listar_sancionables') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver</a>
+            <button type="submit" id="modificar_parte_enviar" name="guardar" class="btn-warning btn">
+                <i class="fa fa-bell"></i> Notificar
+            </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <div class="row my-5">
+        <div class="col-12"><h3>Histórico de comunicaciones del estudiante</h3></div>
+        <div class="col-12">
+            <div class="accordion" id="accordionHistoricoNotificaciones">
+                {% set comunicaciones = comunicacionParteRepository.findAllByEstudiante(estudiante) %}
+                {% for comunicacion in comunicaciones %}
+                    {% include 'comunicacion_parte/comunicacion_partial.html.twig' %}
+                {% else %}
+                    <div class="d-flex align-items-center justify-content-center"><h3>El estudiante no otras notificaciones</h3></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function marcarDesmarcarTodos(e) {
+            if (!jQuery(e).prop('checked')) {
+                jQuery('.casilla').prop('checked', false);
+            } else {
+                jQuery('.casilla').prop('checked', true);
+            }
+        }
+    </script>
+{% endblock %}

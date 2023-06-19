@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ComunicacionParte;
 use App\Entity\Parte;
+use App\Repository\ParteRepository;
 use App\Repository\TipoComunicacionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,15 +18,33 @@ use Symfony\Component\Validator\Constraints\Length;
 class ComunicacionParteType extends AbstractType
 {
     private $tipoComunicacionRepository;
+    private $parteRepository;
 
-    public function __construct(TipoComunicacionRepository $tipoComunicacionRepository)
+    public function __construct(TipoComunicacionRepository $tipoComunicacionRepository, ParteRepository $parteRepository)
     {
         $this->tipoComunicacionRepository = $tipoComunicacionRepository;
+        $this->parteRepository = $parteRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $tiposComunicacion = $this->tipoComunicacionRepository->findAllByCursoActivo();
+        if ($options['estudiante']) {
+            $estudiante = $options['estudiante'];
+            $partesDelEstudiante = $this->parteRepository->findNoNotificadosPorEstudiante($estudiante);
+        }
+        if ($options['estudiante']) {
+            $builder
+                ->add('parte', EntityType::class, [
+                    'label' => 'Partes',
+                    'choices' => $partesDelEstudiante,
+                    'class' => Parte::class,
+                    'required' => true,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'mapped' => false
+                ]);
+        }
         $builder
             ->add('fecha', DateTimeType::class, [
                 'label' => 'Fecha',
@@ -44,13 +63,6 @@ class ComunicacionParteType extends AbstractType
                     ])
                 ]
             ])
-            ->add('parte', EntityType::class, [
-                'label' => 'Parte',
-                'class' => Parte::class,
-                'required' => true,
-                'help' => 'Parte a la que pertenece',
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un parte', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
-            ])
             ->add('tipo', ChoiceType::class, [
                 'label' => 'Tipo',
                 'choices' => $tiposComunicacion,
@@ -65,6 +77,7 @@ class ComunicacionParteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ComunicacionParte::class,
+            'estudiante' => null
         ]);
     }
 }

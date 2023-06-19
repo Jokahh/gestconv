@@ -1,0 +1,44 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Listado de Estudiantes{% endblock %}
+{% block content %}
+    <div class="row px-3 py-1">
+        <div class="col-12 justify-content-start p-0">
+            <h4>Notificar partes a la familia</h4>
+        </div>
+    </div>
+
+    <div class="row px-3 py-1">
+        <table class="table table-sm table-bordered table-hover table-striped text-center">
+            <thead class="thead-light">
+            <tr>
+                <th class="align-middle">Apellidos y Nombre</th>
+                <th class="align-middle">Grupos</th>
+                <th class="align-middle">Partes</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for estudiante in pagination %}
+                <tr>
+                    <td class="align-middle">{{ estudiante.apellido1 }} {{ estudiante.apellido2 }} {{ estudiante.nombre }}</td>
+                    <td class="align-middle">{{ estudiante.grupos|join(', ') }}</td>
+                    <td class="align-middle">{{ parteRepository.findNoNotificadosPorEstudiante(estudiante)|length }}</td>
+                    <td class="align-middle">
+                        <a href="{{ path('estudiante_notificar', {'id': estudiante.id}) }}">
+                            <button type="button" class="btn btn-warning"><i class="fa fa-bell"></i> Notificar</button>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="align-middle">No hay estudiantes</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+{% endblock %}
+

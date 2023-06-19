@@ -51,6 +51,21 @@ class EstudianteRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findAllEstudiantesDeGruposDelCursoActualNoNotificados(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('estudiante');
+        $queryBuilder
+            ->join('estudiante.grupos', 'grupos')
+            ->join('grupos.cursoAcademico', 'cursoAcademico')
+            ->leftJoin('estudiante.partes', 'partes')
+            ->where('cursoAcademico.id = :cursoAcademicoId')
+            ->andWhere('partes.prescrito = false')
+            ->andWhere('partes.fechaAviso IS NULL')
+            ->orderBy('partes.fechaSuceso')
+            ->setParameter('cursoAcademicoId', $this->cursoAcademicoRepository->findActivo()->getId());
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     public function nuevo(): Estudiante
     {
         $estudiante = new Estudiante();

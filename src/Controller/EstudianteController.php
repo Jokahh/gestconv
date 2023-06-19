@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Estudiante;
+use App\Form\ComunicacionParteType;
 use App\Form\EstudianteType;
 use App\Form\SancionType;
+use App\Repository\ComunicacionParteRepository;
 use App\Repository\EstudianteRepository;
 use App\Repository\GrupoRepository;
 use App\Repository\ParteRepository;
@@ -53,6 +55,23 @@ class EstudianteController extends AbstractController
     }
 
     /**
+     * @Route("/estudiantes_notificables", name="estudiantes_listar_notificables")
+     */
+    public function listarNotificables(EstudianteRepository $estudianteRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $pagination = $paginator->paginate(
+            $estudianteRepository->findAllEstudiantesDeGruposDelCursoActualNoNotificados(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
+        return $this->render('estudiante/estudiantes_por_notificar.html.twig', [
+            'pagination' => $pagination,
+            'docente' => $this->getUser()
+        ]);
+    }
+
+    /**
      * @Route("/estudiante_sancionar/{id}", name="estudiante_sancionar", requirements={"id":"\d+"})
      */
     public function sancionarEstudiante(Estudiante $estudiante, SancionRepository $sancionRepository, ParteRepository $parteRepository, Request $request): Response
@@ -87,6 +106,48 @@ class EstudianteController extends AbstractController
         return $this->render('estudiante/estudiante_sancionar.html.twig', [
             'estudiante' => $estudiante,
             'sancion' => $sancion,
+            'partes' => $partes,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/estudiante_notificar/{id}", name="estudiante_notificar", requirements={"id":"\d+"})
+     */
+    public function notificarPartesEstudiante(Estudiante $estudiante, ComunicacionParteRepository $comunicacionParteRepository, ParteRepository $parteRepository, Request $request): Response
+    {
+        $comunicacionParte = $comunicacionParteRepository->nuevo();
+        $partes = $parteRepository->findNoNotificadosPorDocente($this->getUser());
+
+        $form = $this->createForm(ComunicacionParteType::class, $comunicacionParte, [
+            'estudiante' => $estudiante,
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $partesComunicacion = $form->get('parte')->getData();
+                foreach ($partesComunicacion as $parte) {
+                    $parte->addComunicacionParte($comunicacionParte);
+                    if ($parte->getFechaAviso() == null) {
+                        $parte->setFechaAviso($comunicacionParte->getFecha());
+                    }
+                    $parteRepository->guardar();
+                }
+                $comunicacionParteRepository->guardar();
+                $numPartes = count($form->get('parte')->getData());
+                $this->addFlash('exito', ($numPartes == 1) ? 'Se ha comunicado un parte con éxito' : 'Se han comunicado ' . $numPartes . ' partes con éxito');
+                $partes = $parteRepository->findNoNotificadosPorEstudiante($estudiante);
+                return $this->redirectToRoute('estudiante_notificar', ['id' => $estudiante->getId()]);
+            } catch (Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+                dump($e);
+            }
+        }
+        return $this->render('estudiante/estudiante_notificar.html.twig', [
+            'estudiante' => $estudiante,
+            'docente' => $this->getUser(),
+            'comunicacion' => $comunicacionParte,
             'partes' => $partes,
             'form' => $form->createView()
         ]);
