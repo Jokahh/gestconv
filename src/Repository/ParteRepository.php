@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Estudiante;
 use App\Entity\Parte;
+use App\Entity\Sancion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class ParteRepository extends ServiceEntityRepository
 {
     private $cursoAcademicoRepository;
+
     public function __construct(ManagerRegistry $registry, CursoAcademicoRepository $cursoAcademicoRepository)
     {
         parent::__construct($registry, Parte::class);
@@ -34,6 +36,27 @@ class ParteRepository extends ServiceEntityRepository
             ->andWhere('parte.fechaAviso IS NOT NULL')
             ->orderBy('parte.fechaSuceso')
             ->setParameter('estudiante', $estudiante);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findAllSancionadosPorEstudiante(Estudiante $estudiante): array
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->where('parte.estudiante = :estudiante')
+            ->andWhere('parte.sancion IS NOT NULL')
+            ->orderBy('parte.fechaSuceso')
+            ->setParameter('estudiante', $estudiante);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findPartePorSancion(Sancion $sancion): array
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->where('parte.sancion = :sancion')
+            ->orderBy('parte.fechaSuceso')
+            ->setParameter('sancion', $sancion);
         return $queryBuilder->getQuery()->getResult();
     }
 
