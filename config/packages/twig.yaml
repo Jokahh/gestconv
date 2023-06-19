@@ -10,3 +10,4 @@ twig:
     comunicacionParteRepository: "@App\\Repository\\ComunicacionParteRepository"
     comunicacionSancionRepository: "@App\\Repository\\ComunicacionSancionRepository"
     sancionRepository: "@App\\Repository\\SancionRepository"
+    estudianteRepository: "@App\\Repository\\EstudianteRepository"
