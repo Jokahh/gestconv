@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ComunicacionSancion;
+use App\Entity\Sancion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,15 @@ class ComunicacionSancionRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ComunicacionSancion::class);
+    }
+
+    public function findAllBySancion(Sancion $sancion)
+    {
+        $queryBuilder = $this->createQueryBuilder('comunicacion_sancion');
+        $queryBuilder
+            ->where('comunicacion_sancion.sancion = :sancion')
+            ->setParameter('sancion', $sancion);
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function nuevo(): ComunicacionSancion
