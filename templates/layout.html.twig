@@ -12,7 +12,6 @@
             <div class="ml-auto d-inline my-lg-0">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     {% if cursoAcademicoRepository.findActivo %}<a class="btn btn-info disabled">Curso - {{ cursoAcademicoRepository.findActivo }}</a>{% endif %}
-                    <a class="btn btn-outline-dark">{{ app.user.roles|join(', ') }}</a>
                     <a href="{{ path('docente_modificar', {'id': app.user.id}) }}" class="btn btn-outline-info">Mis
                         Datos</a>
                     <a href="{{ path('logout') }}" class="btn btn-outline-dark">Salir</a>
