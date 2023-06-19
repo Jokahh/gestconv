@@ -35,6 +35,20 @@ class EstudianteRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findAllEstudiantesDelDocenteDelCursoActual(int $id): array
+    {
+        $queryBuilder = $this->createQueryBuilder('estudiante');
+        $queryBuilder
+            ->join('estudiante.grupos', 'grupos')
+            ->join('grupos.cursoAcademico', 'cursoAcademico')
+            ->join('grupos.tutores','tutores')
+            ->where('cursoAcademico.id = :cursoAcademicoId')
+            ->andWhere('tutores.id = :tutor_id')
+            ->setParameter('cursoAcademicoId', $this->cursoAcademicoRepository->findActivo()->getId())
+            ->setParameter('tutor_id', $id);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     public function findAllEstudiantesDeGruposDelCursoActualSancionables(): array
     {
         $queryBuilder = $this->createQueryBuilder('estudiante');

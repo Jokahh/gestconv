@@ -36,9 +36,29 @@ class EstudianteController extends AbstractController
         );
         return $this->render('estudiante/listar.html.twig', [
             'pagination' => $pagination,
-            'cursoActual' => false
+            'cursoActual' => false,
+            'estudiantesPropios' => false
         ]);
     }
+
+    /**
+     * @Route("/estudiantes_propios", name="estudiante_listar_propios")
+     */
+    public function listarPropios(EstudianteRepository $estudianteRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $pagination = $paginator->paginate(
+            $estudianteRepository->findAllEstudiantesDelDocenteDelCursoActual($this->getUser()->getId()), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
+        return $this->render('estudiante/listar.html.twig', [
+            'pagination' => $pagination,
+            'cursoActual' => false,
+            'estudiantesPropios' => true
+        ]);
+    }
+
 
     /**
      * @Route("/estudiantes_sancionables", name="estudiantes_listar_sancionables")
@@ -230,7 +250,8 @@ class EstudianteController extends AbstractController
         );
         return $this->render('estudiante/listar.html.twig', [
             'pagination' => $pagination,
-            'cursoActual' => true
+            'cursoActual' => true,
+            'estudiantesPropios' => true
         ]);
     }
 

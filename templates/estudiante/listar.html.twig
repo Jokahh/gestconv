@@ -5,17 +5,21 @@
         <div class="col-12 col-lg-7 justify-content-start p-0">
             {% if cursoActual %}
                 <h4>Listado de los estudiantes del curso {{ cursoAcademicoRepository.findActivo }}</h4>
+            {% elseif estudiantesPropios %}
+                <h4>Listado de los estudiantes de mi tutoría</h4>
             {% else %}
                 <h4>Listado de todos los estudiantes</h4>
             {% endif %}
         </div>
         <div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
-            {% if cursoActual %}
-                <a href="{{ path('estudiante_listar') }}" class="btn btn-secondary">
-                    <i class="fa fa-list"></i> Todos los estudiantes</a>
-            {% else %}
-                <a href="{{ path('estudiante_listar_grupo_curso_actual') }}" class="btn btn-secondary">
-                    <i class="fa fa-list"></i> Estudiantes del curso {{ cursoAcademicoRepository.findActivo }}</a>
+            {% if not estudiantesPropios %}
+                {% if cursoActual %}
+                    <a href="{{ path('estudiante_listar') }}" class="btn btn-secondary">
+                        <i class="fa fa-list"></i> Todos los estudiantes</a>
+                {% else %}
+                    <a href="{{ path('estudiante_listar_grupo_curso_actual') }}" class="btn btn-secondary">
+                        <i class="fa fa-list"></i> Estudiantes del curso {{ cursoAcademicoRepository.findActivo }}</a>
+                {% endif %}
             {% endif %}
             <a href="{{ path('estudiante_nuevo') }}" class="btn btn-success ml-2">
                 <i class="fa fa-plus"></i> Nuevo estudiante</a>
