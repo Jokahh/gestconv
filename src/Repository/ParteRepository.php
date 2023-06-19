@@ -2,11 +2,15 @@
 
 namespace App\Repository;
 
+use App\Entity\ComunicacionParte;
+use App\Entity\Docente;
 use App\Entity\Estudiante;
 use App\Entity\Parte;
 use App\Entity\Sancion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\User;
 
 /**
  * @extends ServiceEntityRepository<Parte>
@@ -60,6 +64,20 @@ class ParteRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findPartePorComunicacion(ComunicacionParte $comunicacionParte): array
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->join('parte.comunicacionParte', 'comunicacion_parte')
+            ->where('comunicacion_parte = :comunicacionParte')
+            ->orderBy('parte.fechaSuceso')
+            ->setParameter('comunicacionParte', $comunicacionParte);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     public function findAllSancionablesDeEstudiantesDelCursoActual(): array
     {
         $queryBuilder = $this->createQueryBuilder('parte');
@@ -82,6 +100,70 @@ class ParteRepository extends ServiceEntityRepository
         $queryBuilder
             ->where('parte.id = :id')
             ->setParameter('id', $id);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findNoNotificados()
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->innerJoin('parte.estudiante', 'estudiante')
+            ->where('parte.fechaAviso IS NULL')
+            ->orderBy('parte.fechaAviso');
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findNoNotificadosPorUsuario(User $user)
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->where('parte.docente = :user')
+            ->andWhere('parte.fechaAviso IS NULL')
+            ->orderBy('parte.fechaAviso')
+            ->setParameter('user', $user);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findNoNotificadosPorDocente(Docente $docente)
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->where('parte.docente = :docente')
+            ->andWhere('parte.fechaAviso IS NULL')
+            ->orderBy('parte.fechaAviso')
+            ->setParameter('docente', $docente);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findNoNotificadosPorEstudiante(Estudiante $estudiante)
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->where('parte.estudiante = :estudiante')
+            ->andWhere('parte.fechaAviso IS NULL')
+            ->orderBy('parte.fechaAviso')
+            ->setParameter('estudiante', $estudiante);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findNotificadosPorUsuario(User $user)
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->where('parte.docente = :user')
+            ->andWhere('parte.fechaAviso IS NOT NULL')
+            ->orderBy('parte.fechaAviso')
+            ->setParameter('user', $user);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findNotificados()
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->innerJoin('parte.estudiante', 'estudiante')
+            ->where('parte.fechaAviso IS NOT NULL')
+            ->orderBy('parte.fechaAviso');
         return $queryBuilder->getQuery()->getResult();
     }
 
