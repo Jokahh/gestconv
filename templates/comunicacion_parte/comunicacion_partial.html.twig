@@ -1,0 +1,22 @@
+<div class="card mb-1">
+    <div class="card-header" id="comunicacion-heading-{{ comunicacion.id }}">
+        <div class="row no-gutters align-items-center">
+            <div class="col-12">
+                <h2>
+                    <button class="btn btn-link btn-block text-left text-decoration-none text-dark pl-0" type="button" data-toggle="collapse" data-target="#comunicacion-{{ comunicacion.id }}" aria-expanded="true" aria-controls="comunicacion-{{ comunicacion.id }}">
+                        Comunicación <b>#{{ comunicacion.id }}</b> - {{ comunicacion.fecha|date('Y-m-d H:i') }}
+                    </button>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="comunicacion-{{ comunicacion.id }}" class="collapse alert alert-info" aria-labelledby="comunicacion-heading-{{ comunicacion.id }}" data-parent="#accordionHistoricoNotificaciones">
+        <div class="card-body p-0 m-0">
+            <div>
+                - <b>Descripción de la comunicación:</b>
+                {{ comunicacion.anotacion | nl2br }}
+            </div>
+        </div>
+    </div>
+</div>
