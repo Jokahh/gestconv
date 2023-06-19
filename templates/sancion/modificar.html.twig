@@ -10,6 +10,17 @@
             {% endif %}
         </div>
     </div>
+    {% if sancion.id %}
+        <div class="form-group row">
+            <legend class="col-form-label col-sm-2 col-form-label required">Parte</legend>
+            <div class="col-sm-10">
+                <div class="form-inline">
+                    {% set parte = parteRepository.findPartePorSancion(sancion)|join(', ') %}
+                    <input type="text" disabled class="form-control col-12" value="{% if parte %}{{ parte }}{% else %}Ninguno{% endif %}">
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row">

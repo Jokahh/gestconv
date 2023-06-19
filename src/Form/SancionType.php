@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -31,17 +32,22 @@ class SancionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $actitudesFamilia = $this->actitudFamiliaRepository->findAllByCursoActivo();
-        $estudiante = $options['estudiante'];
-        $partesDelEstudiante = $this->parteRepository->findAllSancionablesPorEstudiante($estudiante);
+        if ($options['estudiante']) {
+            $estudiante = $options['estudiante'];
+            $partesDelEstudiante = $this->parteRepository->findAllSancionablesPorEstudiante($estudiante);
+        }
+        if ($options['estudiante']) {
+            $builder
+                ->add('partes', EntityType::class, [
+                    'label' => 'Partes',
+                    'choices' => $partesDelEstudiante,
+                    'class' => Parte::class,
+                    'required' => true,
+                    'multiple' => true,
+                    'expanded' => true
+                ]);
+        }
         $builder
-            ->add('partes', EntityType::class, [
-                'label' => 'Partes',
-                'choices' => $partesDelEstudiante,
-                'class' => Parte::class,
-                'required' => true,
-                'multiple' => true,
-                'expanded' => true
-            ])
             ->add('medidas', EntityType::class, [
                 'label' => 'Medidas',
                 'help' => 'Medidas a adoptar para esta sanción',
@@ -132,7 +138,8 @@ class SancionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Sancion::class,
-            'estudiante' => null
+            'estudiante' => null,
+            'sancion' => null
         ]);
     }
 }

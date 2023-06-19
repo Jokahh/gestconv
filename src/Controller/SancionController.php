@@ -32,7 +32,7 @@ class SancionController extends AbstractController
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $sancion = $sancionRepository->nuevo();
-        
+
         return $this->modificarSancion($request, $sancionRepository, $sancion);
     }
 
@@ -42,7 +42,9 @@ class SancionController extends AbstractController
     public function modificarSancion(Request $request, SancionRepository $sancionRepository, Sancion $sancion): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
-        $form = $this->createForm(SancionType::class, $sancion);
+        $form = $this->createForm(SancionType::class, $sancion, [
+            'sancion' => $sancion,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
