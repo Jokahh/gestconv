@@ -66,6 +66,22 @@ class EstudianteRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+
+    public function findAllEstudiantesDeGruposDelCursoActualConSancionesNoNotificadas(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('estudiante');
+        $queryBuilder
+            ->join('estudiante.grupos', 'grupos')
+            ->join('grupos.cursoAcademico', 'cursoAcademico')
+            ->leftJoin('estudiante.partes', 'partes')
+            ->join('partes.sancion', 'sancion')
+            ->where('cursoAcademico.id = :cursoAcademicoId')
+            ->andWhere('sancion.fechaComunicado IS NULL')
+            ->orderBy('sancion.fechaSancion')
+            ->setParameter('cursoAcademicoId', $this->cursoAcademicoRepository->findActivo()->getId());
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     public function nuevo(): Estudiante
     {
         $estudiante = new Estudiante();
