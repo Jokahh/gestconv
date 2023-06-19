@@ -38,12 +38,26 @@
     <div class="row">
         <div class="col">
             <a href="{{ path('estudiantes_listar_sancionables') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver</a>
-            <button type="submit" id="modificar_parte_enviar" name="guardar" class="btn-primary btn">
-                <i class="fa fa-check"></i> Sancionar
+            <button type="submit" id="modificar_parte_enviar" name="guardar" class="btn-danger btn">
+                <i class="fa fa-gavel"></i> Sancionar
             </button>
         </div>
     </div>
     {{ form_end(form) }}
+
+    <div class="row my-5">
+        <div class="col-12"><h3>Histórico de sanciones del estudiante</h3></div>
+        <div class="col-12">
+            <div class="accordion" id="accordionHistoricoSanciones">
+                {% set sanciones = sancionRepository.findAllPorEstudiante(estudiante) %}
+                {% for sancionDetallada in sanciones %}
+                    {% include 'sancion/sancion_partial.html.twig' %}
+                {% else %}
+                    <div class="d-flex align-items-center justify-content-center"><h3>Es estudiante no tiene sanciones</h3></div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

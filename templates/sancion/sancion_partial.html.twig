@@ -1,0 +1,73 @@
+{% set parteDetallado = parteRepository.findPartePorSancion(sancionDetallada)[0] %}
+
+<div class="card mb-1">
+    <div class="card-header"
+         id="parte-heading-{{ sancionDetallada.id }}">
+        <div class="row no-gutters align-items-center">
+            <div class="col-12">
+                <h2>
+                    <button class="btn btn-link btn-block text-left text-decoration-none text-dark pl-0" type="button" data-toggle="collapse" data-target="#sancion-{{ sancionDetallada.id }}" aria-expanded="true" aria-controls="sancion-{{ sancionDetallada.id }}">
+                        Sancion <b>#{{ sancionDetallada.id }}</b> - {{ sancionDetallada.fechaSancion|date('Y-m-d H:i') }}
+                    </button>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="sancion-{{ sancionDetallada.id }}" class="collapse" aria-labelledby="parte-heading-{{ sancionDetallada.id }}" data-parent="#accordionHistoricoSanciones">
+        <div class="card-body">
+            <div class="row mb-2">
+                {% if sancionDetallada.reclamacion %}
+                    <div class="col-12">- Reclamación: <b>{{ sancionDetallada.reclamacion ? 'Si' : 'No' }}</b></div>
+                {% endif %}
+                {% if sancionDetallada.registradoEnSeneca %}
+                    <div class="col-12">- Registrado en Séneca: <b>{{ sancionDetallada.registradoEnSeneca ? 'Si' : 'No' }}</b></div>
+                {% endif %}
+                {% if sancionDetallada.fechaComunicado %}
+                    <div class="col-12">- Comunicada el <b>{{ sancionDetallada.fechaComunicado|date('Y-m-d H:i') }}</b></div>
+                {% endif %}
+                {% if sancionDetallada.fechaRegistroSalida %}
+                    <div class="col-12">- Firmada el <b>{{ sancionDetallada.fechaRegistroSalida|date('Y-m-d H:i') }}</b></div>
+                {% endif %}
+                {% if sancionDetallada.fechaInicioSancion %}
+                    <div class="col-12">- Inició el <b>{{ sancionDetallada.fechaInicioSancion|date('Y-m-d H:i') }}</b></div>
+                {% endif %}
+                {% if sancionDetallada.fechaFinSancion %}
+                    <div class="col-12">- Finalizó el <b>{{ sancionDetallada.fechaFinSancion|date('Y-m-d H:i') }}</b></div>
+                {% endif %}
+                {% if sancionDetallada.fechaIncorporacion %}
+                    <div class="col-12">- El estudiante se incorporó el <b>{{ sancionDetallada.fechaIncorporacion|date('Y-m-d H:i') }}</b></div>
+                {% endif %}
+                <div class="col-12">- Medidas efectivas: <b>{% if sancionDetallada.medidasEfectivas == null %}No se sabe{% elseif sancionDetallada.medidasEfectivas == false %}No{% else %}Si{% endif %}</b></div>
+            </div>
+            <div class="row alert alert-info mb-2">
+                <div class="col-12">
+                    - <b>Descripción de la sanción:</b>
+                </div>
+                <div class="col-12">
+                    {{ sancionDetallada.anotacion | nl2br }}
+                </div>
+            </div>
+            {% if sancionDetallada.observaciones|length > 0 %}
+                <div class="row alert alert-info">
+                    <div class="col-12">- <b>Observaciones del parte:</b></div>
+                    {% for observacion in sancionDetallada.observaciones %}
+                        <div class="col-12">- {{ observacion }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% set comunicacionesSancion = comunicacionSancionRepository.findAllBySancion(sancionDetallada) %}
+            {% if comunicacionesSancion|length > 0 %}
+                <div class="row alert alert-info">
+                    <div class="col-12">- <b>Comunicaciones de la sanción:</b></div>
+                    <ul>
+                        {% for comunicacion in comunicacionesSancion %}
+                            <li><b>#{{ comunicacion.id }}</b> el <b>{{ comunicacion.fecha|date('Y-m-d H:i') }}</b> por <b>{{ comunicacion.tipo }}</b>: {{ comunicacion }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+

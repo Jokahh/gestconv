@@ -25,7 +25,7 @@
                     <td class="align-middle">{{ parteRepository.findAllSancionablesPorEstudiante(estudiante)|length }}</td>
                     <td class="align-middle">
                         <a href="{{ path('estudiante_sancionar', {'id': estudiante.id}) }}">
-                            <button type="button" class="btn btn-warning">Sancionar</button>
+                            <button type="button" class="btn btn-danger"><i class="fa fa-gavel"></i> Sancionar</button>
                         </a>
                     </td>
                 </tr>
