@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ComunicacionSancion;
 use App\Form\ComunicacionSancionType;
 use App\Repository\ComunicacionSancionRepository;
+use App\Repository\SancionRepository;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,18 +34,18 @@ class ComunicacionSancionController extends AbstractController
     /**
      * @Route ("/comunicacion_sancion/nuevo", name="comunicacion_sancion_nuevo")
      */
-    public function nuevoComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository): Response
+    public function nuevoComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, SancionRepository $sancionRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $comunicacionSancion = $comunicacionSancionRepository->nuevo();
 
-        return $this->modificarComunicacionSancion($request, $comunicacionSancionRepository, $comunicacionSancion);
+        return $this->modificarComunicacionSancion($request, $comunicacionSancionRepository, $comunicacionSancion, $sancionRepository);
     }
 
     /**
      * @Route("/comunicacion_sancion/{id}", name="comunicacion_sancion_modificar", requirements={"id":"\d+"})
      */
-    public function modificarComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, ComunicacionSancion $comunicacionSancion): Response
+    public function modificarComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, ComunicacionSancion $comunicacionSancion, SancionRepository $sancionRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $form = $this->createForm(ComunicacionSancionType::class, $comunicacionSancion);
@@ -52,6 +53,11 @@ class ComunicacionSancionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $sancion = $comunicacionSancion->getSancion();
+                if ($sancion->getFechaComunicado() == null) {
+                    $sancion->setFechaComunicado($comunicacionSancion->getFecha());
+                    $sancionRepository->guardar();
+                }
                 $comunicacionSancionRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('comunicacion_sancion_listar');
