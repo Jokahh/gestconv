@@ -1,0 +1,90 @@
+<div class="card mb-1">
+    <div class="card-header {% if parteDetallado.prioritaria %}bg-warning{% endif %}"
+         id="parte-heading-{{ parteDetallado.id }}">
+        <div class="row no-gutters align-items-center">
+            <div class="col-1 pl-4 justify-content-center align-items-center d-flex">
+                <label class="checkbox-bootstrap checkbox-lg">
+                    <input type="checkbox" class="casilla" name="{{ marcar.full_name }}" value="{{ parteDetallado.id }}" {{ marcar.checked ? 'checked' }}>
+                    <span class="checkbox-placeholder"></span>
+                </label>
+            </div>
+            <div class="col-11 pl-0">
+                <h2>
+                    <button class="btn btn-link btn-block text-left text-decoration-none text-dark pl-0" type="button" data-toggle="collapse" data-target="#parte-{{ parteDetallado.id }}" aria-expanded="true" aria-controls="parte-{{ parteDetallado.id }}">
+                        Parte <b>#{{ parteDetallado.id }}</b> - Registrado por <b>{{ parteDetallado.docente }}</b> - {{ parteDetallado.fechaCreacion|date('Y-m-d H:i') }}
+                    </button>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="parte-{{ parteDetallado.id }}" class="collapse {% if parteDetallado.prioritaria %}border border-warning{% endif %}" aria-labelledby="parte-heading-{{ parteDetallado.id }}" data-parent="#accordionPartes">
+        <div class="card-body">
+            <div class="row mb-2">
+                {% if parteDetallado.prioritaria %}
+                    <div class="col-12">- <b>El parte es <span style="color: #ffc107">prioritario</span></b></div>
+                {% endif %}
+                {% if parteDetallado.prescrito %}
+                    <div class="col-12">- El parte ha <b>prescrito</b></div>
+                {% endif %}
+                {% if parteDetallado.fechaAviso %}
+                    <div class="col-12">- Notificado el <b>{{ parteDetallado.fechaAviso|date('Y-m-d H:i') }}</b></div>
+                {% endif %}
+                {% if parteDetallado.fechaSuceso %}
+                    <div class="col-12">- Sucedió el <b>{{ parteDetallado.fechaSuceso|date('Y-m-d H:i') }}</b></div>
+                {% endif %}
+                {% if parteDetallado.fechaRecordatorio %}
+                    <div class="col-12">- Recordado el <b>{{ parteDetallado.fechaRecordatorio|date('Y-m-d H:i') }}</b></div>
+                {% endif %}
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">- <b>Conductas Contrarias</b></div>
+                <ul>
+                    {% for conducta in parteDetallado.conductasContrarias %}
+                        <li>{{ conducta }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="row alert alert-info mb-2">
+                <div class="col-12">
+                    - <b>Descripción del parte:</b>
+                </div>
+                <div class="col-12">
+                    {{ parteDetallado.anotacion | nl2br }}
+                </div>
+            </div>
+            {% if parteDetallado.hayExpulsion %}
+                <div class="row mb-2">
+                    <div class="col-12">
+                        {% if parteDetallado.actividades %}
+                            <div class="row alert alert-secondary">
+                                <div class="col-12">- <b>Expulsión del aula</b></div>
+                                <div class="col-12">- <b>Actividades para realizar:</b> {% if parteDetallado.actividadesRealizadas == true %}Se hicieron{% elseif parte.actividadesRealizadas is not null %}No se hicieron{% endif %}</div>
+                                <div class="col-12">- <b>Actividades: </b>{{ parteDetallado.actividades | nl2br }}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if parteDetallado.observaciones|length > 0 %}
+                <div class="row alert alert-info">
+                    <div class="col-12">- <b>Observaciones del parte:</b></div>
+                    {% for observacion in parteDetallado.observaciones %}
+                        <div class="col-12">- {{ observacion }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% set comunicacionesParte = comunicacionParteRepository.findAllByParte(parteDetallado) %}
+            {% if comunicacionesParte|length > 0 %}
+                <div class="row alert alert-info">
+                    <div class="col-12">- <b>Comunicaciones del parte:</b></div>
+                    <ul>
+                        {% for comunicacion in comunicacionesParte %}
+                            <li><b>#{{ comunicacion.id }}</b> el <b>{{ comunicacion.fecha|date('Y-m-d H:i') }}</b> por <b>{{ comunicacion.tipo }}</b>: {{ comunicacion }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
