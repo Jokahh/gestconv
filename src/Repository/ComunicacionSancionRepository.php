@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ComunicacionSancion;
+use App\Entity\Estudiante;
 use App\Entity\Sancion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -28,6 +29,18 @@ class ComunicacionSancionRepository extends ServiceEntityRepository
         $queryBuilder
             ->where('comunicacion_sancion.sancion = :sancion')
             ->setParameter('sancion', $sancion);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findAllByEstudiante(Estudiante $estudiante)
+    {
+        $queryBuilder = $this->createQueryBuilder('comunicacion_sancion');
+        $queryBuilder
+            ->join('comunicacion_sancion.sancion', 'sancion')
+            ->join('sancion.partes', 'partes')
+            ->where('partes.estudiante = :estudiante')
+            ->orderBy('comunicacion_sancion.fecha')
+            ->setParameter('estudiante', $estudiante);
         return $queryBuilder->getQuery()->getResult();
     }
 
