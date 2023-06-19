@@ -8,3 +8,5 @@ twig:
     cursoAcademicoRepository: "@App\\Repository\\CursoAcademicoRepository"
     parteRepository: "@App\\Repository\\ParteRepository"
     comunicacionParteRepository: "@App\\Repository\\ComunicacionParteRepository"
+    comunicacionSancionRepository: "@App\\Repository\\ComunicacionSancionRepository"
+    sancionRepository: "@App\\Repository\\SancionRepository"
