@@ -116,7 +116,7 @@ class EstudianteController extends AbstractController
                 }
                 $sancionRepository->guardar();
                 $numPartes = count($form->get('partes')->getData());
-                $this->addFlash('exito', ($numPartes == 1) ? 'Se ha sancionado un parte con éxito' : 'Se han sancionado ' . $numPartes . ' con éxito');
+                $this->addFlash('exito', ($numPartes == 1) ? 'Se ha sancionado un parte con éxito' : 'Se han sancionado ' . $numPartes . ' partes con éxito');
                 $partes = $parteRepository->findAllSancionablesPorEstudiante($estudiante);
                 return $this->redirectToRoute('estudiante_sancionar', ['id' => $estudiante->getId()]);
             } catch (Exception $e) {
