@@ -19,7 +19,7 @@ class CategoriaMedidaController extends AbstractController
      */
     public function listar(CategoriaMedidaRepository $categoriaMedidaRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $pagination = $paginator->paginate(
             $categoriaMedidaRepository->findAllOrdenados(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -35,7 +35,7 @@ class CategoriaMedidaController extends AbstractController
      */
     public function nuevoCategoriaMedida(Request $request, CategoriaMedidaRepository $categoriaMedidaRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $categoriaMedida = $categoriaMedidaRepository->nuevo();
 
         return $this->modificarCategoriaMedida($request, $categoriaMedidaRepository, $categoriaMedida);
@@ -46,7 +46,7 @@ class CategoriaMedidaController extends AbstractController
      */
     public function modificarCategoriaMedida(Request $request, CategoriaMedidaRepository $categoriaMedidaRepository, CategoriaMedida $categoriaMedida): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $form = $this->createForm(CategoriaMedidaType::class, $categoriaMedida);
         $form->handleRequest($request);
 
@@ -71,7 +71,7 @@ class CategoriaMedidaController extends AbstractController
      */
     public function eliminarCategoriaMedida(Request $request, CategoriaMedidaRepository $categoriaMedidaRepository, CategoriaMedida $categoriaMedida): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
                 $categoriaMedidaRepository->eliminar($categoriaMedida);

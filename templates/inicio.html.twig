@@ -31,7 +31,7 @@
         <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
             <div class="card">
                 <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
-                   href="{{ path('parte_nuevo') }}">
+                   href="{% if is_granted('ROLE_DIRECTIVO') %}{{ path('parte_listar') }}{% else %}{{ path('parte_listar_propios', {'id': app.user.id}) }}{% endif %}">
                     <i class="card-icon fa-solid fa-rectangle-list pb-3"></i>
                 </a>
                 <div class="card-header px-3">
@@ -143,6 +143,82 @@
                 </div>
             </div>
         {% endif %}
+
+        {% if is_granted('ROLE_DIRECTIVO') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('curso_academico_listar') }}">
+                        <i class="card-icon fa-solid fa-calendar-alt pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Cursos académicos</div>
+                        <div class="texto-card-footer">Muestra el listado de los cursos académicos y permite modificarlos</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_granted('ROLE_DIRECTIVO') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('actitud_familia_listar') }}">
+                        <i class="card-icon fa-solid fa-face-smile pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Actitudes de familia</div>
+                        <div class="texto-card-footer">Permite crear y modificar las actitudes de familia</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_granted('ROLE_DIRECTIVO') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('tipo_comunicacion_listar') }}">
+                        <i class="card-icon fa-solid fa-tower-cell pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Tipos de comunicación</div>
+                        <div class="texto-card-footer">Permite crear y modificar los tipos de comunicación</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_granted('ROLE_DIRECTIVO') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('categoria_conducta_contraria_listar') }}">
+                        <i class="card-icon fa-solid fa-table-list pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Categorías de conductas contrarias</div>
+                        <div class="texto-card-footer">Permite crear y modificar las categorías de conductas contrarias</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_granted('ROLE_DIRECTIVO') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('tramo_listar') }}">
+                        <i class="card-icon fa-solid fa-clock pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Tramos</div>
+                        <div class="texto-card-footer">Permite crear y modificar los tramos</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
     </div>
 
 

@@ -20,9 +20,25 @@ class ParteController extends AbstractController
      */
     public function listar(ParteRepository $parteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $pagination = $paginator->paginate(
             $parteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
+        return $this->render('parte/listar.html.twig', [
+            'pagination' => $pagination
+        ]);
+    }
+
+    /**
+     * @Route("/parte/{id}", name="parte_listar_propios", requirements={"id":"\d+"})
+     */
+    public function listarPropios(ParteRepository $parteRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
+        $pagination = $paginator->paginate(
+            $parteRepository->findAllByUsuarioId($this->getUser()->getId()), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
             10 /* Límite por página */
         );
@@ -80,16 +96,16 @@ class ParteController extends AbstractController
                         }
                     }
                 }
-
-
                 $parteRepository->guardar();
                 if ($nuevo) {
                     $this->addFlash('exito', (count($estudiantes) == 1) ? 'Se ha creado un parte con éxito' : 'Se han creado ' . count($estudiantes) . ' partes con éxito');
                 } else {
                     $this->addFlash('exito', 'Cambios guardados con éxito');
                 }
-
-                return $this->redirectToRoute('parte_listar');
+                if ($this->isGranted('ROLE_DIRECTIVO')) {
+                    return $this->redirectToRoute('parte_listar');
+                }
+                return $this->redirectToRoute('parte_listar_propios', ['id' => $this->getUser()->getId()]);
             } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
                 dump($e);

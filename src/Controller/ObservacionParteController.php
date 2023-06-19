@@ -19,7 +19,7 @@ class ObservacionParteController extends AbstractController
      */
     public function listar(ObservacionParteRepository $observacionParteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $pagination = $paginator->paginate(
             $observacionParteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -35,7 +35,7 @@ class ObservacionParteController extends AbstractController
      */
     public function nuevoObservacionParte(Request $request, ObservacionParteRepository $observacionParteRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $observacionParte = $observacionParteRepository->nuevo();
 
         return $this->modificarObservacionParte($request, $observacionParteRepository, $observacionParte);
@@ -46,7 +46,7 @@ class ObservacionParteController extends AbstractController
      */
     public function modificarObservacionParte(Request $request, ObservacionParteRepository $observacionParteRepository, ObservacionParte $observacionParte): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $form = $this->createForm(ObservacionParteType::class, $observacionParte);
         $form->handleRequest($request);
 
@@ -71,7 +71,7 @@ class ObservacionParteController extends AbstractController
      */
     public function eliminarObservacionParte(Request $request, ObservacionParteRepository $observacionParteRepository, ObservacionParte $observacionParte): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         if ($request->request->has('confirmar')) {
             try {
                 $observacionParteRepository->eliminar($observacionParte);

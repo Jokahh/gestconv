@@ -19,7 +19,7 @@ class MedidaController extends AbstractController
      */
     public function listar(MedidaRepository $medidaRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $pagination = $paginator->paginate(
             $medidaRepository->findAllOrdenados(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -35,7 +35,7 @@ class MedidaController extends AbstractController
      */
     public function nuevoMedida(Request $request, MedidaRepository $medidaRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $medida = $medidaRepository->nuevo();
 
         return $this->modificarMedida($request, $medidaRepository, $medida);
@@ -46,7 +46,7 @@ class MedidaController extends AbstractController
      */
     public function modificarMedida(Request $request, MedidaRepository $medidaRepository, Medida $medida): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $form = $this->createForm(MedidaType::class, $medida);
         $form->handleRequest($request);
 
@@ -71,7 +71,7 @@ class MedidaController extends AbstractController
      */
     public function eliminarMedida(Request $request, MedidaRepository $medidaRepository, Medida $medida): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         if ($request->request->has('confirmar')) {
             try {
                 $medidaRepository->eliminar($medida);

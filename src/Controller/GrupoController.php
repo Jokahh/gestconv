@@ -19,7 +19,7 @@ class GrupoController extends AbstractController
      */
     public function listar(GrupoRepository $grupoRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $pagination = $paginator->paginate(
             $grupoRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -54,7 +54,7 @@ class GrupoController extends AbstractController
     public
     function nuevoGrupo(Request $request, GrupoRepository $grupoRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $grupo = $grupoRepository->nuevo();
 
         return $this->modificarGrupo($request, $grupoRepository, $grupo);
@@ -66,7 +66,7 @@ class GrupoController extends AbstractController
     public
     function modificarGrupo(Request $request, GrupoRepository $grupoRepository, Grupo $grupo): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $form = $this->createForm(GrupoType::class, $grupo);
         $form->handleRequest($request);
 
@@ -92,7 +92,7 @@ class GrupoController extends AbstractController
     public
     function eliminarGrupo(Request $request, GrupoRepository $grupoRepository, Grupo $grupo): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         if ($request->request->has('confirmar')) {
             try {
                 $grupoRepository->eliminar($grupo);

@@ -43,6 +43,17 @@ class ParteRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function findAllByUsuarioId(int $id)
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->join('parte.docente', 'docente')
+            ->where('docente.id = :id')
+            ->setParameter('id', $id);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
     public function findAllSancionadosPorEstudiante(Estudiante $estudiante): array
     {
         $queryBuilder = $this->createQueryBuilder('parte');

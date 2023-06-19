@@ -222,7 +222,7 @@ class EstudianteController extends AbstractController
      */
     public function listarEstudiantesDeGruposDelCursoActual(EstudianteRepository $estudianteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $pagination = $paginator->paginate(
             $estudianteRepository->findAllEstudiantesDeGruposDelCursoActual(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -237,12 +237,12 @@ class EstudianteController extends AbstractController
     /**
      * @Route ("/estudiante/nuevo", name="estudiante_nuevo")
      */
-    public function nuevoEstudiante(Request $request, EstudianteRepository $estudianteRepository): Response
+    public function nuevoEstudiante(Request $request, EstudianteRepository $estudianteRepository, GrupoRepository $grupoRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $estudiante = $estudianteRepository->nuevo();
 
-        return $this->modificarEstudiante($request, $estudianteRepository, $estudiante);
+        return $this->modificarEstudiante($request, $estudianteRepository, $estudiante, $grupoRepository);
     }
 
     /**
@@ -250,7 +250,7 @@ class EstudianteController extends AbstractController
      */
     public function modificarEstudiante(Request $request, EstudianteRepository $estudianteRepository, Estudiante $estudiante, GrupoRepository $grupoRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $form = $this->createForm(EstudianteType::class, $estudiante);
         $form->handleRequest($request);
 
@@ -284,7 +284,7 @@ class EstudianteController extends AbstractController
      */
     public function eliminarEstudiante(Request $request, EstudianteRepository $estudianteRepository, Estudiante $estudiante): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         if ($request->request->has('confirmar')) {
             try {
                 $estudianteRepository->eliminar($estudiante);

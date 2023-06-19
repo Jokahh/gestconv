@@ -20,7 +20,7 @@ class ComunicacionParteController extends AbstractController
      */
     public function listar(ComunicacionParteRepository $comunicacionParteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $pagination = $paginator->paginate(
             $comunicacionParteRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -36,7 +36,7 @@ class ComunicacionParteController extends AbstractController
      */
     public function nuevoComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ParteRepository $parteRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $comunicacionParte = $comunicacionParteRepository->nuevo();
 
         return $this->modificarComunicacionParte($request, $comunicacionParteRepository, $comunicacionParte, $parteRepository);
@@ -47,7 +47,7 @@ class ComunicacionParteController extends AbstractController
      */
     public function modificarComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ComunicacionParte $comunicacionParte, ParteRepository $parteRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $form = $this->createForm(ComunicacionParteType::class, $comunicacionParte);
         $form->handleRequest($request);
 
@@ -77,7 +77,7 @@ class ComunicacionParteController extends AbstractController
      */
     public function eliminarComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ComunicacionParte $comunicacionParte): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         if ($request->request->has('confirmar')) {
             try {
                 $comunicacionParteRepository->eliminar($comunicacionParte);

@@ -20,7 +20,7 @@ class ComunicacionSancionController extends AbstractController
      */
     public function listar(ComunicacionSancionRepository $comunicacionSancionRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $pagination = $paginator->paginate(
             $comunicacionSancionRepository->findAll(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -36,7 +36,7 @@ class ComunicacionSancionController extends AbstractController
      */
     public function nuevoComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, SancionRepository $sancionRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $comunicacionSancion = $comunicacionSancionRepository->nuevo();
 
         return $this->modificarComunicacionSancion($request, $comunicacionSancionRepository, $comunicacionSancion, $sancionRepository);
@@ -47,7 +47,7 @@ class ComunicacionSancionController extends AbstractController
      */
     public function modificarComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, ComunicacionSancion $comunicacionSancion, SancionRepository $sancionRepository): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $form = $this->createForm(ComunicacionSancionType::class, $comunicacionSancion);
         $form->handleRequest($request);
 
@@ -77,7 +77,7 @@ class ComunicacionSancionController extends AbstractController
      */
     public function eliminarComunicacionSancion(Request $request, ComunicacionSancionRepository $comunicacionSancionRepository, ComunicacionSancion $comunicacionSancion): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         if ($request->request->has('confirmar')) {
             try {
                 $comunicacionSancionRepository->eliminar($comunicacionSancion);

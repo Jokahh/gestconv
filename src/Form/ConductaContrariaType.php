@@ -30,13 +30,6 @@ class ConductaContrariaType extends AbstractType
                 'help' => 'Orden en el que va a aparecer en los listados o desplegables',
                 'choices' => range(0, 50)
             ])
-            ->add('partes', EntityType::class, [
-                'label' => 'Parte',
-                'class' => Parte::class,
-                'required' => true,
-                'help' => 'Parte a la que pertenece',
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona un parte', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
-            ])
             ->add('categoria', ChoiceType::class, [
                 'label' => 'Categoría',
                 'choices' => $categorias,

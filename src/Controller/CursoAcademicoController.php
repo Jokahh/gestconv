@@ -19,7 +19,7 @@ class CursoAcademicoController extends AbstractController
      */
     public function listar(CursoAcademicoRepository $cursoAcademicoRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $pagination = $paginator->paginate(
             $cursoAcademicoRepository->findAllOrdenados(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -46,7 +46,7 @@ class CursoAcademicoController extends AbstractController
      */
     public function modificarCursoAcademico(Request $request, CursoAcademicoRepository $cursoAcademicoRepository, CursoAcademico $cursoAcademico): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $form = $this->createForm(CursoAcademicoType::class, $cursoAcademico);
         $form->handleRequest($request);
 
@@ -71,7 +71,7 @@ class CursoAcademicoController extends AbstractController
      */
     public function eliminarCursoAcademico(Request $request, CursoAcademicoRepository $cursoAcademicoRepository, CursoAcademico $cursoAcademico): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
                 $cursoAcademicoRepository->eliminar($cursoAcademico);
@@ -92,8 +92,7 @@ class CursoAcademicoController extends AbstractController
      */
     public function seleccionarCursoAcademicoActivo(Request $request, CursoAcademico $cursoAcademico, CursoAcademicoRepository $cursoAcademicoRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
+        $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         if ($request->request->has('confirmar')) {
             try {
                 $cursoAcademicoRepository->setActivo($cursoAcademico);

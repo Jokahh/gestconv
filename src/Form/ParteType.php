@@ -6,8 +6,8 @@ use App\Entity\ConductaContraria;
 use App\Entity\Docente;
 use App\Entity\Estudiante;
 use App\Entity\Parte;
-use App\Entity\Sancion;
 use App\Entity\Tramo;
+use App\Repository\CategoriaConductaContrariaRepository;
 use App\Repository\EstudianteRepository;
 use App\Repository\TramoRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,16 +25,19 @@ class ParteType extends AbstractType
 {
     private $tramoRepository;
     private $estudianteRepository;
+    private $categoriaConductaContrariaRepository;
 
-    public function __construct(TramoRepository $tramoRepository, EstudianteRepository $estudianteRepository)
+    public function __construct(TramoRepository $tramoRepository, EstudianteRepository $estudianteRepository, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository)
     {
         $this->tramoRepository = $tramoRepository;
         $this->estudianteRepository = $estudianteRepository;
+        $this->categoriaConductaContrariaRepository = $categoriaConductaContrariaRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $tramos = $this->tramoRepository->findAllByCursoActivo();
+        $categoriasConductasContrarias = $this->categoriaConductaContrariaRepository->findAllByCursoActivo();
         $estudiantes = $this->estudianteRepository->findAllEstudiantesDeGruposDelCursoActual();
         $builder
             ->add('docente', EntityType::class, [

@@ -19,7 +19,7 @@ class ConductaContrariaController extends AbstractController
      */
     public function listar(ConductaContrariaRepository $conductaContrariaRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $pagination = $paginator->paginate(
             $conductaContrariaRepository->findAllOrdenados(), /* Query - NO EL RESULTADO DE LA QUERY */
             $request->query->getInt('page', 1), /* Número de la página */
@@ -46,7 +46,7 @@ class ConductaContrariaController extends AbstractController
      */
     public function modificarConductaContraria(Request $request, ConductaContrariaRepository $conductaContrariaRepository, ConductaContraria $conductaContraria): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_EDITOR');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         $form = $this->createForm(ConductaContrariaType::class, $conductaContraria);
         $form->handleRequest($request);
 
@@ -71,7 +71,7 @@ class ConductaContrariaController extends AbstractController
      */
     public function eliminarConductaContraria(Request $request, ConductaContrariaRepository $conductaContrariaRepository, ConductaContraria $conductaContraria): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_DOCENTE');
         if ($request->request->has('confirmar')) {
             try {
                 $conductaContrariaRepository->eliminar($conductaContraria);
