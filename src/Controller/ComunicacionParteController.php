@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ComunicacionParte;
 use App\Form\ComunicacionParteType;
 use App\Repository\ComunicacionParteRepository;
+use App\Repository\ParteRepository;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,18 +34,18 @@ class ComunicacionParteController extends AbstractController
     /**
      * @Route ("/comunicacion_parte/nuevo", name="comunicacion_parte_nuevo")
      */
-    public function nuevoComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository): Response
+    public function nuevoComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ParteRepository $parteRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $comunicacionParte = $comunicacionParteRepository->nuevo();
 
-        return $this->modificarComunicacionParte($request, $comunicacionParteRepository, $comunicacionParte);
+        return $this->modificarComunicacionParte($request, $comunicacionParteRepository, $comunicacionParte, $parteRepository);
     }
 
     /**
      * @Route("/comunicacion_parte/{id}", name="comunicacion_parte_modificar", requirements={"id":"\d+"})
      */
-    public function modificarComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ComunicacionParte $comunicacionParte): Response
+    public function modificarComunicacionParte(Request $request, ComunicacionParteRepository $comunicacionParteRepository, ComunicacionParte $comunicacionParte, ParteRepository $parteRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $form = $this->createForm(ComunicacionParteType::class, $comunicacionParte);
@@ -52,6 +53,11 @@ class ComunicacionParteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $parte = $comunicacionParte->getParte();
+                if ($parte->getFechaAviso() == null) {
+                    $parte->setFechaAviso($comunicacionParte->getFecha());
+                    $parteRepository->guardar();
+                }
                 $comunicacionParteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('comunicacion_parte_listar');
