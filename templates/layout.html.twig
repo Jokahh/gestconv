@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <nav class="navbar fixed-top navbar-expand-lg navbar-light navbar-light" style="background-color: #e3f2fd;">
-        <a class="navbar-brand" href="{{ path('inicio') }}"> GESTCONV</a>
+        <a class="navbar-brand d-flex align-items-center" href="{{ path('inicio') }}">
+            <img src="{{ asset('img/logo.png') }}" width="30rem" height="30rem" alt="GESTCONV+">ESTCONV+
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="ml-auto d-inline my-lg-0">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    {% if cursoAcademicoRepository.findActivo %}<a class="btn btn-outline-dark">{{ cursoAcademicoRepository.findActivo }}</a>{% endif %}
+                    {% if cursoAcademicoRepository.findActivo %}<a class="btn btn-info disabled">Curso - {{ cursoAcademicoRepository.findActivo }}</a>{% endif %}
                     <a class="btn btn-outline-dark">{{ app.user.roles|join(', ') }}</a>
                     <a href="{{ path('docente_modificar', {'id': app.user.id}) }}" class="btn btn-outline-info">Mis
                         Datos</a>
