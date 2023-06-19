@@ -339,7 +339,7 @@ class Sancion
         return $this->comunicaciones;
     }
 
-    public function addComunicacione(ComunicacionSancion $comunicacione): self
+    public function addComunicacion(ComunicacionSancion $comunicacione): self
     {
         if (!$this->comunicaciones->contains($comunicacione)) {
             $this->comunicaciones[] = $comunicacione;
@@ -349,7 +349,7 @@ class Sancion
         return $this;
     }
 
-    public function removeComunicacione(ComunicacionSancion $comunicacione): self
+    public function removeComunicacion(ComunicacionSancion $comunicacione): self
     {
         if ($this->comunicaciones->removeElement($comunicacione)) {
             // set the owning side to null (unless already changed)
@@ -375,7 +375,7 @@ class Sancion
 
     public function __toString()
     {
-        return ($this->getAnotacion() == null) ? '#' . $this->getId() : $this->getAnotacion();
+        return '#' . $this->getId() . ' - ' . $this->getAnotacion() . ' - ' . $this->getFechaSancion()->format('Y-m-d H:i:s');
     }
 }
 
