@@ -219,7 +219,36 @@
             </div>
         {% endif %}
 
-    </div>
+        {% if is_granted('ROLE_DIRECTIVO') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('medida_listar') }}">
+                        <i class="card-icon fa-solid fa-folder-open pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Medidas</div>
+                        <div class="texto-card-footer">Permite crear y modificar las medidas</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
+        {% if is_granted('ROLE_DIRECTIVO') %}
+            <div class="card-inicio col-12 col-sm-6 col-md-4 col-lg-3 px-5 px-sm-3 mb-4">
+                <div class="card">
+                    <a class="text-decoration-none card-body d-flex flex-column align-items-center justify-content-center"
+                       href="{{ path('categoria_medida_listar') }}">
+                        <i class="card-icon fa-solid fa-square-xmark pb-3"></i>
+                    </a>
+                    <div class="card-header px-3">
+                        <div class="font-weight-bold">Categorías de medidas</div>
+                        <div class="texto-card-footer">Permite crear y modificar las categorías de medidas</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
 
 {% endblock %}
