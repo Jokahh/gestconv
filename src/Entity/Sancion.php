@@ -361,11 +361,6 @@ class Sancion
         return $this;
     }
 
-    public function __toString()
-    {
-        return ($this->getAnotacion() == null) ? $this->getId() : $this->getAnotacion();
-    }
-
     public function getFechaIncorporacion(): ?DateTimeInterface
     {
         return $this->fechaIncorporacion;
@@ -376,6 +371,11 @@ class Sancion
         $this->fechaIncorporacion = $fechaIncorporacion;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return ($this->getAnotacion() == null) ? '#' . $this->getId() : $this->getAnotacion();
     }
 }
 
