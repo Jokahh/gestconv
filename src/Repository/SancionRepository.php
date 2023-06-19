@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\ComunicacionSancion;
 use App\Entity\Estudiante;
 use App\Entity\Sancion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -30,6 +31,38 @@ class SancionRepository extends ServiceEntityRepository
             ->where('partes.estudiante = :estudiante')
             ->orderBy('sancion.fechaSancion')
             ->setParameter('estudiante', $estudiante);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findAllNoNotificadasPorEstudiante(Estudiante $estudiante): array
+    {
+        $queryBuilder = $this->createQueryBuilder('sancion');
+        $queryBuilder
+            ->join('sancion.partes', 'partes')
+            ->where('partes.estudiante = :estudiante')
+            ->andWhere('sancion.fechaComunicado IS NULL')
+            ->orderBy('sancion.fechaSancion')
+            ->setParameter('estudiante', $estudiante);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findSancionPorComunicacion(ComunicacionSancion $comunicacionSancion): array
+    {
+        $queryBuilder = $this->createQueryBuilder('sancion');
+        $queryBuilder
+            ->join('sancion.comunicaciones', 'comunicacionSancion')
+            ->where('comunicacionSancion = :comunicacionSancion')
+            ->orderBy('sancion.fechaSancion')
+            ->setParameter('comunicacionSancion', $comunicacionSancion);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findOneById(int $id)
+    {
+        $queryBuilder = $this->createQueryBuilder('sancion');
+        $queryBuilder
+            ->where('sancion.id = :id')
+            ->setParameter('id', $id);
         return $queryBuilder->getQuery()->getResult();
     }
 
