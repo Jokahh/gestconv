@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ComunicacionParte;
+use App\Entity\Estudiante;
 use App\Entity\Parte;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,6 +31,18 @@ class ComunicacionParteRepository extends ServiceEntityRepository
             ->setParameter('parte', $parte);
         return $queryBuilder->getQuery()->getResult();
     }
+
+    public function findAllByEstudiante(Estudiante $estudiante)
+    {
+        $queryBuilder = $this->createQueryBuilder('comunicacion_parte');
+        $queryBuilder
+            ->join('comunicacion_parte.parte', 'parte')
+            ->where('parte.estudiante = :estudiante')
+            ->orderBy('comunicacion_parte.fecha')
+            ->setParameter('estudiante', $estudiante);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 
     public function nuevo(): ComunicacionParte
     {
