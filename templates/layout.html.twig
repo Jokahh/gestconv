@@ -11,16 +11,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="ml-auto d-inline my-lg-0">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    {% if cursoAcademicoRepository.findActivo %}<a class="btn btn-info disabled">Curso - {{ cursoAcademicoRepository.findActivo }}</a>{% endif %}
-                    <a href="{{ path('docente_modificar', {'id': app.user.id}) }}" class="btn btn-outline-info">Mis
+                    {% if cursoAcademicoRepository.findActivo %}<a class="btn btn-outline-info disabled">Curso - {{ cursoAcademicoRepository.findActivo }}</a>{% endif %}
+                    <a href="{{ path('docente_modificar', {'id': app.user.id}) }}" class="btn btn-info">Mis
                         Datos</a>
-                    <a href="{{ path('logout') }}" class="btn btn-outline-dark">Salir</a>
+                    <a href="{{ path('logout') }}" class="btn btn-dark">Salir</a>
                 {% endif %}
             </div>
         </div>
     </nav>
-
-    <div class="container mt-3">
+    <div class="container mt-5 mt-lg-0">
+        <div class="row"></div>
+    </div>
+    <div class="container mt-5">
         {% for mensaje in app.flashes('error') %}
             <div class="alert alert-danger alert-dismissible fade show">
                 {{ mensaje }}
