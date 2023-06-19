@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Estudiante;
 use App\Entity\Sancion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,17 @@ class SancionRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Sancion::class);
+    }
+
+    public function findAllPorEstudiante(Estudiante $estudiante): array
+    {
+        $queryBuilder = $this->createQueryBuilder('sancion');
+        $queryBuilder
+            ->join('sancion.partes', 'partes')
+            ->where('partes.estudiante = :estudiante')
+            ->orderBy('sancion.fechaSancion')
+            ->setParameter('estudiante', $estudiante);
+        return $queryBuilder->getQuery()->getResult();
     }
 
     public function nuevo(): Sancion
