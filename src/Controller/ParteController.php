@@ -61,16 +61,34 @@ class ParteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $estudiantes = $form->get('estudiantes')->getData();
                 $entityManager = $this->getDoctrine()->getManager();
-                foreach ($estudiantes as $estudiante) {
-                    $entityManager->detach($parte);
-                    $copiaParte = clone $parte;
-                    $copiaParte->setEstudiante($estudiante);
-                    $entityManager->persist($copiaParte);
+                if ($nuevo) {
+                    $estudiantes = $form->get('estudiantes')->getData();
+                    foreach ($estudiantes as $estudiante) {
+                        $entityManager->detach($parte);
+                        $copiaParte = clone $parte;
+                        $copiaParte->setEstudiante($estudiante);
+                        $entityManager->persist($copiaParte);
+                    }
                 }
+                $conductasContrarias = $parte->getConductasContrarias();
+                if ($parte->getPrioritaria() === false) {
+                    foreach ($conductasContrarias as $conducta) {
+                        if ($conducta->getCategoria()->getPrioritaria() === true) {
+                            $parte->setPrioritaria(true);
+                            break;
+                        }
+                    }
+                }
+
+
                 $parteRepository->guardar();
-                $this->addFlash('exito', (count($estudiantes) == 1) ? 'Se ha creado un parte con éxito' : 'Se han creado ' . count($estudiantes) . ' partes con éxito');
+                if ($nuevo) {
+                    $this->addFlash('exito', (count($estudiantes) == 1) ? 'Se ha creado un parte con éxito' : 'Se han creado ' . count($estudiantes) . ' partes con éxito');
+                } else {
+                    $this->addFlash('exito', 'Cambios guardados con éxito');
+                }
+
                 return $this->redirectToRoute('parte_listar');
             } catch (Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
