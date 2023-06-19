@@ -29,4 +29,21 @@
         </div>
     </div>
     {{ form_end(form) }}
+
+    {% set sanciones = sancionRepository.findAllPorEstudiante(estudiante) %}
+    {% if sanciones|length > 0 %}
+        <div class="row my-5">
+            <div class="col-12"><h3>Histórico de sanciones del estudiante</h3></div>
+            <div class="col-12">
+                <div class="accordion" id="accordionHistoricoSanciones">
+                    {% for sancionDetallada in sanciones %}
+                        {% include 'sancion/sancion_partial.html.twig' %}
+                    {% else %}
+                        <div class="d-flex align-items-center justify-content-center"><h3>El estudiante no tiene sanciones</h3></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock %}
