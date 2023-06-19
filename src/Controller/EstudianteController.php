@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Estudiante;
 use App\Form\ComunicacionParteType;
+use App\Form\ComunicacionSancionType;
 use App\Form\EstudianteType;
 use App\Form\SancionType;
 use App\Repository\ComunicacionParteRepository;
+use App\Repository\ComunicacionSancionRepository;
 use App\Repository\EstudianteRepository;
 use App\Repository\GrupoRepository;
 use App\Repository\ParteRepository;
@@ -66,6 +68,25 @@ class EstudianteController extends AbstractController
             10 /* Límite por página */
         );
         return $this->render('estudiante/estudiantes_por_notificar.html.twig', [
+            'pagination' => $pagination,
+            'docente' => $this->getUser()
+        ]);
+    }
+
+    /**
+     * @Route("/estudiantes_sanciones_notificables", name="estudiantes_listar_sanciones_notificables")
+     */
+    public function listarSancionesNotificables(EstudianteRepository $estudianteRepository, PaginatorInterface $paginator, Request $request, SancionRepository $sancionRepository): Response
+    {
+        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+
+        $estudianteRepository->findAllEstudiantesDeGruposDelCursoActualConSancionesNoNotificadas();
+        $pagination = $paginator->paginate(
+            $estudianteRepository->findAllEstudiantesDeGruposDelCursoActualConSancionesNoNotificadas(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
+        return $this->render('estudiante/estudiantes_sanciones_por_notificar.html.twig', [
             'pagination' => $pagination,
             'docente' => $this->getUser()
         ]);
@@ -149,6 +170,49 @@ class EstudianteController extends AbstractController
             'docente' => $this->getUser(),
             'comunicacion' => $comunicacionParte,
             'partes' => $partes,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/estudiante_notificar_sanciones/{id}", name="estudiante_notificar_sanciones", requirements={"id":"\d+"})
+     */
+    public function notificarSancionesEstudiante(Estudiante $estudiante, ComunicacionSancionRepository $comunicacionSancionRepository, SancionRepository $sancionRepository, Request $request): Response
+    {
+        $comunicacionSancion = $comunicacionSancionRepository->nuevo();
+        $sanciones = $sancionRepository->findAllNoNotificadasPorEstudiante($estudiante);
+
+        $form = $this->createForm(ComunicacionSancionType::class, $comunicacionSancion, [
+            'estudiante' => $estudiante,
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $sancionesComunicacion = $form->get('sancion')->getData();
+                dump($sancionesComunicacion);
+                foreach ($sancionesComunicacion as $sancion) {
+                    $sancion->addComunicacion($comunicacionSancion);
+                    if ($sancion->getFechaComunicado() == null) {
+                        $sancion->setFechaComunicado($comunicacionSancion->getFecha());
+                    }
+                    $sancionRepository->guardar();
+                }
+                $comunicacionSancionRepository->guardar();
+                $numSanciones = count($form->get('sancion')->getData());
+                $this->addFlash('exito', ($numSanciones == 1) ? 'Se ha comunicado una sanción con éxito' : 'Se han comunicado ' . $numSanciones . ' sanciones con éxito');
+                $sanciones = $sancionRepository->findAllNoNotificadasPorEstudiante($estudiante);
+                return $this->redirectToRoute('estudiante_notificar_sanciones', ['id' => $estudiante->getId()]);
+            } catch (Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+                dump($e);
+            }
+        }
+        return $this->render('estudiante/estudiante_notificar_sanciones.html.twig', [
+            'estudiante' => $estudiante,
+            'docente' => $this->getUser(),
+            'comunicacion' => $comunicacionSancion,
+            'sanciones' => $sanciones,
             'form' => $form->createView()
         ]);
     }

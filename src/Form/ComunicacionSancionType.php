@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ComunicacionSancion;
 use App\Entity\Sancion;
+use App\Repository\SancionRepository;
 use App\Repository\TipoComunicacionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,15 +18,33 @@ use Symfony\Component\Validator\Constraints\Length;
 class ComunicacionSancionType extends AbstractType
 {
     private $tipoComunicacionRepository;
+    private $sancionRepository;
 
-    public function __construct(TipoComunicacionRepository $tipoComunicacionRepository)
+    public function __construct(TipoComunicacionRepository $tipoComunicacionRepository, SancionRepository $sancionRepository)
     {
         $this->tipoComunicacionRepository = $tipoComunicacionRepository;
+        $this->sancionRepository = $sancionRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $tiposComunicacion = $this->tipoComunicacionRepository->findAllByCursoActivo();
+        if ($options['estudiante']) {
+            $estudiante = $options['estudiante'];
+            $sancionesDelEstudiante = $this->sancionRepository->findAllNoNotificadasPorEstudiante($estudiante);
+        }
+        if ($options['estudiante']) {
+            $builder
+                ->add('sancion', EntityType::class, [
+                    'label' => 'Sanciones',
+                    'choices' => $sancionesDelEstudiante,
+                    'class' => Sancion::class,
+                    'required' => true,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'mapped' => false
+                ]);
+        }
         $builder
             ->add('fecha', DateTimeType::class, [
                 'label' => 'Fecha',
@@ -44,13 +63,6 @@ class ComunicacionSancionType extends AbstractType
                     ])
                 ]
             ])
-            ->add('sancion', EntityType::class, [
-                'label' => 'Sanción',
-                'class' => Sancion::class,
-                'required' => true,
-                'help' => 'Sanción a la que pertenece',
-                'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona una sanción', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
-            ])
             ->add('tipo', ChoiceType::class, [
                 'label' => 'Tipo',
                 'choices' => $tiposComunicacion,
@@ -64,6 +76,7 @@ class ComunicacionSancionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ComunicacionSancion::class,
+            'estudiante' => null
         ]);
     }
 }

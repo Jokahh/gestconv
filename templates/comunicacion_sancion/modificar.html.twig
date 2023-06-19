@@ -10,6 +10,17 @@
             {% endif %}
         </div>
     </div>
+    {% if comunicacionSancion.id %}
+        <div class="form-group row">
+            <legend class="col-form-label col-sm-2 col-form-label required">Sanción</legend>
+            <div class="col-sm-10">
+                <div class="form-inline">
+                    {% set sancion = sancionRepository.findSancionPorComunicacion(comunicacionSancion)[0] %}
+                    <input type="text" disabled class="form-control col-12" value="{% if sancion %}{{ sancion }}{% else %}Ninguno{% endif %}">
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group row">
