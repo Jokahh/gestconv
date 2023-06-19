@@ -49,7 +49,7 @@
                     </a>
                     <div class="card-header px-3">
                         <div class="font-weight-bold">Revisar y sancionar</div>
-                        <div class="texto-card-footer">Hay <b>X</b> partes sancionables pendientes de revisar</div>
+                        <div class="texto-card-footer">Hay <b>{{ parteRepository.findAllSancionablesDeEstudiantesDelCursoActual|length }}</b> partes sancionables pendientes de revisar</div>
                     </div>
                 </div>
             </div>

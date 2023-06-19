@@ -17,9 +17,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ParteRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $cursoAcademicoRepository;
+    public function __construct(ManagerRegistry $registry, CursoAcademicoRepository $cursoAcademicoRepository)
     {
         parent::__construct($registry, Parte::class);
+        $this->cursoAcademicoRepository = $cursoAcademicoRepository;
     }
 
     public function findAllSancionablesPorEstudiante(Estudiante $estudiante): array
@@ -32,6 +34,22 @@ class ParteRepository extends ServiceEntityRepository
             ->andWhere('parte.fechaAviso IS NOT NULL')
             ->orderBy('parte.fechaSuceso')
             ->setParameter('estudiante', $estudiante);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findAllSancionablesDeEstudiantesDelCursoActual(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('parte');
+        $queryBuilder
+            ->join('parte.estudiante', 'estudiante')
+            ->join('estudiante.grupos', 'grupo')
+            ->join('grupo.cursoAcademico', 'cursoAcademico')
+            ->where('cursoAcademico.id = :cursoAcademicoId')
+            ->andWhere('parte.sancion IS NULL')
+            ->andWhere('parte.prescrito = false')
+            ->andWhere('parte.fechaAviso IS NOT NULL')
+            ->orderBy('parte.fechaSuceso')
+            ->setParameter('cursoAcademicoId', $this->cursoAcademicoRepository->findActivo()->getId());
         return $queryBuilder->getQuery()->getResult();
     }
 
