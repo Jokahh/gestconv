@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\CategoriaConductaContraria;
 use App\Form\CategoriaConductaContrariaType;
 use App\Repository\CategoriaConductaContrariaRepository;
+use App\Repository\ConductaContrariaRepository;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,18 +52,18 @@ class CategoriaConductaContrariaController extends AbstractController
     /**
      * @Route ("/categoria_conducta_contraria/nuevo", name="categoria_conducta_contraria_nuevo")
      */
-    public function nuevoCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository): Response
+    public function nuevoCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, ConductaContrariaRepository $contrariaRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $categoriaConductaContraria = $categoriaConductaContrariaRepository->nuevo();
 
-        return $this->modificarCategoriaConductaContraria($request, $categoriaConductaContrariaRepository, $categoriaConductaContraria);
+        return $this->modificarCategoriaConductaContraria($request, $categoriaConductaContrariaRepository, $categoriaConductaContraria, $contrariaRepository, true);
     }
 
     /**
      * @Route("/categoria_conducta_contraria/{id}", name="categoria_conducta_contraria_modificar", requirements={"id":"\d+"})
      */
-    public function modificarCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CategoriaConductaContraria $categoriaConductaContraria): Response
+    public function modificarCategoriaConductaContraria(Request $request, CategoriaConductaContrariaRepository $categoriaConductaContrariaRepository, CategoriaConductaContraria $categoriaConductaContraria, ConductaContrariaRepository $contrariaRepository, $nueva = false): Response
     {
         $this->denyAccessUnlessGranted('ROLE_DIRECTIVO');
         $form = $this->createForm(CategoriaConductaContrariaType::class, $categoriaConductaContraria);
@@ -70,6 +71,12 @@ class CategoriaConductaContrariaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                if ($nueva) {
+                    $categoriaNueva = $contrariaRepository->nuevo();
+                    $categoriaNueva->setOrden($categoriaConductaContraria->getOrden());
+                    $categoriaNueva->setCategoria($categoriaConductaContraria);
+                    $contrariaRepository->guardar();
+                }
                 $categoriaConductaContrariaRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('categoria_conducta_contraria_listar');
@@ -77,6 +84,7 @@ class CategoriaConductaContrariaController extends AbstractController
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
         }
+
         return $this->render('categoria_conducta_contraria/modificar.html.twig', [
             'categoriaConductaContraria' => $categoriaConductaContraria,
             'form' => $form->createView()
