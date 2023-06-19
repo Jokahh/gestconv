@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -153,12 +154,11 @@ class ParteType extends AbstractType
             ]);
         if ($options['nuevo'] === false) {
             $builder
-                ->add('sancion', EntityType::class, [
+                ->add('sancion', TextType::class, [
                     'label' => 'Sanción',
-                    'class' => Sancion::class,
                     'required' => false,
-                    'help' => 'Seleccione la sanción',
-                    'attr' => ['class' => 'selectpicker show-tick', 'data-header' => 'Selecciona una sanción', 'data-live-search' => 'true', 'data-live-search-placeholder' => 'Buscador..', 'data-none-selected-text' => 'Nada seleccionado', 'data-size' => '7']
+                    'attr' => ['readonly' => true],
+                    'disabled' => true
                 ]);
         }
         $builder
