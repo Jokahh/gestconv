@@ -4,7 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Estudiante;
 use App\Form\EstudianteType;
+use App\Form\SancionType;
 use App\Repository\EstudianteRepository;
+use App\Repository\GrupoRepository;
+use App\Repository\ParteRepository;
+use App\Repository\SancionRepository;
+use DateTime;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,6 +33,62 @@ class EstudianteController extends AbstractController
         return $this->render('estudiante/listar.html.twig', [
             'pagination' => $pagination,
             'cursoActual' => false
+        ]);
+    }
+
+    /**
+     * @Route("/estudiantes_sancionables", name="estudiantes_listar_sancionables")
+     */
+    public function listarSancionables(EstudianteRepository $estudianteRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        //$this->denyAccessUnlessGranted('ROLE_USUARIO');
+        $pagination = $paginator->paginate(
+            $estudianteRepository->findAllEstudiantesDeGruposDelCursoActualSancionables(), /* Query - NO EL RESULTADO DE LA QUERY */
+            $request->query->getInt('page', 1), /* Número de la página */
+            10 /* Límite por página */
+        );
+        return $this->render('estudiante/estudiantes_sancionables.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+
+    /**
+     * @Route("/estudiante_sancionar/{id}", name="estudiante_sancionar", requirements={"id":"\d+"})
+     */
+    public function sancionarEstudiante(Estudiante $estudiante, SancionRepository $sancionRepository, ParteRepository $parteRepository, Request $request): Response
+    {
+        $sancion = $sancionRepository->nuevo();
+        $sancion->setFechaSancion(new DateTime());
+        $sancion->setRegistradoEnSeneca(false);
+        $partes = $parteRepository->findAllSancionablesPorEstudiante($estudiante);
+
+        $form = $this->createForm(SancionType::class, $sancion, [
+            'estudiante' => $estudiante,
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $partesSancion = $form->get('partes')->getData();
+                foreach ($partesSancion as $parte) {
+                    $parte->setSancion($sancion);
+                    $parteRepository->guardar();
+                }
+                $sancionRepository->guardar();
+                $numPartes = count($form->get('partes')->getData());
+                $this->addFlash('exito', ($numPartes == 1) ? 'Se ha sancionado un parte con éxito' : 'Se han sancionado ' . $numPartes . ' con éxito');
+                $partes = $parteRepository->findAllSancionablesPorEstudiante($estudiante);
+                return $this->redirectToRoute('estudiante_sancionar', ['id' => $estudiante->getId()]);
+            } catch (Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+                dump($e);
+            }
+        }
+        return $this->render('estudiante/estudiante_sancionar.html.twig', [
+            'estudiante' => $estudiante,
+            'sancion' => $sancion,
+            'partes' => $partes,
+            'form' => $form->createView()
         ]);
     }
 
@@ -62,7 +123,7 @@ class EstudianteController extends AbstractController
     /**
      * @Route("/estudiante/{id}", name="estudiante_modificar", requirements={"id":"\d+"})
      */
-    public function modificarEstudiante(Request $request, EstudianteRepository $estudianteRepository, Estudiante $estudiante): Response
+    public function modificarEstudiante(Request $request, EstudianteRepository $estudianteRepository, Estudiante $estudiante, GrupoRepository $grupoRepository): Response
     {
         //$this->denyAccessUnlessGranted('ROLE_EDITOR');
         $form = $this->createForm(EstudianteType::class, $estudiante);
@@ -70,6 +131,15 @@ class EstudianteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $grupos = $form->get('grupos')->getData();
+                foreach ($grupos as $grupo) {
+                    $estudiante->addGrupo($grupo);
+                    $grupo->addEstudiante($estudiante);
+                    $entityManager->persist($grupo);
+                }
+                $entityManager->persist($estudiante);
+                $grupoRepository->guardar();
                 $estudianteRepository->guardar();
                 $this->addFlash('exito', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('estudiante_listar');
