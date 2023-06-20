@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\CursoAcademico;
 use App\Entity\Docente;
 use App\Factory\ActitudFamiliaFactory;
 use App\Factory\CategoriaConductaContrariaFactory;
@@ -20,6 +21,7 @@ use App\Factory\ParteFactory;
 use App\Factory\SancionFactory;
 use App\Factory\TipoComunicacionFactory;
 use App\Factory\TramoFactory;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -27,22 +29,29 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        CursoAcademicoFactory::createMany(10);
+        CursoAcademicoFactory::createMany(1);
+        $cursoActivo = new CursoAcademico();
+        $cursoActivo->setDescripcion('2023/2024');
+        $cursoActivo->setEstado(1);
+        $cursoActivo->setEsActivo(1);
+        $cursoActivo->setFechaInicio(new DateTime('now'));
+        $cursoActivo->setFechaFin(new DateTime('+1 years'));
+        $manager->persist($cursoActivo);
 
-        ActitudFamiliaFactory::createMany(25, function () {
+        ActitudFamiliaFactory::createMany(6, function () {
             return [
                 'cursoAcademico' => CursoAcademicoFactory::random()
             ];
         });
 
-        TramoFactory::createMany(10, function () {
+        TramoFactory::createMany(15, function () {
             return [
                 'cursoAcademico' => CursoAcademicoFactory::random()
             ];
         });
 
 
-        TipoComunicacionFactory::createMany(10, function () {
+        TipoComunicacionFactory::createMany(8, function () {
             return [
                 'cursoAcademico' => CursoAcademicoFactory::random()
             ];
@@ -92,22 +101,22 @@ class AppFixtures extends Fixture
         $manager->persist($docenteTutor);
 
 
-        DocenteFactory::createMany(15);
+        DocenteFactory::createMany(3);
 
-        GrupoFactory::createMany(5, function () {
+        GrupoFactory::createMany(2, function () {
             return [
                 'cursoAcademico' => CursoAcademicoFactory::random(),
                 'tutores' => DocenteFactory::randomRange(0, 2)
             ];
         });
 
-        EstudianteFactory::createMany(75, function () {
+        EstudianteFactory::createMany(25, function () {
             return [
                 'grupos' => GrupoFactory::randomRange(0, 1)
             ];
         });
 
-        GrupoFactory::createMany(10, function () {
+        GrupoFactory::createMany(2, function () {
             return [
                 'cursoAcademico' => CursoAcademicoFactory::random(),
                 'tutores' => DocenteFactory::randomRange(0, 2),
@@ -115,7 +124,7 @@ class AppFixtures extends Fixture
             ];
         });
 
-        ParteFactory::createMany(30, function () {
+        ParteFactory::createMany(10, function () {
             return [
                 'docente' => DocenteFactory::random(),
                 'estudiante' => EstudianteFactory::random(),
@@ -123,20 +132,20 @@ class AppFixtures extends Fixture
             ];
         });
 
-        DocenteFactory::createMany(30, function () {
+        DocenteFactory::createMany(2, function () {
             return [
                 'partes' => ParteFactory::randomRange(0, 3)
             ];
         });
 
-        ComunicacionParteFactory::createMany(15, function () {
+        ComunicacionParteFactory::createMany(5, function () {
             return [
                 'tipo' => TipoComunicacionFactory::random(),
                 'parte' => ParteFactory::random()
             ];
         });
 
-        ObservacionParteFactory::createMany(15, function () {
+        ObservacionParteFactory::createMany(5, function () {
             return [
                 'parte' => ParteFactory::random()
             ];
@@ -148,15 +157,15 @@ class AppFixtures extends Fixture
             ];
         });
 
-        ConductaContrariaFactory::createMany(25, function () {
+        ConductaContrariaFactory::createMany(15, function () {
             return [
                 'categoria' => CategoriaConductaContrariaFactory::random(),
-                'partes' => ParteFactory::randomRange(0,1)
+                'partes' => ParteFactory::randomRange(0, 1)
             ];
         });
 
 
-        MedidaFactory::createMany(15, function () {
+        MedidaFactory::createMany(10, function () {
             return [
                 'categoria' => CategoriaMedidaFactory::createOne()
             ];
@@ -170,13 +179,13 @@ class AppFixtures extends Fixture
             ];
         });
 
-        ObservacionSancionFactory::createMany(20, function () {
+        ObservacionSancionFactory::createMany(10, function () {
             return [
                 'sancion' => SancionFactory::random(),
             ];
         });
 
-        SancionFactory::createMany(20, function () {
+        SancionFactory::createMany(15, function () {
             return [
                 'medidas' => MedidaFactory::randomRange(0, 4),
                 'actitudFamilia' => ActitudFamiliaFactory::random(),
@@ -185,7 +194,7 @@ class AppFixtures extends Fixture
             ];
         });
 
-        ComunicacionSancionFactory::createMany(15, function () {
+        ComunicacionSancionFactory::createMany(10, function () {
             return [
                 'sancion' => SancionFactory::random(),
                 'tipo' => TipoComunicacionFactory::random()
