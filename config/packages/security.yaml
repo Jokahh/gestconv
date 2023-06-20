@@ -6,7 +6,7 @@ security:
         class: 'App\Entity\Docente'
         property: 'usuario'
   encoders:
-    App\Entity\Docente: 'plaintext'
+    App\Entity\Docente: 'bcrypt'
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
