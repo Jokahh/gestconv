@@ -12,7 +12,7 @@
             {% endif %}
         </div>
         <div class="col-12 col-lg-5 d-flex justify-content-start justify-content-lg-end align-items-center p-0">
-            {% if not estudiantesPropios %}
+            {% if is_granted('ROLE_COMISIONARIO') %}
                 {% if cursoActual %}
                     <a href="{{ path('estudiante_listar') }}" class="btn btn-secondary">
                         <i class="fa fa-list"></i> Todos los estudiantes</a>
