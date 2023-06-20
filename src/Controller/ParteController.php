@@ -32,7 +32,7 @@ class ParteController extends AbstractController
     }
 
     /**
-     * @Route("/parte/{id}", name="parte_listar_propios", requirements={"id":"\d+"})
+     * @Route("/partes_propios/{id}", name="parte_listar_propios", requirements={"id":"\d+"})
      */
     public function listarPropios(ParteRepository $parteRepository, PaginatorInterface $paginator, Request $request): Response
     {
