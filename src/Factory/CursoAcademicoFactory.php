@@ -55,6 +55,7 @@ final class CursoAcademicoFactory extends ModelFactory
 
             //true = activo, false = inactivo
             'estado' => self::faker()->boolean(75),
+            'esActivo' => self::faker()->boolean(0)
         ];
     }
 
