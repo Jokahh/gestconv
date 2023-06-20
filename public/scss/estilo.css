@@ -1,6 +1,3 @@
-/* TODO cambiar a SCSS */
-
-
 .inicio .card-inicio .texto-card-footer {
     font-size: 0.9em;
 }
@@ -34,6 +31,10 @@
     transition: all;
     transition-duration: 0.4s;
 }
+
+
+
+/* Media query */
 
 @media (max-width: 575.98px) {
     html {
@@ -73,6 +74,8 @@
 
 
 
+
+/* Large checkboxes */
 :root {
     /* larger checkbox */
 }
